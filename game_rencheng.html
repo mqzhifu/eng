@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 人称代词游戏 - 英语语法学习乐园</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-left: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .game-content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .sentence {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .blank {
+            display: inline-block;
+            width: 120px;
+            height: 50px;
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            margin: 0 10px;
+            vertical-align: middle;
+            line-height: 46px;
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .feedback {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .next-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        .result h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .result-score {
+            font-size: 72px;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 30px 0;
+        }
+
+        .result-message {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .restart-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .home-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            border-radius: 50%;
+            animation: confetti 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .game-content {
+                padding: 20px;
+            }
+            
+            .sentence {
+                font-size: 18px;
+            }
+            
+            .blank {
+                width: 100px;
+                height: 40px;
+                line-height: 36px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-score {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回游戏列表</a>
+            <h1>👤 人称代词游戏</h1>
+            <p>选择正确的人称代词填空，一共20道题，满分100分！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <span>题目: <span id="current-question">1</span>/20</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>/100
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <div class="question-number">第 <span id="question-number">1</span> 题</div>
+                <div class="sentence" id="sentence">
+                    ______ am a student.
+                </div>
+                <div class="options" id="options">
+                    <div class="option" data-answer="I">I</div>
+                    <div class="option" data-answer="You">You</div>
+                    <div class="option" data-answer="He">He</div>
+                    <div class="option" data-answer="She">She</div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <button class="next-btn" id="next-btn">下一题</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <button class="restart-btn" id="restart-btn">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 题目数据 - 100个模板
+        const allQuestions = [
+            // I 相关
+            { sentence: "______ am a student.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ love my family.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ have a dog.", options: ["I", "He", "She", "It"], correctAnswer: "I" },
+            { sentence: "______ am hungry.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am seven years old.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am happy today.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am learning English.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am going to school.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am reading a book.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am playing with my friends.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            
+            // You 相关
+            { sentence: "______ are my friend.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are very kind.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are good at English.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are tall and strong.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are my best friend.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are wearing a blue shirt.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are coming to my party.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are doing a great job.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are my neighbor.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are always helpful.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            
+            // He 相关
+            { sentence: "______ is a boy.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ likes ice cream.", options: ["I", "You", "He", "They"], correctAnswer: "He" },
+            { sentence: "______ is tall.", options: ["I", "You", "He", "They"], correctAnswer: "He" },
+            { sentence: "______ is my teacher.", options: ["I", "You", "He", "They"], correctAnswer: "He" },
+            { sentence: "______ is playing football.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is my brother.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is reading a book.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is very smart.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is wearing a red cap.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is my father.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            
+            // She 相关
+            { sentence: "______ is a girl.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is my sister.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is my mother.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is wearing a dress.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is reading a storybook.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is very pretty.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is my teacher.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is playing with a doll.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is my aunt.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is good at singing.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            
+            // It 相关
+            { sentence: "______ is a cat.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a bird.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a dog.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a book.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a ball.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a tree.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a car.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a house.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a computer.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a pencil.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            
+            // We 相关
+            { sentence: "______ are happy.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are in the park.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are friends.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are going to school together.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are playing games.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are learning English.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are a family.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are having fun.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are watching a movie.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are eating lunch.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            
+            // They 相关
+            { sentence: "______ are playing football.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are students.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are my parents.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are my classmates.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are my friends.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are playing in the garden.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are happy together.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are going to the zoo.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are eating ice cream.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are reading books.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            
+            // 混合练习
+            { sentence: "______ is my pet.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is my grandfather.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is my grandmother.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ are my siblings.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ are my cousins.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ am excited about the party.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ are my neighbors.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ is a big dog.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ are my team members.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ is a small cat.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ am ready for the test.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ are my colleagues.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ is my favorite toy.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ are my relatives.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ am a good student.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ is my favorite book.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ are my favorite foods.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ am looking forward to the holiday.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ are my favorite animals.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
+            { sentence: "______ is my favorite color.", options: ["I", "You", "He", "It"], correctAnswer: "It" }
+        ];
+        
+        // 随机选择20道题
+        function getRandomQuestions() {
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 20);
+        }
+        
+        let questions = getRandomQuestions();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        // 初始化游戏
+        function initGame() {
+            // 重新随机选择20道题
+            questions = getRandomQuestions();
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            document.getElementById('sentence').innerHTML = question.sentence;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            // 随机打乱选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.dataset.answer = option;
+                optionElement.addEventListener('click', selectOption);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            answered = false;
+        }
+
+        // 选择选项
+        function selectOption(e) {
+            if (answered) return;
+            
+            const selectedOption = e.target;
+            const correctAnswer = questions[currentQuestion].correctAnswer;
+            
+            // 禁用所有选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.removeEventListener('click', selectOption);
+                if (option.dataset.answer === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (option === selectedOption && option.dataset.answer !== correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (selectedOption.dataset.answer === correctAnswer) {
+                score += 5; // 每题5分
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            answered = true;
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('current-question').textContent = currentQuestion + 1;
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            const message = document.getElementById('result-message');
+            if (score === 100) {
+                message.textContent = '太棒了！你是人称代词大师！';
+                createConfetti();
+            } else if (score >= 80) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 60) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+
+        // 初始化游戏
+        initGame();
+    </script>
+</body>
+</html>

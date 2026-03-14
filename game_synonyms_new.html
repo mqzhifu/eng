@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔤 近似词多选游戏 - 英语语法学习乐园</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-left: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .game-content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #667eea;
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .option input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.5);
+        }
+
+        .feedback {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .next-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+
+        .result {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        .result h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .result-score {
+            font-size: 72px;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 30px 0;
+        }
+
+        .result-message {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .restart-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .home-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            border-radius: 50%;
+            animation: confetti 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .game-content {
+                padding: 20px;
+            }
+            
+            .question-text {
+                font-size: 18px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-score {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回游戏列表</a>
+            <h1>🔤 近似词多选游戏</h1>
+            <p>选择所有与中文意思匹配的近似词，一共20道题，满分100分！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <span>题目: <span id="current-question">1</span>/20</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>/100
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <div class="question-number">第 <span id="question-number">1</span> 题</div>
+                <div class="question-text" id="question-text">
+                    请选择所有表示"大的"的单词
+                </div>
+                <div class="options" id="options">
+                    <div class="option">
+                        <input type="checkbox" name="option" value="big">
+                        <span>big</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="option" value="large">
+                        <span>large</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="option" value="small">
+                        <span>small</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="option" value="little">
+                        <span>little</span>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <button class="next-btn" id="next-btn">下一题</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <button class="restart-btn" id="restart-btn">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 题目数据
+        const allQuestions = [
+            { chinese: "大的", options: ["big", "large", "small", "little"], correctAnswers: ["big", "large"] },
+            { chinese: "小的", options: ["small", "little", "big", "large"], correctAnswers: ["small", "little"] },
+            { chinese: "好的", options: ["good", "nice", "well", "fine"], correctAnswers: ["good", "nice", "well", "fine"] },
+            { chinese: "漂亮的", options: ["beautiful", "pretty", "ugly", "bad"], correctAnswers: ["beautiful", "pretty"] },
+            { chinese: "聪明的", options: ["clever", "smart", "stupid", "foolish"], correctAnswers: ["clever", "smart"] },
+            { chinese: "快的", options: ["fast", "quick", "slow", "late"], correctAnswers: ["fast", "quick"] },
+            { chinese: "高的", options: ["tall", "high", "short", "low"], correctAnswers: ["tall", "high"] },
+            { chinese: "看", options: ["look", "see", "watch", "hear"], correctAnswers: ["look", "see", "watch"] },
+            { chinese: "听", options: ["listen", "hear", "see", "watch"], correctAnswers: ["listen", "hear"] },
+            { chinese: "说", options: ["speak", "talk", "tell", "say"], correctAnswers: ["speak", "talk", "tell", "say"] },
+            { chinese: "开始", options: ["begin", "start", "finish", "end"], correctAnswers: ["begin", "start"] },
+            { chinese: "结束", options: ["finish", "end", "begin", "start"], correctAnswers: ["finish", "end"] },
+            { chinese: "学习", options: ["learn", "study", "teach", "instruct"], correctAnswers: ["learn", "study"] },
+            { chinese: "喜欢", options: ["like", "love", "hate", "dislike"], correctAnswers: ["like", "love"] },
+            { chinese: "许多", options: ["many", "much", "a lot of", "few"], correctAnswers: ["many", "much", "a lot of"] },
+            { chinese: "图片", options: ["photo", "picture", "video", "audio"], correctAnswers: ["photo", "picture"] },
+            { chinese: "声音", options: ["sound", "voice", "silence", "quiet"], correctAnswers: ["sound", "voice"] },
+            { chinese: "问题", options: ["question", "problem", "answer", "solution"], correctAnswers: ["question", "problem"] },
+            { chinese: "也", options: ["also", "too", "only", "just"], correctAnswers: ["also", "too"] },
+            { chinese: "桌子", options: ["desk", "table", "chair", "sofa"], correctAnswers: ["desk", "table"] },
+            { chinese: "笔", options: ["pen", "pencil", "eraser", "ruler"], correctAnswers: ["pen", "pencil"] },
+            { chinese: "门", options: ["door", "gate", "window", "wall"], correctAnswers: ["door", "gate"] },
+            { chinese: "晚上", options: ["evening", "night", "morning", "afternoon"], correctAnswers: ["evening", "night"] },
+            { chinese: "吃", options: ["eat", "have", "drink", "drink"], correctAnswers: ["eat", "have"] },
+            { chinese: "近的", options: ["near", "close", "far", "distant"], correctAnswers: ["near", "close"] },
+            { chinese: "冷的", options: ["cold", "cool", "hot", "warm"], correctAnswers: ["cold", "cool"] },
+            { chinese: "热的", options: ["warm", "hot", "cold", "cool"], correctAnswers: ["warm", "hot"] },
+            { chinese: "容易的", options: ["easy", "simple", "difficult", "hard"], correctAnswers: ["easy", "simple"] },
+            { chinese: "困难的", options: ["difficult", "hard", "easy", "simple"], correctAnswers: ["difficult", "hard"] },
+            { chinese: "正确的", options: ["right", "correct", "wrong", "incorrect"], correctAnswers: ["right", "correct"] },
+            { chinese: "错误的", options: ["wrong", "incorrect", "right", "correct"], correctAnswers: ["wrong", "incorrect"] },
+            { chinese: "穿", options: ["wear", "dress", "put on", "take off"], correctAnswers: ["wear", "dress", "put on"] },
+            { chinese: "寻找", options: ["find", "look for", "lose", "misplace"], correctAnswers: ["find", "look for"] },
+            { chinese: "工作", options: ["job", "work", "play", "rest"], correctAnswers: ["job", "work"] },
+            { chinese: "旅行", options: ["trip", "travel", "stay", "remain"], correctAnswers: ["trip", "travel"] },
+            { chinese: "礼物", options: ["gift", "present", "take", "give"], correctAnswers: ["gift", "present"] },
+            { chinese: "有趣的", options: ["fun", "funny", "boring", "dull"], correctAnswers: ["fun", "funny"] },
+            { chinese: "居住", options: ["live", "stay", "leave", "depart"], correctAnswers: ["live", "stay"] },
+            { chinese: "河 / 湖", options: ["river", "lake", "sea", "ocean"], correctAnswers: ["river", "lake"] },
+            { chinese: "商店", options: ["shop", "store", "market", "mall"], correctAnswers: ["shop", "store"] },
+            { chinese: "孩子", options: ["child", "kid", "adult", "grownup"], correctAnswers: ["child", "kid"] },
+            { chinese: "生气的", options: ["angry", "mad", "happy", "glad"], correctAnswers: ["angry", "mad"] },
+            { chinese: "害怕的", options: ["afraid", "scared", "brave", "courageous"], correctAnswers: ["afraid", "scared"] },
+            { chinese: "累的 / 困的", options: ["tired", "sleepy", "energetic", "awake"], correctAnswers: ["tired", "sleepy"] },
+            { chinese: "路 / 街道", options: ["road", "street", "path", "alley"], correctAnswers: ["road", "street"] },
+            { chinese: "公园 / 花园", options: ["park", "garden", "forest", "jungle"], correctAnswers: ["park", "garden"] },
+            { chinese: "杯子", options: ["cup", "glass", "bottle", "jar"], correctAnswers: ["cup", "glass"] },
+            { chinese: "电影", options: ["movie", "film", "play", "show"], correctAnswers: ["movie", "film"] },
+            { chinese: "游戏 / 比赛", options: ["game", "match", "work", "job"], correctAnswers: ["game", "match"] },
+            { chinese: "笑", options: ["laugh", "smile", "cry", "weep"], correctAnswers: ["laugh", "smile"] },
+            { chinese: "饿的", options: ["hungry", "starving", "full", "satisfied"], correctAnswers: ["hungry", "starving"] },
+            { chinese: "照顾", options: ["look after", "take care of", "ignore", "neglect"], correctAnswers: ["look after", "take care of"] },
+            { chinese: "关上", options: ["close", "turn off", "open", "turn on"], correctAnswers: ["close", "turn off"] },
+            { chinese: "打开", options: ["open", "turn on", "close", "turn off"], correctAnswers: ["open", "turn on"] }
+        ];
+        
+        // 随机选择20道题
+        function getRandomQuestions() {
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 20);
+        }
+        
+        let questions = getRandomQuestions();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        // 初始化游戏
+        function initGame() {
+            // 重新随机选择20道题
+            questions = getRandomQuestions();
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = `请选择所有表示"${question.chinese}"的单词`;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            // 随机打乱选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <input type="checkbox" name="option" value="${option}">
+                    <span>${option}</span>
+                `;
+                
+                // 添加点击事件到整个选项
+                optionElement.addEventListener('click', function(e) {
+                    if (e.target.type !== 'checkbox') {
+                        const checkbox = this.querySelector('input[type="checkbox"]');
+                        checkbox.checked = !checkbox.checked;
+                    }
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    this.classList.toggle('selected', checkbox.checked);
+                    
+                    // 显示下一题按钮
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                });
+                
+                // 为复选框添加点击事件
+                const checkbox = optionElement.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const option = this.closest('.option');
+                    option.classList.toggle('selected', this.checked);
+                    
+                    // 显示下一题按钮
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            answered = false;
+        }
+
+        // 选择选项
+        function checkAnswers() {
+            const question = questions[currentQuestion];
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selectedOptions = [];
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedOptions.push(checkbox.value);
+                }
+            });
+            
+            // 检查是否至少选择了一个选项
+            if (selectedOptions.length === 0) {
+                alert('请至少选择一个选项！');
+                return;
+            }
+            
+            // 检查答案是否正确
+            const isCorrect = selectedOptions.length === question.correctAnswers.length && 
+                           selectedOptions.every(option => question.correctAnswers.includes(option));
+            
+            // 显示正确和错误的选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                const checkbox = option.querySelector('input[type="checkbox"]');
+                if (question.correctAnswers.includes(checkbox.value)) {
+                    option.classList.add('correct');
+                } else if (checkbox.checked) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (isCorrect) {
+                score += 5; // 每题5分
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                feedback.textContent = `❌ 回答错误！正确答案是: ${question.correctAnswers.join(', ')}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            answered = true;
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (!answered) {
+                checkAnswers();
+                return;
+            }
+            
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('current-question').textContent = currentQuestion + 1;
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            const message = document.getElementById('result-message');
+            if (score === 100) {
+                message.textContent = '太棒了！你是近似词大师！';
+                createConfetti();
+            } else if (score >= 80) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 60) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+
+        // 初始化游戏
+        initGame();
+    </script>
+</body>
+</html>

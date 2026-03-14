@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔤 系动词游戏 - 英语语法学习乐园</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-left: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .game-content {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .question {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .sentence {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        .blank {
+            display: inline-block;
+            width: 120px;
+            height: 50px;
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 10px;
+            margin: 0 10px;
+            vertical-align: middle;
+            line-height: 46px;
+            color: #667eea;
+            font-style: italic;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .feedback {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .next-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .result {
+            text-align: center;
+            padding: 50px;
+            display: none;
+        }
+
+        .result h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .result-score {
+            font-size: 72px;
+            font-weight: bold;
+            color: #764ba2;
+            margin: 30px 0;
+        }
+
+        .result-message {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .restart-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .home-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f00;
+            border-radius: 50%;
+            animation: confetti 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+            }
+            
+            .game-content {
+                padding: 20px;
+            }
+            
+            .sentence {
+                font-size: 18px;
+            }
+            
+            .blank {
+                width: 100px;
+                height: 40px;
+                line-height: 36px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-score {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回游戏列表</a>
+            <h1>🔤 系动词游戏</h1>
+            <p>选择正确的系动词填空，一共20道题，满分100分！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <span>题目: <span id="current-question">1</span>/20</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>/100
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <div class="question-number">第 <span id="question-number">1</span> 题</div>
+                <div class="sentence" id="sentence">
+                    I ______ a student.
+                </div>
+                <div class="options" id="options">
+                    <div class="option" data-answer="am">am</div>
+                    <div class="option" data-answer="is">is</div>
+                    <div class="option" data-answer="are">are</div>
+                    <div class="option" data-answer="was">was</div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <button class="next-btn" id="next-btn">下一题</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <button class="restart-btn" id="restart-btn">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 题目数据 - 100个模板
+        const allQuestions = [
+            // am 相关
+            { sentence: "I ______ a student.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ happy today.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ learning English.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ seven years old.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ hungry.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ excited about the party.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ ready for the test.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ going to school.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ reading a book.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ playing with my friends.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            
+            // is 相关
+            { sentence: "He ______ a boy.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "She ______ a girl.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "It ______ a cat.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The book ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "My mother ______ a teacher.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The sky ______ blue.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The dog ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The sun ______ hot.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "My father ______ tall.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The car ______ fast.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            
+            // are 相关
+            { sentence: "You ______ my friend.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "They ______ students.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "We ______ happy.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The children ______ playing.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "My parents ______ kind.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The flowers ______ beautiful.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The books ______ on the table.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "My friends ______ coming.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The cats ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The apples ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            
+            // was 相关
+            { sentence: "I ______ at home yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "He ______ sick last week.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "She ______ happy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "It ______ cold last night.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "The weather ______ nice yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "My brother ______ tired yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "The dog ______ hungry yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "The cat ______ on the chair yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "The book ______ on the table yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "I ______ busy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            
+            // were 相关
+            { sentence: "You ______ at school yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "They ______ happy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "We ______ at the park yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The children ______ playing yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "My parents ______ at work yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The flowers ______ beautiful yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The books ______ on the table yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "My friends ______ here yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The cats ______ black yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The apples ______ red yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            
+            // 混合练习 - am/is/are
+            { sentence: "I ______ a good student.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "He ______ my brother.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "She ______ my sister.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "It ______ a dog.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "You ______ my best friend.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "They ______ my classmates.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "We ______ a family.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The sky ______ clear today.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The trees ______ green.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "My teacher ______ nice.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            
+            // 混合练习 - was/were
+            { sentence: "I ______ happy last week.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "He ______ at school yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "She ______ sick last month.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "It ______ rainy last night.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "You ______ busy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "They ______ at the zoo yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "We ______ playing football yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The children ______ happy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "My parents ______ on vacation last week.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The dogs ______ barking yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            
+            // 更多混合练习
+            { sentence: "I ______ excited about the trip.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "He ______ tall and strong.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "She ______ wearing a blue dress.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "It ______ a beautiful day.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "You ______ very kind.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "They ______ going to the store.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "We ______ learning math.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "The cat ______ sleeping on the sofa.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "The birds ______ singing in the tree.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "My brother ______ playing video games.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "I ______ tired last night.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "He ______ reading a book yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "She ______ cooking dinner yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "It ______ snowing last week.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "You ______ watching TV yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "They ______ eating dinner together.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "We ______ studying for the test yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The students ______ listening to the teacher.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "My friends ______ visiting me yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
+            { sentence: "The flowers ______ blooming in the garden.", options: ["am", "is", "are", "were"], correctAnswer: "are" }
+        ];
+        
+        // 随机选择20道题
+        function getRandomQuestions() {
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 20);
+        }
+        
+        let questions = getRandomQuestions();
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        // 初始化游戏
+        function initGame() {
+            // 重新随机选择20道题
+            questions = getRandomQuestions();
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            document.getElementById('sentence').innerHTML = question.sentence;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            // 随机打乱选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.dataset.answer = option;
+                optionElement.addEventListener('click', selectOption);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            answered = false;
+        }
+
+        // 选择选项
+        function selectOption(e) {
+            if (answered) return;
+            
+            const selectedOption = e.target;
+            const correctAnswer = questions[currentQuestion].correctAnswer;
+            
+            // 禁用所有选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.removeEventListener('click', selectOption);
+                if (option.dataset.answer === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (option === selectedOption && option.dataset.answer !== correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (selectedOption.dataset.answer === correctAnswer) {
+                score += 5; // 每题5分
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            answered = true;
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('current-question').textContent = currentQuestion + 1;
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            const message = document.getElementById('result-message');
+            if (score === 100) {
+                message.textContent = '太棒了！你是系动词大师！';
+                createConfetti();
+            } else if (score >= 80) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 60) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+
+        // 初始化游戏
+        initGame();
+    </script>
+</body>
+</html>

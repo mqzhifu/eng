@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔤 英语疑问句翻译游戏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.2);
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .info-item {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .info-item span {
+            color: #667eea;
+            margin-left: 5px;
+        }
+
+        .question-container {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .option {
+            padding: 20px;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .option.correct {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+            color: #388E3C;
+        }
+
+        .option.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        .feedback {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            color: #388E3C;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            color: #c62828;
+            display: block;
+        }
+
+        .controls {
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .modal h2 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .modal p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .modal .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .question-text {
+                font-size: 20px;
+            }
+
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+
+            .game-info {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔤 英语疑问句翻译游戏</h1>
+        
+        <div class="game-info">
+            <div class="info-item">题目: <span id="questionCount">0/20</span></div>
+            <div class="info-item">得分: <span id="score">0</span></div>
+        </div>
+
+        <div class="question-container">
+            <div class="question-number" id="questionNumber">第 1 题</div>
+            <div class="question-text" id="questionText">加载中...</div>
+            
+            <div class="options-container" id="optionsContainer">
+                <!-- 选项将通过JavaScript动态生成 -->
+            </div>
+            
+            <div class="feedback" id="feedback"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="startBtn">开始游戏</button>
+            <button class="btn btn-secondary" id="nextBtn" disabled>下一题</button>
+            <button class="btn btn-secondary" id="restartBtn" disabled>重新开始</button>
+        </div>
+    </div>
+
+    <!-- 游戏结束弹窗 -->
+    <div class="modal" id="resultModal">
+        <div class="modal-content">
+            <h2>🎮 游戏结束</h2>
+            <p>恭喜你完成了所有题目！</p>
+            <div class="result">得分: <span id="finalScore">0</span>/100</div>
+            <p>正确率: <span id="accuracy">0</span>%</p>
+            <p>用时: <span id="timeSpent">0</span> 秒</p>
+            <div style="margin-top: 30px;">
+                <button class="btn btn-primary" id="playAgainBtn">再玩一次</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 200个常用特殊疑问句及其翻译
+        const questionBank = [
+            // What 类型
+            { english: "What's your name?", chinese: "你叫什么名字？", type: "what" },
+            { english: "What are you doing?", chinese: "你在做什么？", type: "what" },
+            { english: "What color is your bag?", chinese: "你的书包是什么颜色？", type: "what" },
+            { english: "What do you like to eat?", chinese: "你喜欢吃什么？", type: "what" },
+            { english: "What time is it?", chinese: "现在几点了？", type: "what" },
+            { english: "What's your favorite subject?", chinese: "你最喜欢的科目是什么？", type: "what" },
+            { english: "What did you do yesterday?", chinese: "你昨天做了什么？", type: "what" },
+            { english: "What are you going to do tomorrow?", chinese: "你明天打算做什么？", type: "what" },
+            { english: "What's this in English?", chinese: "这个用英语怎么说？", type: "what" },
+            { english: "What's the weather like today?", chinese: "今天天气怎么样？", type: "what" },
+            { english: "What's your hobby?", chinese: "你的爱好是什么？", type: "what" },
+            { english: "What grade are you in?", chinese: "你上几年级？", type: "what" },
+            { english: "What's your phone number?", chinese: "你的电话号码是多少？", type: "what" },
+            { english: "What's the capital of China?", chinese: "中国的首都是什么？", type: "what" },
+            { english: "What do you want for dinner?", chinese: "你晚饭想吃什么？", type: "what" },
+            { english: "What's your mother's name?", chinese: "你妈妈叫什么名字？", type: "what" },
+            { english: "What's the meaning of this word?", chinese: "这个单词是什么意思？", type: "what" },
+            { english: "What's your favorite animal?", chinese: "你最喜欢的动物是什么？", type: "what" },
+            { english: "What's your favorite food?", chinese: "你最喜欢的食物是什么？", type: "what" },
+            { english: "What's your favorite color?", chinese: "你最喜欢的颜色是什么？", type: "what" },
+            { english: "What's your favorite movie?", chinese: "你最喜欢的电影是什么？", type: "what" },
+            { english: "What's your favorite song?", chinese: "你最喜欢的歌曲是什么？", type: "what" },
+            { english: "What's your favorite sport?", chinese: "你最喜欢的运动是什么？", type: "what" },
+            { english: "What's your favorite book?", chinese: "你最喜欢的书是什么？", type: "what" },
+            { english: "What's your favorite season?", chinese: "你最喜欢的季节是什么？", type: "what" },
+            { english: "What's your favorite holiday?", chinese: "你最喜欢的节日是什么？", type: "what" },
+            { english: "What's your favorite day of the week?", chinese: "你一周中最喜欢哪一天？", type: "what" },
+            { english: "What's your favorite time of day?", chinese: "你一天中最喜欢什么时候？", type: "what" },
+            { english: "What's your favorite subject in school?", chinese: "你在学校最喜欢的科目是什么？", type: "what" },
+            { english: "What's your favorite teacher?", chinese: "你最喜欢的老师是谁？", type: "what" },
+            
+            // Who 类型
+            { english: "Who is that girl?", chinese: "那个女孩是谁？", type: "who" },
+            { english: "Who is your English teacher?", chinese: "你的英语老师是谁？", type: "who" },
+            { english: "Who can help me?", chinese: "谁能帮助我？", type: "who" },
+            { english: "Who has a new ruler?", chinese: "谁有一把新尺子？", type: "who" },
+            { english: "Who are they?", chinese: "他们是谁？", type: "who" },
+            { english: "Who is your best friend?", chinese: "你最好的朋友是谁？", type: "who" },
+            { english: "Who is the president of the United States?", chinese: "美国总统是谁？", type: "who" },
+            { english: "Who wrote this book?", chinese: "谁写了这本书？", type: "who" },
+            { english: "Who is calling?", chinese: "谁在打电话？", type: "who" },
+            { english: "Who is at the door?", chinese: "谁在门口？", type: "who" },
+            { english: "Who is your favorite singer?", chinese: "你最喜欢的歌手是谁？", type: "who" },
+            { english: "Who is your favorite actor?", chinese: "你最喜欢的演员是谁？", type: "who" },
+            { english: "Who is your favorite athlete?", chinese: "你最喜欢的运动员是谁？", type: "who" },
+            { english: "Who is your favorite character?", chinese: "你最喜欢的角色是谁？", type: "who" },
+            { english: "Who is your hero?", chinese: "谁是你的英雄？", type: "who" },
+            { english: "Who is your role model?", chinese: "谁是你的榜样？", type: "who" },
+            { english: "Who is the tallest in your class?", chinese: "你们班谁最高？", type: "who" },
+            { english: "Who is the smartest in your class?", chinese: "你们班谁最聪明？", type: "who" },
+            { english: "Who is the fastest in your class?", chinese: "你们班谁最快？", type: "who" },
+            { english: "Who is the funniest in your class?", chinese: "你们班谁最有趣？", type: "who" },
+            
+            // Where 类型
+            { english: "Where is my pencil?", chinese: "我的铅笔在哪里？", type: "where" },
+            { english: "Where are you from?", chinese: "你来自哪里？", type: "where" },
+            { english: "Where do you live?", chinese: "你住在哪里？", type: "where" },
+            { english: "Where is your school?", chinese: "你的学校在哪里？", type: "where" },
+            { english: "Where do you want to go?", chinese: "你想去哪里？", type: "where" },
+            { english: "Where is the nearest hospital?", chinese: "最近的医院在哪里？", type: "where" },
+            { english: "Where is the bathroom?", chinese: "洗手间在哪里？", type: "where" },
+            { english: "Where is the library?", chinese: "图书馆在哪里？", type: "where" },
+            { english: "Where is the park?", chinese: "公园在哪里？", type: "where" },
+            { english: "Where is the supermarket?", chinese: "超市在哪里？", type: "where" },
+            { english: "Where were you born?", chinese: "你在哪里出生？", type: "where" },
+            { english: "Where did you go last weekend?", chinese: "上周末你去哪里了？", type: "where" },
+            { english: "Where are you going on vacation?", chinese: "你假期要去哪里？", type: "where" },
+            { english: "Where is your favorite place?", chinese: "你最喜欢的地方在哪里？", type: "where" },
+            { english: "Where do you usually eat lunch?", chinese: "你通常在哪里吃午饭？", type: "where" },
+            { english: "Where do you study?", chinese: "你在哪里学习？", type: "where" },
+            { english: "Where do you work?", chinese: "你在哪里工作？", type: "where" },
+            { english: "Where is the train station?", chinese: "火车站在哪里？", type: "where" },
+            { english: "Where is the airport?", chinese: "机场在哪里？", type: "where" },
+            { english: "Where is the bus stop?", chinese: "公交车站在哪里？", type: "where" },
+            
+            // When 类型
+            { english: "When do you get up?", chinese: "你什么时候起床？", type: "when" },
+            { english: "When is your birthday?", chinese: "你的生日是什么时候？", type: "when" },
+            { english: "When do you go to school?", chinese: "你什么时候去上学？", type: "when" },
+            { english: "When will you come back?", chinese: "你什么时候回来？", type: "when" },
+            { english: "When do you watch TV?", chinese: "你什么时候看电视？", type: "when" },
+            { english: "When is Christmas?", chinese: "圣诞节是什么时候？", type: "when" },
+            { english: "When is New Year's Day?", chinese: "元旦是什么时候？", type: "when" },
+            { english: "When is your school holiday?", chinese: "你的学校假期是什么时候？", type: "when" },
+            { english: "When did you start learning English?", chinese: "你什么时候开始学英语的？", type: "when" },
+            { english: "When will the movie start?", chinese: "电影什么时候开始？", type: "when" },
+            { english: "When is the exam?", chinese: "考试是什么时候？", type: "when" },
+            { english: "When do you finish your homework?", chinese: "你什么时候完成作业？", type: "when" },
+            { english: "When do you go to bed?", chinese: "你什么时候睡觉？", type: "when" },
+            { english: "When is your mother's birthday?", chinese: "你妈妈的生日是什么时候？", type: "when" },
+            { english: "When is your father's birthday?", chinese: "你爸爸的生日是什么时候？", type: "when" },
+            { english: "When did you move here?", chinese: "你什么时候搬到这里的？", type: "when" },
+            { english: "When will you visit your grandparents?", chinese: "你什么时候去看望爷爷奶奶？", type: "when" },
+            { english: "When is the next holiday?", chinese: "下一个假期是什么时候？", type: "when" },
+            { english: "When do you have your English class?", chinese: "你什么时候上英语课？", type: "when" },
+            { english: "When is the school trip?", chinese: "学校旅行是什么时候？", type: "when" },
+            
+            // Why 类型
+            { english: "Why are you late?", chinese: "你为什么迟到？", type: "why" },
+            { english: "Why do you like dogs?", chinese: "你为什么喜欢狗？", type: "why" },
+            { english: "Why is he happy?", chinese: "他为什么高兴？", type: "why" },
+            { english: "Why not go with us?", chinese: "为什么不和我们一起去？", type: "why" },
+            { english: "Why do you get up early?", chinese: "你为什么早起？", type: "why" },
+            { english: "Why did you choose this school?", chinese: "你为什么选择这所学校？", type: "why" },
+            { english: "Why are you crying?", chinese: "你为什么哭？", type: "why" },
+            { english: "Why are you laughing?", chinese: "你为什么笑？", type: "why" },
+            { english: "Why do you study English?", chinese: "你为什么学英语？", type: "why" },
+            { english: "Why do you want to be a teacher?", chinese: "你为什么想当老师？", type: "why" },
+            { english: "Why is the sky blue?", chinese: "天空为什么是蓝色的？", type: "why" },
+            { english: "Why do we need to learn?", chinese: "我们为什么需要学习？", type: "why" },
+            { english: "Why is water important?", chinese: "水为什么重要？", type: "why" },
+            { english: "Why do we sleep?", chinese: "我们为什么要睡觉？", type: "why" },
+            { english: "Why do we eat?", chinese: "我们为什么要吃饭？", type: "why" },
+            { english: "Why do we exercise?", chinese: "我们为什么要锻炼？", type: "why" },
+            { english: "Why do we brush our teeth?", chinese: "我们为什么要刷牙？", type: "why" },
+            { english: "Why do we wear clothes?", chinese: "我们为什么要穿衣服？", type: "why" },
+            { english: "Why do we go to school?", chinese: "我们为什么要上学？", type: "why" },
+            { english: "Why do we celebrate birthdays?", chinese: "我们为什么要庆祝生日？", type: "why" },
+            
+            // Which 类型
+            { english: "Which do you like best?", chinese: "你最喜欢哪一个？", type: "which" },
+            { english: "Which is your pen?", chinese: "哪一支是你的钢笔？", type: "which" },
+            { english: "Which one is bigger?", chinese: "哪一个更大？", type: "which" },
+            { english: "Which class are you in?", chinese: "你在哪个班？", type: "which" },
+            { english: "Which season do you like?", chinese: "你喜欢哪个季节？", type: "which" },
+            { english: "Which color do you prefer?", chinese: "你更喜欢哪种颜色？", type: "which" },
+            { english: "Which book do you want to read?", chinese: "你想读哪本书？", type: "which" },
+            { english: "Which movie do you want to watch?", chinese: "你想看哪部电影？", type: "which" },
+            { english: "Which song do you want to listen to?", chinese: "你想听哪首歌？", type: "which" },
+            { english: "Which sport do you want to play?", chinese: "你想玩哪种运动？", type: "which" },
+            { english: "Which restaurant do you want to go to?", chinese: "你想去哪家餐厅？", type: "which" },
+            { english: "Which city do you want to visit?", chinese: "你想参观哪个城市？", type: "which" },
+            { english: "Which country do you want to visit?", chinese: "你想访问哪个国家？", type: "which" },
+            { english: "Which subject is the most difficult for you?", chinese: "哪个科目对你来说最难？", type: "which" },
+            { english: "Which subject is the easiest for you?", chinese: "哪个科目对你来说最容易？", type: "which" },
+            { english: "Which day of the week do you like best?", chinese: "你一周中最喜欢哪一天？", type: "which" },
+            { english: "Which month do you like best?", chinese: "你最喜欢哪个月份？", type: "which" },
+            { english: "Which animal do you like best?", chinese: "你最喜欢哪种动物？", type: "which" },
+            { english: "Which food do you like best?", chinese: "你最喜欢哪种食物？", type: "which" },
+            { english: "Which drink do you like best?", chinese: "你最喜欢哪种饮料？", type: "which" },
+            
+            // How 类型
+            { english: "How are you?", chinese: "你好吗？", type: "how" },
+            { english: "How do you go to school?", chinese: "你怎么去上学？", type: "how" },
+            { english: "How old are you?", chinese: "你多大了？", type: "how" },
+            { english: "How much is it?", chinese: "这个多少钱？", type: "how" },
+            { english: "How many books do you have?", chinese: "你有多少本书？", type: "how" },
+            { english: "How tall are you?", chinese: "你有多高？", type: "how" },
+            { english: "How heavy are you?", chinese: "你有多重？", type: "how" },
+            { english: "How fast can you run?", chinese: "你能跑多快？", type: "how" },
+            { english: "How far is your school?", chinese: "你的学校有多远？", type: "how" },
+            { english: "How long does it take to get there?", chinese: "到那里需要多长时间？", type: "how" },
+            { english: "How often do you exercise?", chinese: "你多久锻炼一次？", type: "how" },
+            { english: "How well do you speak English?", chinese: "你英语说得怎么样？", type: "how" },
+            { english: "How do you spell your name?", chinese: "你的名字怎么拼写？", type: "how" },
+            { english: "How do you feel today?", chinese: "你今天感觉怎么样？", type: "how" },
+            { english: "How is the weather today?", chinese: "今天天气怎么样？", type: "how" },
+            { english: "How was your weekend?", chinese: "你周末过得怎么样？", type: "how" },
+            { english: "How is your family?", chinese: "你的家人怎么样？", type: "how" },
+            { english: "How is your friend?", chinese: "你的朋友怎么样？", type: "how" },
+            { english: "How do you learn English?", chinese: "你是怎么学英语的？", type: "how" },
+            { english: "How do you solve this problem?", chinese: "你怎么解决这个问题？", type: "how" },
+            
+            // 更多 What 类型
+            { english: "What's your favorite fruit?", chinese: "你最喜欢的水果是什么？", type: "what" },
+            { english: "What's your favorite vegetable?", chinese: "你最喜欢的蔬菜是什么？", type: "what" },
+            { english: "What's your favorite drink?", chinese: "你最喜欢的饮料是什么？", type: "what" },
+            { english: "What's your favorite dessert?", chinese: "你最喜欢的甜点是什么？", type: "what" },
+            { english: "What's your favorite hobby?", chinese: "你最喜欢的爱好是什么？", type: "what" },
+            { english: "What's your favorite game?", chinese: "你最喜欢的游戏是什么？", type: "what" },
+            { english: "What's your favorite toy?", chinese: "你最喜欢的玩具是什么？", type: "what" },
+            { english: "What's your favorite cartoon?", chinese: "你最喜欢的动画片是什么？", type: "what" },
+            { english: "What's your favorite video game?", chinese: "你最喜欢的电子游戏是什么？", type: "what" },
+            { english: "What's your favorite board game?", chinese: "你最喜欢的棋盘游戏是什么？", type: "what" },
+            
+            // 更多 Who 类型
+            { english: "Who is your favorite cartoon character?", chinese: "你最喜欢的卡通人物是谁？", type: "who" },
+            { english: "Who is your favorite video game character?", chinese: "你最喜欢的电子游戏角色是谁？", type: "who" },
+            { english: "Who is your favorite book character?", chinese: "你最喜欢的书中角色是谁？", type: "who" },
+            { english: "Who is your favorite historical figure?", chinese: "你最喜欢的历史人物是谁？", type: "who" },
+            { english: "Who is your favorite scientist?", chinese: "你最喜欢的科学家是谁？", type: "who" },
+            
+            // 更多 Where 类型
+            { english: "Where is your favorite place to go?", chinese: "你最喜欢去的地方在哪里？", type: "where" },
+            { english: "Where is your favorite restaurant?", chinese: "你最喜欢的餐厅在哪里？", type: "where" },
+            { english: "Where is your favorite park?", chinese: "你最喜欢的公园在哪里？", type: "where" },
+            { english: "Where is your favorite library?", chinese: "你最喜欢的图书馆在哪里？", type: "where" },
+            { english: "Where is your favorite museum?", chinese: "你最喜欢的博物馆在哪里？", type: "where" },
+            
+            // 更多 When 类型
+            { english: "When do you usually have breakfast?", chinese: "你通常什么时候吃早餐？", type: "when" },
+            { english: "When do you usually have lunch?", chinese: "你通常什么时候吃午饭？", type: "when" },
+            { english: "When do you usually have dinner?", chinese: "你通常什么时候吃晚饭？", type: "when" },
+            { english: "When do you usually do your homework?", chinese: "你通常什么时候做作业？", type: "when" },
+            { english: "When do you usually play?", chinese: "你通常什么时候玩？", type: "when" },
+            
+            // 更多 Why 类型
+            { english: "Why do you like reading?", chinese: "你为什么喜欢读书？", type: "why" },
+            { english: "Why do you like watching TV?", chinese: "你为什么喜欢看电视？", type: "why" },
+            { english: "Why do you like playing games?", chinese: "你为什么喜欢玩游戏？", type: "why" },
+            { english: "Why do you like listening to music?", chinese: "你为什么喜欢听音乐？", type: "why" },
+            { english: "Why do you like drawing?", chinese: "你为什么喜欢画画？", type: "why" },
+            
+            // 更多 Which 类型
+            { english: "Which TV show do you like best?", chinese: "你最喜欢哪个电视节目？", type: "which" },
+            { english: "Which radio station do you like best?", chinese: "你最喜欢哪个广播电台？", type: "which" },
+            { english: "Which website do you like best?", chinese: "你最喜欢哪个网站？", type: "which" },
+            { english: "Which app do you like best?", chinese: "你最喜欢哪个应用程序？", type: "which" },
+            { english: "Which social media platform do you like best?", chinese: "你最喜欢哪个社交媒体平台？", type: "which" },
+            
+            // 更多 How 类型
+            { english: "How do you get to school?", chinese: "你怎么去学校？", type: "how" },
+            { english: "How do you get home?", chinese: "你怎么回家？", type: "how" },
+            { english: "How do you get to work?", chinese: "你怎么去上班？", type: "how" },
+            { english: "How do you get to the store?", chinese: "你怎么去商店？", type: "how" },
+            { english: "How do you get to the park?", chinese: "你怎么去公园？", type: "how" }
+        ];
+
+        // 游戏变量
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let startTime = 0;
+        let endTime = 0;
+        let gameStarted = false;
+        let answerSelected = false;
+
+        // DOM 元素
+        const startBtn = document.getElementById('startBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const questionCount = document.getElementById('questionCount');
+        const questionNumber = document.getElementById('questionNumber');
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedback = document.getElementById('feedback');
+        const scoreElement = document.getElementById('score');
+        const resultModal = document.getElementById('resultModal');
+        const finalScore = document.getElementById('finalScore');
+        const accuracy = document.getElementById('accuracy');
+        const timeSpent = document.getElementById('timeSpent');
+
+        // 事件监听器
+        startBtn.addEventListener('click', startGame);
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartGame);
+        playAgainBtn.addEventListener('click', restartGame);
+
+        // 开始游戏
+        function startGame() {
+            // 随机选择20道题
+            currentQuestions = shuffleArray([...questionBank]).slice(0, 20);
+            currentQuestionIndex = 0;
+            score = 0;
+            gameStarted = true;
+            startTime = new Date().getTime();
+
+            // 更新UI
+            startBtn.disabled = true;
+            startBtn.style.display = 'none';
+            nextBtn.disabled = false;
+            restartBtn.disabled = false;
+            scoreElement.textContent = score;
+            questionCount.textContent = `${currentQuestionIndex + 1}/20`;
+            questionNumber.textContent = `第 ${currentQuestionIndex + 1} 题`;
+
+            // 显示第一题
+            showQuestion();
+        }
+
+        // 显示当前题目
+        function showQuestion() {
+            const currentQuestion = currentQuestions[currentQuestionIndex];
+            questionText.textContent = currentQuestion.english;
+            questionCount.textContent = `${currentQuestionIndex + 1}/20`;
+            questionNumber.textContent = `第 ${currentQuestionIndex + 1} 题`;
+            feedback.style.display = 'none';
+            answerSelected = false;
+
+            // 生成选项
+            generateOptions(currentQuestion);
+        }
+
+        // 生成选项
+        function generateOptions(currentQuestion) {
+            optionsContainer.innerHTML = '';
+
+            // 获取4个选项，包括正确答案
+            const options = [currentQuestion.chinese];
+            
+            // 从题库中随机选择3个不同的翻译作为干扰项
+            while (options.length < 4) {
+                const randomQuestion = questionBank[Math.floor(Math.random() * questionBank.length)];
+                if (!options.includes(randomQuestion.chinese)) {
+                    options.push(randomQuestion.chinese);
+                }
+            }
+
+            // 打乱选项顺序
+            const shuffledOptions = shuffleArray(options);
+
+            // 创建选项按钮
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => checkAnswer(option, currentQuestion.chinese));
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        // 检查答案
+        function checkAnswer(selectedOption, correctAnswer) {
+            if (!gameStarted) return;
+
+            answerSelected = true;
+            
+            // 禁用所有选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.removeEventListener('click', checkAnswer);
+                if (option.textContent === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (option.textContent === selectedOption) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            // 显示反馈
+            if (selectedOption === correctAnswer) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✅ 正确！';
+                score += 5; // 每题5分
+                scoreElement.textContent = score;
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = `❌ 错误！正确答案是：${correctAnswer}`;
+            }
+
+            // 如果是最后一题，显示结果
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                endTime = new Date().getTime();
+                showResult();
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (!answerSelected) {
+                alert('请先选择一个答案！');
+                return;
+            }
+            
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                currentQuestionIndex++;
+                showQuestion();
+            }
+        }
+
+        // 重新开始游戏
+        function restartGame() {
+            resultModal.style.display = 'none';
+            startGame();
+        }
+
+        // 显示游戏结果
+        function showResult() {
+            const totalTime = Math.round((endTime - startTime) / 1000);
+            const correctAnswers = score / 5;
+            const accuracyPercentage = Math.round((correctAnswers / 20) * 100);
+
+            finalScore.textContent = score;
+            accuracy.textContent = accuracyPercentage;
+            timeSpent.textContent = totalTime;
+            resultModal.style.display = 'flex';
+        }
+
+        // 打乱数组
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+    </script>
+</body>
+</html>
