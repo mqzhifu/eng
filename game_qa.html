@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔤 系动词游戏 - 英语语法学习乐园</title>
+    <title>🔤 英语问答游戏 - 英语语法学习乐园</title>
     <style>
         * {
             margin: 0;
@@ -47,7 +47,11 @@
             text-decoration: none;
             font-weight: bold;
             transition: all 0.3s;
-            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
         .play-audio-btn {
@@ -79,11 +83,6 @@
 
         .play-audio-btn:active {
             transform: translateY(0);
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
         }
 
         .header h1 {
@@ -160,9 +159,15 @@
             margin-bottom: 40px;
         }
 
+        .question-number {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
 
-
-        .sentence {
+        .question-text {
             font-size: 30px;
             font-weight: bold;
             margin: 10px 0 20px;
@@ -188,7 +193,7 @@
             }
         }
 
-        .sentence::before {
+        .question-text::before {
             content: '';
             position: absolute;
             top: 0;
@@ -196,50 +201,6 @@
             right: 0;
             height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-
-        .blank {
-            display: inline-block;
-            width: 130px;
-            height: 55px;
-            background: white;
-            border: 2px dashed #667eea;
-            border-radius: 12px;
-            margin: 0 12px;
-            vertical-align: middle;
-            line-height: 51px;
-            color: #667eea;
-            font-style: italic;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.15);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .blank::after {
-            content: '?';
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: rgba(102, 126, 234, 0.5);
-        }
-
-        .blank:hover {
-            transform: scale(1.05);
-            border-color: #764ba2;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .blank.filled {
-            background: #e8f5e9;
-            border: 2px solid #4CAF50;
-            color: #388E3C;
-            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.2);
-        }
-
-        .blank.filled::after {
-            display: none;
         }
 
         .options {
@@ -302,58 +263,31 @@
         .feedback {
             margin-top: 30px;
             padding: 20px;
-            border-radius: 16px;
+            border-radius: 10px;
             font-size: 18px;
             font-weight: bold;
             display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            animation: feedbackSlide 0.3s ease;
-        }
-
-        @keyframes feedbackSlide {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
         }
 
         .feedback.correct {
             background: #e8f5e9;
             color: #388E3C;
             display: block;
-            border-left: 4px solid #4CAF50;
         }
 
         .feedback.incorrect {
             background: #ffebee;
             color: #c62828;
             display: block;
-            border-left: 4px solid #f44336;
         }
 
-        .explanation {
-            margin-top: 10px;
-            padding: 15px;
+        .translation {
+            margin-top: 20px;
+            padding: 20px;
             background: #f8f9fa;
             border-radius: 12px;
-            font-size: 16px;
-            color: #666;
-            line-height: 1.5;
-        }
-
-        /* 翻译区域样式 */
-        .translation {
-            margin-top: 12px;
-            padding: 12px 18px;
-            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
-            border-radius: 16px;
-            border: 2px solid #e9ecef;
-            display: none;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: none;
             animation: translationSlide 0.3s ease;
         }
 
@@ -386,19 +320,55 @@
             background: linear-gradient(90deg, #667eea, #764ba2);
             color: white;
             border: none;
+            padding: 20px 50px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
+        }
+
+        .restart-btn {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
             padding: 15px 40px;
             border-radius: 30px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
             transition: all 0.3s ease;
-            display: none;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .next-btn:hover {
+        .restart-btn:hover {
+            background: #667eea;
+            color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
 
         .result {
@@ -433,6 +403,22 @@
             margin: 30px 0;
             text-shadow: 2px 2px 4px rgba(118, 75, 162, 0.2);
             animation: scorePulse 1s ease-in-out;
+        }
+
+        @keyframes scorePulse {
+            0% {
+                transform: scale(1);
+                color: #667eea;
+            }
+            50% {
+                transform: scale(1.2);
+                color: #764ba2;
+                text-shadow: 0 0 20px rgba(118, 75, 162, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                color: #764ba2;
+            }
         }
 
         .result-message {
@@ -471,25 +457,6 @@
             text-align: left;
         }
 
-        .restart-btn {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .restart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
         .home-btn {
             background: #f8f9fa;
             color: #667eea;
@@ -511,27 +478,6 @@
             color: white;
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        /* 得分动画 */
-        .score-animation {
-            animation: scorePulse 1s ease-in-out;
-        }
-
-        @keyframes scorePulse {
-            0% {
-                transform: scale(1);
-                color: #667eea;
-            }
-            50% {
-                transform: scale(1.5);
-                color: #764ba2;
-                text-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
-            }
-            100% {
-                transform: scale(1);
-                color: #667eea;
-            }
         }
 
         .confetti {
@@ -748,14 +694,8 @@
                 padding: 20px;
             }
             
-            .sentence {
-                font-size: 18px;
-            }
-            
-            .blank {
-                width: 100px;
-                height: 40px;
-                line-height: 36px;
+            .question-text {
+                font-size: 20px;
             }
             
             .options {
@@ -789,8 +729,8 @@
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
             <button class="play-audio-btn" id="play-audio-btn">🔊</button>
-            <h1>🔤 系动词游戏</h1>
-            <p>选择正确的系动词填空，一共20道题，满分100分！</p>
+            <h1>🔤 英语问答游戏</h1>
+            <p>回答问题，选择正确的答案，一共20道题，满分100分！</p>
         </div>
 
         <div class="game-info">
@@ -809,20 +749,22 @@
 
         <div class="game-content">
             <div class="question" id="question">
-                <div class="sentence" id="sentence">
-                    I ______ a student.
+                <div class="question-number">第 <span id="question-number">1</span> 题</div>
+                <div class="question-text" id="question-text">
+                    How are you today?
                 </div>
                 <div class="options" id="options">
-                    <div class="option" data-answer="am">am</div>
-                    <div class="option" data-answer="is">is</div>
-                    <div class="option" data-answer="are">are</div>
-                    <div class="option" data-answer="was">was</div>
+                    <div class="option">I'm fine.</div>
+                    <div class="option">I'm ten.</div>
+                    <div class="option">I'm Tom.</div>
+                    <div class="option">I'm from China.</div>
                 </div>
                 <div class="feedback" id="feedback"></div>
-                <div class="translation" id="translation">
+                <div class="translation" id="translation" style="display: none;">
                     <div class="translation-content" id="translation-content"></div>
                 </div>
                 <button class="next-btn" id="next-btn">下一题</button>
+                <button class="restart-btn" id="game-restart-btn" style="display: inline-block; margin-left: 10px;">重新开始</button>
             </div>
 
             <div class="result" id="result">
@@ -883,77 +825,171 @@
     </div>
 
     <script>
-        // 题目数据 - 100个模板
-        const allQuestions = [
-            // am 相关
-            { sentence: "I ______ a student.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我是一名学生。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ happy today.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我今天很开心。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ learning English.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我正在学习英语。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ seven years old.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我七岁了。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ hungry.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我饿了。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ excited about the party.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我对派对很兴奋。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ ready for the test.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我准备好考试了。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ going to school.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我要去上学。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ reading a book.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我正在读书。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
-            { sentence: "I ______ playing with my friends.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我正在和朋友们玩。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+        // 数据源
+        const dataSource = [
+            // 1. 问候与自我介绍
+            { category: "问候与自我介绍", question: "How are you today?", correctAnswer: "I'm fine.", chineseQuestion: "你今天好吗？", chineseAnswer: "我很好。" },
+            { category: "问候与自我介绍", question: "What's your name?", correctAnswer: "My name is Tom.", chineseQuestion: "你叫什么名字？", chineseAnswer: "我叫汤姆。" },
+            { category: "问候与自我介绍", question: "How old are you?", correctAnswer: "I'm ten years old.", chineseQuestion: "你几岁？", chineseAnswer: "我十岁。" },
+            { category: "问候与自我介绍", question: "Where are you from?", correctAnswer: "I'm from China.", chineseQuestion: "你来自哪里？", chineseAnswer: "我来自中国。" },
+            { category: "问候与自我介绍", question: "Nice to meet you.", correctAnswer: "Nice to meet you, too.", chineseQuestion: "很高兴见到你。", chineseAnswer: "我也是。" },
+            { category: "问候与自我介绍", question: "How do you do?", correctAnswer: "How do you do?", chineseQuestion: "你好。", chineseAnswer: "你好。" },
+            { category: "问候与自我介绍", question: "Where do you live?", correctAnswer: "I live in China.", chineseQuestion: "你住在哪里？", chineseAnswer: "我住在中国。" },
             
-            // is 相关
-            { sentence: "He ______ a boy.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "他是一个男孩。", explanation: "当主语是第三人称单数（如 he, she, it）时，系动词应该使用 'is'" },
-            { sentence: "She ______ a girl.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "她是一个女孩。", explanation: "当主语是第三人称单数（如 he, she, it）时，系动词应该使用 'is'" },
-            { sentence: "It ______ a cat.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "它是一只猫。", explanation: "当主语是第三人称单数（如 he, she, it）时，系动词应该使用 'is'" },
-            { sentence: "The book ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "这本书是红色的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
-            { sentence: "My mother ______ a teacher.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "我的妈妈是一名老师。", explanation: "当主语是第三人称单数时，系动词应该使用 'is'" },
-            { sentence: "The sky ______ blue.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "天空是蓝色的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
-            { sentence: "The dog ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "这只狗是黑色的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
-            { sentence: "The sun ______ hot.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "太阳是热的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
-            { sentence: "My father ______ tall.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "我的爸爸很高。", explanation: "当主语是第三人称单数时，系动词应该使用 'is'" },
-            { sentence: "The car ______ fast.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "这辆车很快。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
+            // 2. 学校与学习
+            { category: "学校与学习", question: "What's your favorite subject?", correctAnswer: "My favorite subject is English.", chineseQuestion: "你最喜欢的科目是什么？", chineseAnswer: "我最喜欢英语。" },
+            { category: "学校与学习", question: "What's in your schoolbag?", correctAnswer: "A book and a pencil.", chineseQuestion: "书包里有什么？", chineseAnswer: "书和铅笔。" },
+            { category: "学校与学习", question: "Who is your teacher?", correctAnswer: "Miss Li is my teacher.", chineseQuestion: "你的老师是谁？", chineseAnswer: "李老师。" },
+            { category: "学校与学习", question: "What do you do in class?", correctAnswer: "I read and write.", chineseQuestion: "你在课上做什么？", chineseAnswer: "我读书写字。" },
+            { category: "学校与学习", question: "Do you like English?", correctAnswer: "Yes, I do.", chineseQuestion: "你喜欢英语吗？", chineseAnswer: "喜欢。" },
+            { category: "学校与学习", question: "Where is your classroom?", correctAnswer: "It's over there.", chineseQuestion: "教室在哪里？", chineseAnswer: "在那边。" },
+            { category: "学校与学习", question: "Is this your book?", correctAnswer: "Yes, it is.", chineseQuestion: "这是你的书吗？", chineseAnswer: "是。" },
+            { category: "学校与学习", question: "What color is your pen?", correctAnswer: "It's blue.", chineseQuestion: "你的笔是什么颜色？", chineseAnswer: "蓝色。" },
+            { category: "学校与学习", question: "Can you read it?", correctAnswer: "Yes, I can.", chineseQuestion: "你会读吗？", chineseAnswer: "会。" },
+            { category: "学校与学习", question: "What time do you go to school?", correctAnswer: "At seven o'clock.", chineseQuestion: "你几点上学？", chineseAnswer: "七点。" },
+            { category: "学校与学习", question: "How do you go to school?", correctAnswer: "I go to school on foot.", chineseQuestion: "你怎么去上学？", chineseAnswer: "我步行去上学。" },
             
-            // are 相关
-            { sentence: "You ______ my friend.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "你是我的朋友。", explanation: "当主语是第二人称（you）时，系动词应该使用 'are'" },
-            { sentence: "They ______ students.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "他们是学生。", explanation: "当主语是复数（they）时，系动词应该使用 'are'" },
-            { sentence: "We ______ happy.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "我们很开心。", explanation: "当主语是第一人称复数（we）时，系动词应该使用 'are'" },
-            { sentence: "The children ______ playing.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "孩子们正在玩耍。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
-            { sentence: "My parents ______ kind.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "我的父母很善良。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
-            { sentence: "The flowers ______ beautiful.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "这些花很美丽。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
-            { sentence: "The books ______ on the table.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "书在桌子上。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
-            { sentence: "My friends ______ coming.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "我的朋友们正在来。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
-            { sentence: "The cats ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "这些猫是黑色的。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
-            { sentence: "The apples ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "这些苹果是红色的。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            // 3. 家庭
+            { category: "家庭", question: "How many people are in your family?", correctAnswer: "Four people.", chineseQuestion: "你家有几口人？", chineseAnswer: "四口人。" },
+            { category: "家庭", question: "Do you have a sister/brother?", correctAnswer: "Yes, I do.", chineseQuestion: "你有姐妹 / 兄弟吗？", chineseAnswer: "有。" },
+            { category: "家庭", question: "What's your father's job?", correctAnswer: "He is a doctor.", chineseQuestion: "爸爸是做什么工作的？", chineseAnswer: "他是医生。" },
+            { category: "家庭", question: "Do you love your family?", correctAnswer: "Yes, very much.", chineseQuestion: "你爱你的家人吗？", chineseAnswer: "非常爱。" },
+            { category: "家庭", question: "Where is your home?", correctAnswer: "My home is here.", chineseQuestion: "你家在哪里？", chineseAnswer: "我家在这里。" },
+            { category: "家庭", question: "Is this your family photo?", correctAnswer: "Yes, it is.", chineseQuestion: "这是全家福吗？", chineseAnswer: "是。" },
             
-            // was 相关
-            { sentence: "I ______ at home yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "我昨天在家。", explanation: "当主语是第一人称单数且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "He ______ sick last week.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "他上周生病了。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "She ______ happy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "她昨天很开心。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "It ______ cold last night.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "昨晚很冷。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "The weather ______ nice yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "昨天天气很好。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "My brother ______ tired yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "我哥哥昨天很累。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "The dog ______ hungry yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "这只狗昨天很饿。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "The cat ______ on the chair yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "这只猫昨天在椅子上。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "The book ______ on the table yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "这本书昨天在桌子上。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
-            { sentence: "I ______ busy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "我昨天很忙。", explanation: "当主语是第一人称单数且时态是过去时时，系动词应该使用 'was'" },
+            // 4. 动物
+            { category: "动物", question: "What's this?", correctAnswer: "It's a dog.", chineseQuestion: "这是什么？", chineseAnswer: "这是一只狗。" },
+            { category: "动物", question: "What's that?", correctAnswer: "It's a cat.", chineseQuestion: "那是什么？", chineseAnswer: "那是一只猫。" },
+            { category: "动物", question: "What does a dog say?", correctAnswer: "Woof, woof.", chineseQuestion: "狗怎么叫？", chineseAnswer: "汪汪。" },
+            { category: "动物", question: "Can a bird fly?", correctAnswer: "Yes, it can.", chineseQuestion: "鸟会飞吗？", chineseAnswer: "会。" },
+            { category: "动物", question: "Can a fish walk?", correctAnswer: "No, it can't.", chineseQuestion: "鱼会走路吗？", chineseAnswer: "不会。" },
+            { category: "动物", question: "Do you like pandas/cats?", correctAnswer: "No, I don't.", chineseQuestion: "你喜欢熊猫 / 猫吗？", chineseAnswer: "不喜欢。" },
+            { category: "动物", question: "What color is the panda?", correctAnswer: "Black and white.", chineseQuestion: "熊猫是什么颜色？", chineseAnswer: "黑白相间。" },
+            { category: "动物", question: "Where do monkeys live?", correctAnswer: "In the tree.", chineseQuestion: "猴子住在哪里？", chineseAnswer: "在树上。" },
+            { category: "动物", question: "How many legs does a dog have?", correctAnswer: "Four legs.", chineseQuestion: "狗有几条腿？", chineseAnswer: "四条腿。" },
             
-            // were 相关
-            { sentence: "You ______ at school yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "你昨天在学校。", explanation: "当主语是第二人称且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "They ______ happy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "他们昨天很开心。", explanation: "当主语是复数且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "We ______ at the park yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "我们昨天在公园。", explanation: "当主语是第一人称复数且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "The children ______ playing yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "孩子们昨天在玩耍。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "My parents ______ at work yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "我的父母昨天在工作。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "The flowers ______ beautiful yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "这些花昨天很美丽。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "The books ______ on the table yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "书昨天在桌子上。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "My friends ______ here yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "我的朋友们昨天在这里。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "The cats ______ black yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "这些猫昨天是黑色的。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
-            { sentence: "The apples ______ red yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "这些苹果昨天是红色的。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" }
+            // 5. 食物与水果
+            { category: "食物与水果", question: "Do you like apples/rice?", correctAnswer: "Yes, I do.", chineseQuestion: "你喜欢苹果 / 米饭吗？", chineseAnswer: "喜欢。" },
+            { category: "食物与水果", question: "What's your favorite fruit?", correctAnswer: "Bananas.", chineseQuestion: "你最喜欢的水果是什么？", chineseAnswer: "香蕉。" },
+            { category: "食物与水果", question: "Are you hungry/thirsty?", correctAnswer: "Yes, I am.", chineseQuestion: "你饿 / 渴吗？", chineseAnswer: "是的。" },
+            { category: "食物与水果", question: "What do you want to eat/drink?", correctAnswer: "I want bread and water.", chineseQuestion: "你想吃 / 喝什么？", chineseAnswer: "我想吃面包喝水。" },
+            { category: "食物与水果", question: "Is this an orange?", correctAnswer: "Yes, it is.", chineseQuestion: "这是橙子吗？", chineseAnswer: "是。" },
+            { category: "食物与水果", question: "What color is a strawberry?", correctAnswer: "Red.", chineseQuestion: "草莓是什么颜色？", chineseAnswer: "红色。" },
+            
+            // 6. 颜色
+            { category: "颜色", question: "What color is it?", correctAnswer: "It's red.", chineseQuestion: "它是什么颜色？", chineseAnswer: "红色。" },
+            { category: "颜色", question: "What color is the sky?", correctAnswer: "Blue.", chineseQuestion: "天空是什么颜色？", chineseAnswer: "蓝色。" },
+            { category: "颜色", question: "What color is your bag?", correctAnswer: "It's black.", chineseQuestion: "你的包是什么颜色？", chineseAnswer: "黑色。" },
+            { category: "颜色", question: "What color are your eyes?", correctAnswer: "Black.", chineseQuestion: "你的眼睛是什么颜色？", chineseAnswer: "黑色。" },
+            { category: "颜色", question: "Do you like green/red?", correctAnswer: "No, I don't.", chineseQuestion: "你喜欢绿色 / 红色吗？", chineseAnswer: "不喜欢。" },
+            
+            // 7. 数字与数学
+            { category: "数字与数学", question: "What's two plus three?", correctAnswer: "Five.", chineseQuestion: "二加三等于几？", chineseAnswer: "五。" },
+            { category: "数字与数学", question: "How many hands do you have?", correctAnswer: "Two.", chineseQuestion: "你有几只手？", chineseAnswer: "两只。" },
+            { category: "数字与数学", question: "What's ten minus four?", correctAnswer: "Six.", chineseQuestion: "十减四等于几？", chineseAnswer: "六。" },
+            { category: "数字与数学", question: "How many legs do you have?", correctAnswer: "Two.", chineseQuestion: "你有几条腿？", chineseAnswer: "两条。" },
+            { category: "数字与数学", question: "How many seasons in a year?", correctAnswer: "Four.", chineseQuestion: "一年有几个季节？", chineseAnswer: "四个。" },
+            { category: "数字与数学", question: "How many months in a year?", correctAnswer: "Twelve.", chineseQuestion: "一年有几个月？", chineseAnswer: "十二个。" },
+            { category: "数字与数学", question: "How many minutes are there in an hour?", correctAnswer: "Sixty.", chineseQuestion: "一小时有多少分钟？", chineseAnswer: "六十分钟。" },
+            { category: "数字与数学", question: "How many seconds are there in a minute?", correctAnswer: "Sixty.", chineseQuestion: "一分钟有多少秒？", chineseAnswer: "六十秒。" },
+            { category: "数字与数学", question: "How many hours are there in a day?", correctAnswer: "Twenty-four.", chineseQuestion: "一天有多少个小时？", chineseAnswer: "二十四个小时。" },
+            
+            // 8. 天气
+            { category: "天气", question: "How's the weather today?", correctAnswer: "It's sunny.", chineseQuestion: "今天天气怎么样？", chineseAnswer: "晴天。" },
+            { category: "天气", question: "Is it rainy today?", correctAnswer: "Yes, it is.", chineseQuestion: "今天下雨吗？", chineseAnswer: "下。" },
+            { category: "天气", question: "Is it cold/hot today?", correctAnswer: "Yes, it is.", chineseQuestion: "今天冷 / 热吗？", chineseAnswer: "是的。" },
+            { category: "天气", question: "Do you like sunny/rainy days?", correctAnswer: "Yes, I do.", chineseQuestion: "你喜欢晴天 / 雨天吗？", chineseAnswer: "喜欢。" },
+            { category: "天气", question: "What weather do you like?", correctAnswer: "I like sunny days.", chineseQuestion: "你喜欢什么天气？", chineseAnswer: "我喜欢晴天。" },
+            { category: "天气", question: "Is it snowing?", correctAnswer: "No, it isn't.", chineseQuestion: "下雪吗？", chineseAnswer: "不下。" },
+            
+            // 9. 时间
+            { category: "时间", question: "What time is it?", correctAnswer: "It's eight o'clock.", chineseQuestion: "几点了？", chineseAnswer: "八点。" },
+            { category: "时间", question: "What day is it today?", correctAnswer: "Monday.", chineseQuestion: "今天星期几？", chineseAnswer: "星期一。" },
+            { category: "时间", question: "Is it Sunday today?", correctAnswer: "Yes, it is.", chineseQuestion: "今天是星期日吗？", chineseAnswer: "是。" },
+            { category: "时间", question: "What day is tomorrow?", correctAnswer: "Tuesday.", chineseQuestion: "明天星期几？", chineseAnswer: "星期二。" },
+            { category: "时间", question: "When do you get up?", correctAnswer: "At six thirty.", chineseQuestion: "你几点起床？", chineseAnswer: "六点半。" },
+            { category: "时间", question: "When do you eat breakfast?", correctAnswer: "At seven.", chineseQuestion: "你几点吃早饭？", chineseAnswer: "七点。" },
+            { category: "时间", question: "When do you go to bed?", correctAnswer: "At nine.", chineseQuestion: "你几点睡觉？", chineseAnswer: "九点。" },
+            { category: "时间", question: "Is it morning now?", correctAnswer: "Yes, it is.", chineseQuestion: "现在是早上吗？", chineseAnswer: "是。" },
+            { category: "时间", question: "Is it afternoon now?", correctAnswer: "Yes, it is.", chineseQuestion: "现在是下午吗？", chineseAnswer: "是。" },
+            { category: "时间", question: "How many days in a week?", correctAnswer: "Seven.", chineseQuestion: "一周有几天？", chineseAnswer: "七天。" },
+            
+            // 10. 爱好与运动
+            { category: "爱好与运动", question: "What do you like to do?", correctAnswer: "I like to play.", chineseQuestion: "你喜欢做什么？", chineseAnswer: "我喜欢玩。" },
+            { category: "爱好与运动", question: "Do you like drawing/singing?", correctAnswer: "Yes, I do.", chineseQuestion: "你喜欢画画 / 唱歌吗？", chineseAnswer: "喜欢。" },
+            { category: "爱好与运动", question: "Can you swim/dance?", correctAnswer: "Yes, I can.", chineseQuestion: "你会游泳 / 跳舞吗？", chineseAnswer: "会。" },
+            { category: "爱好与运动", question: "Do you like football/basketball?", correctAnswer: "Yes, I do.", chineseQuestion: "你喜欢足球 / 篮球吗？", chineseAnswer: "喜欢。" },
+            { category: "爱好与运动", question: "What's your hobby?", correctAnswer: "I like reading.", chineseQuestion: "你的爱好是什么？", chineseAnswer: "我喜欢阅读。" },
+            { category: "爱好与运动", question: "Do you like running?", correctAnswer: "Yes, I do.", chineseQuestion: "你喜欢跑步吗？", chineseAnswer: "喜欢。" },
+            { category: "爱好与运动", question: "What sport do you like?", correctAnswer: "I like ping-pong.", chineseQuestion: "你喜欢什么运动？", chineseAnswer: "我喜欢乒乓球。" }
         ];
-        
-        // 随机选择20道题
-        function getRandomQuestions() {
-            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
-            return shuffled.slice(0, 20);
-        }
-        
-        let questions = getRandomQuestions();
 
+        // 为每个问题生成错误选项
+        function generateDistractors(correctAnswer, category) {
+            const distractors = [];
+            const sameCategoryQuestions = dataSource.filter(item => item.category === category && item.correctAnswer !== correctAnswer);
+            
+            // 从同类别中选择错误选项
+            while (distractors.length < 3 && sameCategoryQuestions.length > 0) {
+                const randomIndex = Math.floor(Math.random() * sameCategoryQuestions.length);
+                const distractor = sameCategoryQuestions[randomIndex].correctAnswer;
+                if (!distractors.includes(distractor)) {
+                    distractors.push(distractor);
+                }
+                sameCategoryQuestions.splice(randomIndex, 1);
+            }
+            
+            // 如果同类别选项不够，从其他类别选择
+            if (distractors.length < 3) {
+                const otherCategoryQuestions = dataSource.filter(item => item.category !== category && item.correctAnswer !== correctAnswer);
+                while (distractors.length < 3 && otherCategoryQuestions.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * otherCategoryQuestions.length);
+                    const distractor = otherCategoryQuestions[randomIndex].correctAnswer;
+                    if (!distractors.includes(distractor)) {
+                        distractors.push(distractor);
+                    }
+                    otherCategoryQuestions.splice(randomIndex, 1);
+                }
+            }
+            
+            return distractors;
+        }
+
+        // 从每个分类中选择题目，确保覆盖所有分类
+        function selectQuestions() {
+            const categoryCount = {};
+            const selectedQuestions = [];
+            const shuffledData = [...dataSource].sort(() => Math.random() - 0.5);
+            
+            // 首先从每个分类中至少选择一道题
+            const categories = [...new Set(dataSource.map(item => item.category))];
+            categories.forEach(category => {
+                const categoryQuestions = shuffledData.filter(item => item.category === category);
+                if (categoryQuestions.length > 0) {
+                    const question = categoryQuestions[0];
+                    selectedQuestions.push(question);
+                    categoryCount[category] = 1;
+                }
+            });
+            
+            // 填充剩余的题目
+            let remaining = 20 - selectedQuestions.length;
+            let i = 0;
+            while (remaining > 0 && i < shuffledData.length) {
+                const question = shuffledData[i];
+                if (!selectedQuestions.includes(question)) {
+                    selectedQuestions.push(question);
+                    categoryCount[question.category] = (categoryCount[question.category] || 0) + 1;
+                    remaining--;
+                }
+                i++;
+            }
+            
+            return selectedQuestions;
+        }
+
+        // 游戏变量
+        let questions = [];
         let currentQuestion = 0;
         let score = 0;
         let answered = false;
@@ -962,14 +998,14 @@
 
         // 初始化游戏
         function initGame() {
-            // 重新随机选择20道题
-            questions = getRandomQuestions();
+            questions = selectQuestions();
             currentQuestion = 0;
             score = 0;
             answered = false;
             correctAnswers = 0;
             startTime = Date.now(); // 记录开始时间
             document.getElementById('current-question').textContent = 1;
+            document.getElementById('question-number').textContent = 1;
             document.getElementById('score').textContent = 0;
             document.getElementById('progress-fill').style.width = '0%';
             document.getElementById('result').style.display = 'none';
@@ -980,27 +1016,77 @@
         // 加载题目
         function loadQuestion() {
             const question = questions[currentQuestion];
-            document.getElementById('sentence').innerHTML = question.sentence;
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            
+            // 生成选项
+            const correctAnswer = question.correctAnswer;
+            const distractors = generateDistractors(correctAnswer, question.category);
+            const options = [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
             
             const optionsContainer = document.getElementById('options');
             optionsContainer.innerHTML = '';
             
-            // 随机打乱选项
-            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
-            
-            shuffledOptions.forEach(option => {
+            options.forEach(option => {
                 const optionElement = document.createElement('div');
                 optionElement.className = 'option';
                 optionElement.textContent = option;
-                optionElement.dataset.answer = option;
-                optionElement.addEventListener('click', selectOption);
+                optionElement.addEventListener('click', () => selectOption(optionElement));
                 optionsContainer.appendChild(optionElement);
             });
             
             document.getElementById('feedback').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
             answered = false;
+        }
+
+        // 选择选项
+        function selectOption(selectedOption) {
+            if (answered) return;
+            
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correctAnswer;
+            
+            // 禁用所有选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.removeEventListener('click', selectOption);
+                if (option.textContent === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (option === selectedOption && option.textContent !== correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (selectedOption.textContent === correctAnswer) {
+                score += 5; // 每题5分
+                correctAnswers++; // 增加正确答案计数
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            
+            // 显示翻译
+            document.getElementById('translation-content').innerHTML = `
+                <strong>中文问句：</strong>${question.chineseQuestion}<br>
+                <strong>中文答句：</strong>${question.chineseAnswer}
+            `;
+            document.getElementById('translation').style.display = 'block';
+            
+            // 播放语音
+            playAudio(question.question);
+            
+            document.getElementById('next-btn').style.display = 'inline-block';
+            answered = true;
         }
 
         // 播放音频
@@ -1013,115 +1099,6 @@
                 utterance.volume = 1.0;
                 speechSynthesis.speak(utterance);
             }
-        }
-
-        // 播放当前题目的音频
-        function playCurrentQuestionAudio() {
-            if (currentQuestion < questions.length) {
-                const question = questions[currentQuestion];
-                const correctSentence = question.sentence.replace('______', question.correctAnswer);
-                playAudio(correctSentence);
-            }
-        }
-
-
-
-        // 选择选项
-        function selectOption(e) {
-            if (answered) return;
-            
-            const selectedOption = e.target;
-            const question = questions[currentQuestion];
-            const correctAnswer = question.correctAnswer;
-            
-            // 禁用所有选项
-            const options = document.querySelectorAll('.option');
-            options.forEach(option => {
-                option.removeEventListener('click', selectOption);
-                if (option.dataset.answer === correctAnswer) {
-                    option.classList.add('correct');
-                    if (option === selectedOption) {
-                        animateOption(option, true);
-                    }
-                } else if (option === selectedOption && option.dataset.answer !== correctAnswer) {
-                    option.classList.add('incorrect');
-                    animateOption(option, false);
-                }
-            });
-            
-            // 显示反馈
-            const feedback = document.getElementById('feedback');
-            const icePrincess = document.getElementById('ice-princess');
-            const princessFace = document.getElementById('princess-face');
-            if (selectedOption.dataset.answer === correctAnswer) {
-                score += 5; // 每题5分
-                correctAnswers++; // 增加正确答案计数
-                document.getElementById('score').textContent = score;
-                feedback.textContent = '🎉 回答正确！';
-                feedback.className = 'feedback correct';
-                createConfetti();
-                // 冰雪公主开心表情
-                princessFace.textContent = '😄';
-                icePrincess.className = 'ice-princess happy';
-                setTimeout(() => {
-                    icePrincess.className = 'ice-princess';
-                }, 1000);
-            } else {
-                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
-                feedback.className = 'feedback incorrect';
-                // 显示解释
-                const explanationDiv = document.createElement('div');
-                explanationDiv.className = 'explanation';
-                explanationDiv.textContent = `错误原因：${question.explanation}`;
-                feedback.appendChild(explanationDiv);
-                // 冰雪公主伤心表情
-                princessFace.textContent = '😢';
-                icePrincess.className = 'ice-princess sad';
-                setTimeout(() => {
-                    icePrincess.className = 'ice-princess';
-                }, 1000);
-            }
-            
-            // 将正确答案写进空格处
-            const correctSentenceWithHTML = question.sentence.replace('______', `<span class="blank filled">${question.correctAnswer}</span>`);
-            const correctSentencePlain = question.sentence.replace('______', question.correctAnswer);
-            document.getElementById('sentence').innerHTML = correctSentenceWithHTML;
-            
-            // 显示翻译和语音播放
-            if (questions && questions[currentQuestion]) {
-                document.getElementById('translation-content').innerHTML = `
-                    <strong>中文翻译：</strong>${question.chinese}
-                `;
-                document.getElementById('translation').style.display = 'block';
-                
-                // 播放语音
-                playAudio(correctSentencePlain);
-            }
-            
-            // 添加翻转动画
-            icePrincess.classList.add('flip');
-            
-            // 动画结束后移除翻转类
-            setTimeout(() => {
-                icePrincess.classList.remove('flip');
-            }, 1000);
-            
-            feedback.style.display = 'block';
-            document.getElementById('next-btn').style.display = 'inline-block';
-            answered = true;
-        }
-
-        // 选项选择动画
-        function animateOption(option, isCorrect) {
-            option.classList.add('option-animation');
-            if (isCorrect) {
-                option.classList.add('correct-animation');
-            } else {
-                option.classList.add('incorrect-animation');
-            }
-            setTimeout(() => {
-                option.classList.remove('option-animation', 'correct-animation', 'incorrect-animation');
-            }, 1000);
         }
 
         // 创建庆祝效果
@@ -1146,46 +1123,37 @@
         function nextQuestion() {
             currentQuestion++;
             if (currentQuestion < questions.length) {
-                document.getElementById('current-question').textContent = currentQuestion + 1;
-                // 如果是最后一题，设置进度条为100%
-                if (currentQuestion === questions.length - 1) {
-                    document.getElementById('progress-fill').style.width = '100%';
-                } else {
-                    document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
-                }
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
                 loadQuestion();
             } else {
+                document.getElementById('progress-fill').style.width = '100%';
                 showResult();
             }
         }
 
         // 显示结果
         function showResult() {
-            // 设置进度条为100%
-            document.getElementById('progress-fill').style.width = '100%';
             document.getElementById('question').style.display = 'none';
             document.getElementById('result').style.display = 'block';
             document.getElementById('result-score').textContent = score;
             
-            // 计算统计信息
+            // 计算正确率、错误率和总耗时
             const totalQuestions = questions.length;
-            const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
-            const errorRate = 100 - accuracy;
-            const endTime = Date.now();
-            const durationMs = endTime - startTime;
-            const minutes = Math.floor(durationMs / 60000);
-            const seconds = Math.floor((durationMs % 60000) / 1000);
-            const durationStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const accuracy = ((correctAnswers / totalQuestions) * 100).toFixed(0);
+            const errorRate = (( (totalQuestions - correctAnswers) / totalQuestions) * 100).toFixed(0);
+            const duration = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(duration / 60);
+            const seconds = duration % 60;
+            const formattedDuration = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
             // 显示统计信息
             document.getElementById('accuracy').textContent = `${accuracy}%`;
             document.getElementById('error-rate').textContent = `${errorRate}%`;
-            document.getElementById('duration').textContent = durationStr;
+            document.getElementById('duration').textContent = formattedDuration;
             
             const message = document.getElementById('result-message');
             if (score === 100) {
-                message.textContent = '太棒了！你是系动词大师！';
-                createConfetti();
+                message.textContent = '太棒了！你是英语问答大师！';
             } else if (score >= 80) {
                 message.textContent = '做得很好！继续加油！';
             } else if (score >= 60) {
@@ -1195,59 +1163,18 @@
             }
         }
 
-        // 播放语音按钮点击事件
-        document.getElementById('play-audio-btn').addEventListener('click', function() {
-            if (questions && questions[currentQuestion]) {
-                const question = questions[currentQuestion];
-                const correctSentence = question.sentence.replace('______', question.correctAnswer);
-                playAudio(correctSentence);
-            }
-        });
-
         // 事件监听
         document.getElementById('next-btn').addEventListener('click', nextQuestion);
         document.getElementById('restart-btn').addEventListener('click', initGame);
-
-        // 生成雪花
-        function generateSnowflakes() {
-            const snowflakesContainer = document.getElementById('snowflakes');
-            if (!snowflakesContainer) return;
-            
-            // 清空现有雪花
-            snowflakesContainer.innerHTML = '';
-            
-            // 创建10个雪花
-            for (let i = 0; i < 10; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                
-                // 随机大小
-                const size = Math.random() * 5 + 2;
-                snowflake.style.width = `${size}px`;
-                snowflake.style.height = `${size}px`;
-                
-                // 随机位置
-                snowflake.style.left = `${Math.random() * 100}%`;
-                
-                // 随机延迟
-                snowflake.style.animationDelay = `${Math.random() * 3}s`;
-                
-                // 随机持续时间
-                snowflake.style.animationDuration = `${Math.random() * 2 + 2}s`;
-                
-                snowflakesContainer.appendChild(snowflake);
+        document.getElementById('game-restart-btn').addEventListener('click', initGame);
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (currentQuestion < questions.length) {
+                playAudio(questions[currentQuestion].question);
             }
-        }
+        });
 
-        // 确保所有资源加载完成后再初始化游戏
-        window.onload = function() {
-            // 初始化游戏
-            initGame();
-            generateSnowflakes();
-            
-            // 每3秒重新生成雪花
-            setInterval(generateSnowflakes, 3000);
-        };
+        // 初始化游戏
+        initGame();
     </script>
 </body>
 </html>

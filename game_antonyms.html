@@ -80,6 +80,12 @@
             color: #667eea;
         }
 
+        .error-count {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
         .time {
             font-size: 24px;
             font-weight: bold;
@@ -349,8 +355,11 @@
             <div class="score">
                 分数: <span id="score">0</span>
             </div>
+            <div class="error-count">
+                错误次数: <span id="error-count">0</span>
+            </div>
             <div class="time">
-                计时: <span id="game-time">00:00</span>
+                总耗时: <span id="game-time">00:00</span>
             </div>
         </div>
 
@@ -506,6 +515,7 @@
         let flippedCards = [];
         let matchedPairs = 0;
         let score = 0;
+        let errorCount = 0;
         let gameStarted = false;
         let gameStartTime = 0;
         let gameEndTime = 0;
@@ -544,10 +554,12 @@
             flippedCards = [];
             matchedPairs = 0;
             score = 0;
+            errorCount = 0;
             gameStarted = false;
             
             // 更新UI
             document.getElementById('score').textContent = score;
+            document.getElementById('error-count').textContent = errorCount;
             document.getElementById('game-time').textContent = '00:00';
             document.getElementById('error-message').style.display = 'none';
             document.getElementById('result').style.display = 'none';
@@ -817,9 +829,19 @@
                 card1.style.transform = 'scale(1)';
                 card2.style.transform = 'scale(1)';
                 
+                // 错误次数增加
+                errorCount++;
+                document.getElementById('error-count').textContent = errorCount;
+                
+                // 检查错误次数是否达到10次
+                if (errorCount >= 10) {
+                    endGame();
+                    return;
+                }
+                
                 // 显示错误消息
                 const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = `❌ 错误！"${word1}" 和 "${word2}" 不是反义词`;
+                errorMessage.textContent = `❌ 错误！"${word1}" 和 "${word2}" 不是反义词 (错误次数: ${errorCount}/10)`;
                 errorMessage.style.display = 'block';
                 
                 // 2秒后隐藏错误消息和移除selected类
@@ -898,7 +920,8 @@
                 <div class="modal-content">
                     <h2>🎉 游戏结束！</h2>
                     <div class="modal-score">${score}</div>
-                    <div class="modal-time">用时：${timeString}</div>
+                    <div class="modal-time">总耗时：${timeString}</div>
+                    <div class="modal-error-count">错误次数：${errorCount}/10</div>
                     <div class="modal-message"></div>
                     <div class="modal-buttons">
                         <button class="restart-btn" id="modal-restart-btn">再玩一次</button>
@@ -942,6 +965,11 @@
                 .modal-time {
                     font-size: 20px;
                     color: #667eea;
+                    margin-bottom: 10px;
+                }
+                .modal-error-count {
+                    font-size: 20px;
+                    color: #ff6b6b;
                     margin-bottom: 20px;
                 }
                 .modal-message {
@@ -993,7 +1021,19 @@
 
         // 放弃游戏
         function giveUp() {
+            // 显示中文翻译
             generateGameBoard(true);
+            
+            // 使所有卡片不可点击
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                card.style.pointerEvents = 'none';
+                card.style.opacity = '0.7';
+            });
+            
+            // 重置错误次数
+            errorCount = 0;
+            document.getElementById('error-count').textContent = errorCount;
         }
 
         // 重新开始游戏
