@@ -52,6 +52,37 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
+        .play-audio-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .play-audio-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .play-audio-btn:active {
+            transform: translateY(0);
+        }
+
         h1 {
             color: #667eea;
             font-size: 32px;
@@ -376,6 +407,53 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* 弹窗样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .modal-content h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+        
+        .modal-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -405,6 +483,7 @@
 <body>
     <div class="container">
         <a href="game_index.html" class="back-btn">⬅ 返回</a>
+        <button class="play-audio-btn" onclick="playCurrentQuestionAudio()">🔊</button>
         <h1>🔤 英语疑问句翻译游戏</h1>
         
         <div class="game-info">
@@ -763,10 +842,18 @@
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
-                utterance.rate = 1.0;
+                utterance.rate = 0.7;
                 utterance.pitch = 1.0;
                 utterance.volume = 1.0;
                 speechSynthesis.speak(utterance);
+            }
+        }
+
+        // 播放当前题目的音频
+        function playCurrentQuestionAudio() {
+            if (currentQuestionIndex < currentQuestions.length) {
+                const currentQuestion = currentQuestions[currentQuestionIndex];
+                playAudio(currentQuestion.english);
             }
         }
 
@@ -812,7 +899,23 @@
         // 下一题
         function nextQuestion() {
             if (!answerSelected) {
-                alert('请先选择一个答案！');
+                // 创建自定义弹窗
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>提示</h3>
+                        <p>请先选择一个答案！</p>
+                        <button class="btn btn-primary" id="modal-ok-btn">确定</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 添加事件监听
+                document.getElementById('modal-ok-btn').addEventListener('click', () => {
+                    modal.remove();
+                });
                 return;
             }
             

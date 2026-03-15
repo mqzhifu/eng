@@ -50,6 +50,37 @@
             z-index: 10;
         }
 
+        .play-audio-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .play-audio-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .play-audio-btn:active {
+            transform: translateY(0);
+        }
+
         .back-btn:hover {
             background: rgba(255,255,255,0.3);
             transform: translateY(-2px);
@@ -128,18 +159,12 @@
             margin-bottom: 40px;
         }
 
-        .question-number {
-            font-size: 18px;
-            color: #667eea;
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-align: left;
-        }
+
 
         .sentence {
             font-size: 30px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 10px 0 20px;
             line-height: 1.5;
             padding: 30px;
             background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
@@ -203,6 +228,17 @@
             transform: scale(1.05);
             border-color: #764ba2;
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .blank.filled {
+            background: #e8f5e9;
+            border: 2px solid #4CAF50;
+            color: #388E3C;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.2);
+        }
+
+        .blank.filled::after {
+            display: none;
         }
 
         .options {
@@ -306,6 +342,43 @@
             font-size: 16px;
             color: #666;
             line-height: 1.5;
+        }
+
+        /* 翻译区域样式 */
+        .translation {
+            margin-top: 12px;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+            border-radius: 16px;
+            border: 2px solid #e9ecef;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: translationSlide 0.3s ease;
+        }
+
+        @keyframes translationSlide {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .translation-content {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            text-align: left;
+        }
+
+        .translation-content strong {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+            color: #667eea;
         }
 
         .next-btn {
@@ -479,6 +552,22 @@
             .result-score {
                 font-size: 48px;
             }
+            
+            .play-audio-btn {
+                top: 15px;
+                right: 15px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+                padding: 10px;
+            }
+            
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -486,6 +575,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
             <h1>🔤 系动词游戏</h1>
             <p>选择正确的系动词填空，一共20道题，满分100分！</p>
         </div>
@@ -506,7 +596,6 @@
 
         <div class="game-content">
             <div class="question" id="question">
-                <div class="question-number">第 <span id="question-number">1</span> 题</div>
                 <div class="sentence" id="sentence">
                     I ______ a student.
                 </div>
@@ -517,6 +606,9 @@
                     <div class="option" data-answer="was">was</div>
                 </div>
                 <div class="feedback" id="feedback"></div>
+                <div class="translation" id="translation">
+                    <div class="translation-content" id="translation-content"></div>
+                </div>
                 <button class="next-btn" id="next-btn">下一题</button>
             </div>
 
@@ -624,7 +716,6 @@
         // 加载题目
         function loadQuestion() {
             const question = questions[currentQuestion];
-            document.getElementById('question-number').textContent = currentQuestion + 1;
             document.getElementById('sentence').innerHTML = question.sentence;
             
             const optionsContainer = document.getElementById('options');
@@ -644,6 +735,7 @@
             
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('translation').style.display = 'none';
             answered = false;
         }
 
@@ -652,12 +744,23 @@
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
-                utterance.rate = 1.0;
+                utterance.rate = 0.7;
                 utterance.pitch = 1.0;
                 utterance.volume = 1.0;
                 speechSynthesis.speak(utterance);
             }
         }
+
+        // 播放当前题目的音频
+        function playCurrentQuestionAudio() {
+            if (currentQuestion < questions.length) {
+                const question = questions[currentQuestion];
+                const correctSentence = question.sentence.replace('______', question.correctAnswer);
+                playAudio(correctSentence);
+            }
+        }
+
+
 
         // 选择选项
         function selectOption(e) {
@@ -683,25 +786,34 @@
             if (selectedOption.dataset.answer === correctAnswer) {
                 score += 5; // 每题5分
                 document.getElementById('score').textContent = score;
-                feedback.textContent = `🎉 回答正确！\n中文翻译：${question.chinese}`;
+                feedback.textContent = '🎉 回答正确！';
                 feedback.className = 'feedback correct';
                 createConfetti();
             } else {
-                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}\n中文翻译：${question.chinese}`;
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
                 feedback.className = 'feedback incorrect';
-            }
-            
-            // 显示解释
-            if (selectedOption.dataset.answer !== correctAnswer) {
+                // 显示解释
                 const explanationDiv = document.createElement('div');
                 explanationDiv.className = 'explanation';
                 explanationDiv.textContent = `错误原因：${question.explanation}`;
                 feedback.appendChild(explanationDiv);
             }
             
-            // 播放音频
-            const fullSentence = question.sentence.replace('______', correctAnswer);
-            playAudio(fullSentence);
+            // 将正确答案写进空格处
+            const correctSentenceWithHTML = question.sentence.replace('______', `<span class="blank filled">${question.correctAnswer}</span>`);
+            const correctSentencePlain = question.sentence.replace('______', question.correctAnswer);
+            document.getElementById('sentence').innerHTML = correctSentenceWithHTML;
+            
+            // 显示翻译和语音播放
+            if (questions && questions[currentQuestion]) {
+                document.getElementById('translation-content').innerHTML = `
+                    <strong>中文翻译：</strong>${question.chinese}
+                `;
+                document.getElementById('translation').style.display = 'block';
+                
+                // 播放语音
+                playAudio(correctSentencePlain);
+            }
             
             feedback.style.display = 'block';
             document.getElementById('next-btn').style.display = 'inline-block';
@@ -756,6 +868,15 @@
                 message.textContent = '没关系，再试一次吧！';
             }
         }
+
+        // 播放语音按钮点击事件
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (questions && questions[currentQuestion]) {
+                const question = questions[currentQuestion];
+                const correctSentence = question.sentence.replace('______', question.correctAnswer);
+                playAudio(correctSentence);
+            }
+        });
 
         // 事件监听
         document.getElementById('next-btn').addEventListener('click', nextQuestion);

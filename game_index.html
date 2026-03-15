@@ -37,9 +37,6 @@
         }
 
         .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
             background: white;
             color: #667eea;
             padding: 12px 30px;
@@ -48,6 +45,9 @@
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             transition: all 0.3s;
+            grid-column: 1 / -1;
+            text-align: left;
+            margin-bottom: 10px;
         }
 
         .back-btn:hover {
@@ -168,17 +168,22 @@
         @media (max-width: 768px) {
             .header h1 { font-size: 32px; }
             .games-grid { grid-template-columns: 1fr; }
+            .back-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <a href="index.html" class="back-btn">⬅ 返回首页</a>
         <h1>🎮 游戏闯关</h1>
         <p>选择你想练习的语法点，开始挑战吧！</p>
     </div>
 
     <div class="games-grid">
+        <a href="index.html" class="back-btn">⬅ 返回首页</a>
         <a href="game_rencheng.html" class="game-card">
             <div class="game-icon">👤</div>
             <div class="game-title">人称代词填空</div>
