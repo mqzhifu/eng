@@ -33,6 +33,26 @@
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
         .header h1 {
@@ -46,30 +66,14 @@
             opacity: 0.9;
         }
 
-        .back-btn {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
         .game-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
             border-bottom: 1px solid #e9ecef;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .progress {
@@ -77,13 +81,24 @@
             align-items: center;
         }
 
+        .progress-info {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 18px;
+            font-weight: bold;
+            color: #764ba2;
+            margin-right: 15px;
+        }
+
         .progress-bar {
             width: 200px;
-            height: 10px;
-            background: #e9ecef;
-            border-radius: 5px;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
             overflow: hidden;
-            margin-left: 10px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .progress-fill {
@@ -91,12 +106,17 @@
             background: linear-gradient(90deg, #667eea, #764ba2);
             width: 0%;
             transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
         }
 
         .score {
             font-size: 24px;
             font-weight: bold;
             color: #667eea;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .game-content {
@@ -110,29 +130,79 @@
 
         .question-number {
             font-size: 18px;
-            color: #666;
-            margin-bottom: 10px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: left;
         }
 
         .sentence {
-            font-size: 24px;
+            font-size: 30px;
             font-weight: bold;
             margin: 20px 0;
             line-height: 1.5;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+            position: relative;
+            overflow: hidden;
+            animation: sentenceFade 0.5s ease;
+        }
+
+        @keyframes sentenceFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sentence::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
         .blank {
             display: inline-block;
-            width: 120px;
-            height: 50px;
-            background: #f8f9fa;
+            width: 130px;
+            height: 55px;
+            background: white;
             border: 2px dashed #667eea;
-            border-radius: 10px;
-            margin: 0 10px;
+            border-radius: 12px;
+            margin: 0 12px;
             vertical-align: middle;
-            line-height: 46px;
+            line-height: 51px;
             color: #667eea;
             font-style: italic;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .blank::after {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: rgba(102, 126, 234, 0.5);
+        }
+
+        .blank:hover {
+            transform: scale(1.05);
+            border-color: #764ba2;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
         .options {
@@ -143,54 +213,99 @@
         }
 
         .option {
-            background: #f8f9fa;
+            background: white;
             border: 2px solid #e9ecef;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 18px;
             font-weight: bold;
             color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option:hover::before {
+            left: 100%;
         }
 
         .option:hover {
             border-color: #667eea;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
         }
 
         .option.correct {
-            background: #d4edda;
-            border-color: #28a745;
-            color: #155724;
+            background: #e8f5e9;
+            border-color: #4CAF50;
+            color: #388E3C;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
         }
 
         .option.incorrect {
-            background: #f8d7da;
-            border-color: #dc3545;
-            color: #721c24;
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
         }
 
         .feedback {
             margin-top: 30px;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 16px;
             font-size: 18px;
             font-weight: bold;
             display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: feedbackSlide 0.3s ease;
+        }
+
+        @keyframes feedbackSlide {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .feedback.correct {
-            background: #d4edda;
-            color: #155724;
+            background: #e8f5e9;
+            color: #388E3C;
             display: block;
+            border-left: 4px solid #4CAF50;
         }
 
         .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
+            background: #ffebee;
+            color: #c62828;
             display: block;
+            border-left: 4px solid #f44336;
+        }
+
+        .explanation {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
         }
 
         .next-btn {
@@ -214,27 +329,43 @@
 
         .result {
             text-align: center;
-            padding: 50px;
+            padding: 60px;
             display: none;
+            animation: resultFade 0.5s ease;
+        }
+
+        @keyframes resultFade {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .result h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 24px;
             color: #667eea;
+            text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.2);
         }
 
         .result-score {
-            font-size: 72px;
+            font-size: 80px;
             font-weight: bold;
             color: #764ba2;
             margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(118, 75, 162, 0.2);
+            animation: scorePulse 1s ease-in-out;
         }
 
         .result-message {
             font-size: 24px;
             margin-bottom: 40px;
             color: #333;
+            line-height: 1.5;
         }
 
         .restart-btn {
@@ -248,11 +379,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .restart-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
 
         .home-btn {
@@ -268,13 +400,35 @@
             margin: 10px;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .home-btn:hover {
             background: #667eea;
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        /* 得分动画 */
+        .score-animation {
+            animation: scorePulse 1s ease-in-out;
+        }
+
+        @keyframes scorePulse {
+            0% {
+                transform: scale(1);
+                color: #667eea;
+            }
+            50% {
+                transform: scale(1.5);
+                color: #764ba2;
+                text-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
+            }
+            100% {
+                transform: scale(1);
+                color: #667eea;
+            }
         }
 
         .confetti {
@@ -331,14 +485,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="game_index.html" class="back-btn">⬅ 返回游戏列表</a>
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
             <h1>🔤 系动词游戏</h1>
             <p>选择正确的系动词填空，一共20道题，满分100分！</p>
         </div>
 
         <div class="game-info">
             <div class="progress">
-                <span>题目: <span id="current-question">1</span>/20</span>
+                <div class="progress-info">
+                    题目: <span id="current-question">1</span>/20
+                </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
@@ -378,110 +534,64 @@
         // 题目数据 - 100个模板
         const allQuestions = [
             // am 相关
-            { sentence: "I ______ a student.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ happy today.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ learning English.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ seven years old.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ hungry.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ excited about the party.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ ready for the test.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ going to school.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ reading a book.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "I ______ playing with my friends.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
+            { sentence: "I ______ a student.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我是一名学生。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ happy today.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我今天很开心。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ learning English.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我正在学习英语。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ seven years old.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我七岁了。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ hungry.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我饿了。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ excited about the party.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我对派对很兴奋。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ ready for the test.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我准备好考试了。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ going to school.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我要去上学。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ reading a book.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我正在读书。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
+            { sentence: "I ______ playing with my friends.", options: ["am", "is", "are", "was"], correctAnswer: "am", chinese: "我正在和朋友们玩。", explanation: "当主语是第一人称单数 'I' 时，系动词应该使用 'am'" },
             
             // is 相关
-            { sentence: "He ______ a boy.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "She ______ a girl.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "It ______ a cat.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The book ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "My mother ______ a teacher.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The sky ______ blue.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The dog ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The sun ______ hot.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "My father ______ tall.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The car ______ fast.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
+            { sentence: "He ______ a boy.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "他是一个男孩。", explanation: "当主语是第三人称单数（如 he, she, it）时，系动词应该使用 'is'" },
+            { sentence: "She ______ a girl.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "她是一个女孩。", explanation: "当主语是第三人称单数（如 he, she, it）时，系动词应该使用 'is'" },
+            { sentence: "It ______ a cat.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "它是一只猫。", explanation: "当主语是第三人称单数（如 he, she, it）时，系动词应该使用 'is'" },
+            { sentence: "The book ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "这本书是红色的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
+            { sentence: "My mother ______ a teacher.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "我的妈妈是一名老师。", explanation: "当主语是第三人称单数时，系动词应该使用 'is'" },
+            { sentence: "The sky ______ blue.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "天空是蓝色的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
+            { sentence: "The dog ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "这只狗是黑色的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
+            { sentence: "The sun ______ hot.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "太阳是热的。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
+            { sentence: "My father ______ tall.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "我的爸爸很高。", explanation: "当主语是第三人称单数时，系动词应该使用 'is'" },
+            { sentence: "The car ______ fast.", options: ["am", "is", "are", "was"], correctAnswer: "is", chinese: "这辆车很快。", explanation: "当主语是单数名词时，系动词应该使用 'is'" },
             
             // are 相关
-            { sentence: "You ______ my friend.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "They ______ students.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "We ______ happy.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The children ______ playing.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "My parents ______ kind.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The flowers ______ beautiful.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The books ______ on the table.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "My friends ______ coming.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The cats ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The apples ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
+            { sentence: "You ______ my friend.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "你是我的朋友。", explanation: "当主语是第二人称（you）时，系动词应该使用 'are'" },
+            { sentence: "They ______ students.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "他们是学生。", explanation: "当主语是复数（they）时，系动词应该使用 'are'" },
+            { sentence: "We ______ happy.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "我们很开心。", explanation: "当主语是第一人称复数（we）时，系动词应该使用 'are'" },
+            { sentence: "The children ______ playing.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "孩子们正在玩耍。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            { sentence: "My parents ______ kind.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "我的父母很善良。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            { sentence: "The flowers ______ beautiful.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "这些花很美丽。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            { sentence: "The books ______ on the table.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "书在桌子上。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            { sentence: "My friends ______ coming.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "我的朋友们正在来。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            { sentence: "The cats ______ black.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "这些猫是黑色的。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
+            { sentence: "The apples ______ red.", options: ["am", "is", "are", "was"], correctAnswer: "are", chinese: "这些苹果是红色的。", explanation: "当主语是复数名词时，系动词应该使用 'are'" },
             
             // was 相关
-            { sentence: "I ______ at home yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "He ______ sick last week.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "She ______ happy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "It ______ cold last night.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "The weather ______ nice yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "My brother ______ tired yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "The dog ______ hungry yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "The cat ______ on the chair yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "The book ______ on the table yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "I ______ busy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
+            { sentence: "I ______ at home yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "我昨天在家。", explanation: "当主语是第一人称单数且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "He ______ sick last week.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "他上周生病了。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "She ______ happy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "她昨天很开心。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "It ______ cold last night.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "昨晚很冷。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "The weather ______ nice yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "昨天天气很好。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "My brother ______ tired yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "我哥哥昨天很累。", explanation: "当主语是第三人称单数且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "The dog ______ hungry yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "这只狗昨天很饿。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "The cat ______ on the chair yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "这只猫昨天在椅子上。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "The book ______ on the table yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "这本书昨天在桌子上。", explanation: "当主语是单数名词且时态是过去时时，系动词应该使用 'was'" },
+            { sentence: "I ______ busy yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was", chinese: "我昨天很忙。", explanation: "当主语是第一人称单数且时态是过去时时，系动词应该使用 'was'" },
             
             // were 相关
-            { sentence: "You ______ at school yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "They ______ happy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "We ______ at the park yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The children ______ playing yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "My parents ______ at work yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The flowers ______ beautiful yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The books ______ on the table yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "My friends ______ here yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The cats ______ black yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The apples ______ red yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            
-            // 混合练习 - am/is/are
-            { sentence: "I ______ a good student.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "He ______ my brother.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "She ______ my sister.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "It ______ a dog.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "You ______ my best friend.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "They ______ my classmates.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "We ______ a family.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The sky ______ clear today.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The trees ______ green.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "My teacher ______ nice.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            
-            // 混合练习 - was/were
-            { sentence: "I ______ happy last week.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "He ______ at school yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "She ______ sick last month.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "It ______ rainy last night.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "You ______ busy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "They ______ at the zoo yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "We ______ playing football yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The children ______ happy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "My parents ______ on vacation last week.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The dogs ______ barking yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            
-            // 更多混合练习
-            { sentence: "I ______ excited about the trip.", options: ["am", "is", "are", "was"], correctAnswer: "am" },
-            { sentence: "He ______ tall and strong.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "She ______ wearing a blue dress.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "It ______ a beautiful day.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "You ______ very kind.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "They ______ going to the store.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "We ______ learning math.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "The cat ______ sleeping on the sofa.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "The birds ______ singing in the tree.", options: ["am", "is", "are", "was"], correctAnswer: "are" },
-            { sentence: "My brother ______ playing video games.", options: ["am", "is", "are", "was"], correctAnswer: "is" },
-            { sentence: "I ______ tired last night.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "He ______ reading a book yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "She ______ cooking dinner yesterday.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "It ______ snowing last week.", options: ["am", "is", "are", "was"], correctAnswer: "was" },
-            { sentence: "You ______ watching TV yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "They ______ eating dinner together.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "We ______ studying for the test yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The students ______ listening to the teacher.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "My friends ______ visiting me yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were" },
-            { sentence: "The flowers ______ blooming in the garden.", options: ["am", "is", "are", "were"], correctAnswer: "are" }
+            { sentence: "You ______ at school yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "你昨天在学校。", explanation: "当主语是第二人称且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "They ______ happy yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "他们昨天很开心。", explanation: "当主语是复数且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "We ______ at the park yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "我们昨天在公园。", explanation: "当主语是第一人称复数且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "The children ______ playing yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "孩子们昨天在玩耍。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "My parents ______ at work yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "我的父母昨天在工作。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "The flowers ______ beautiful yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "这些花昨天很美丽。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "The books ______ on the table yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "书昨天在桌子上。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "My friends ______ here yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "我的朋友们昨天在这里。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "The cats ______ black yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "这些猫昨天是黑色的。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" },
+            { sentence: "The apples ______ red yesterday.", options: ["am", "is", "are", "were"], correctAnswer: "were", chinese: "这些苹果昨天是红色的。", explanation: "当主语是复数名词且时态是过去时时，系动词应该使用 'were'" }
         ];
         
         // 随机选择20道题
@@ -537,12 +647,25 @@
             answered = false;
         }
 
+        // 播放音频
+        function playAudio(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 1.0;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
         // 选择选项
         function selectOption(e) {
             if (answered) return;
             
             const selectedOption = e.target;
-            const correctAnswer = questions[currentQuestion].correctAnswer;
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correctAnswer;
             
             // 禁用所有选项
             const options = document.querySelectorAll('.option');
@@ -560,13 +683,25 @@
             if (selectedOption.dataset.answer === correctAnswer) {
                 score += 5; // 每题5分
                 document.getElementById('score').textContent = score;
-                feedback.textContent = '🎉 回答正确！';
+                feedback.textContent = `🎉 回答正确！\n中文翻译：${question.chinese}`;
                 feedback.className = 'feedback correct';
                 createConfetti();
             } else {
-                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}\n中文翻译：${question.chinese}`;
                 feedback.className = 'feedback incorrect';
             }
+            
+            // 显示解释
+            if (selectedOption.dataset.answer !== correctAnswer) {
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = 'explanation';
+                explanationDiv.textContent = `错误原因：${question.explanation}`;
+                feedback.appendChild(explanationDiv);
+            }
+            
+            // 播放音频
+            const fullSentence = question.sentence.replace('______', correctAnswer);
+            playAudio(fullSentence);
             
             feedback.style.display = 'block';
             document.getElementById('next-btn').style.display = 'inline-block';

@@ -33,6 +33,25 @@
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
 
         .header h1 {
@@ -46,30 +65,16 @@
             opacity: 0.9;
         }
 
-        .back-btn {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
+        
 
         .game-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
             border-bottom: 1px solid #e9ecef;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
         .progress {
@@ -77,13 +82,24 @@
             align-items: center;
         }
 
+        .progress-info {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 18px;
+            font-weight: bold;
+            color: #764ba2;
+            margin-right: 15px;
+        }
+
         .progress-bar {
             width: 200px;
-            height: 10px;
-            background: #e9ecef;
-            border-radius: 5px;
+            height: 12px;
+            background: white;
+            border-radius: 6px;
             overflow: hidden;
-            margin-left: 10px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .progress-fill {
@@ -91,12 +107,17 @@
             background: linear-gradient(90deg, #667eea, #764ba2);
             width: 0%;
             transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
         }
 
         .score {
             font-size: 24px;
             font-weight: bold;
             color: #667eea;
+            background: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .game-content {
@@ -110,29 +131,90 @@
 
         .question-number {
             font-size: 18px;
-            color: #666;
-            margin-bottom: 10px;
+            color: #667eea;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-align: left;
         }
 
         .sentence {
-            font-size: 24px;
+            font-size: 30px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 10px 0 20px;
             line-height: 1.5;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+            position: relative;
+            overflow: hidden;
+            animation: sentenceFade 0.5s ease;
+        }
+
+        @keyframes sentenceFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sentence::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
         .blank {
             display: inline-block;
-            width: 120px;
-            height: 50px;
-            background: #f8f9fa;
+            width: 130px;
+            height: 55px;
+            background: white;
             border: 2px dashed #667eea;
-            border-radius: 10px;
-            margin: 0 10px;
+            border-radius: 12px;
+            margin: 0 12px;
             vertical-align: middle;
-            line-height: 46px;
+            line-height: 51px;
             color: #667eea;
             font-style: italic;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .blank::after {
+            content: '?';
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: rgba(102, 126, 234, 0.5);
+        }
+
+        .blank:hover {
+            transform: scale(1.05);
+            border-color: #764ba2;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .blank.filled {
+            background: #e8f5e9;
+            border: 2px solid #4CAF50;
+            color: #388E3C;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.2);
+        }
+
+        .blank.filled::after {
+            display: none;
         }
 
         .options {
@@ -143,54 +225,89 @@
         }
 
         .option {
-            background: #f8f9fa;
+            background: white;
             border: 2px solid #e9ecef;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 18px;
             font-weight: bold;
             color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .option:hover::before {
+            left: 100%;
         }
 
         .option:hover {
             border-color: #667eea;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
         }
 
         .option.correct {
-            background: #d4edda;
-            border-color: #28a745;
-            color: #155724;
+            background: #e8f5e9;
+            border-color: #4CAF50;
+            color: #388E3C;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
         }
 
         .option.incorrect {
-            background: #f8d7da;
-            border-color: #dc3545;
-            color: #721c24;
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
         }
 
         .feedback {
             margin-top: 30px;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 16px;
             font-size: 18px;
             font-weight: bold;
             display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: feedbackSlide 0.3s ease;
+        }
+
+        @keyframes feedbackSlide {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .feedback.correct {
-            background: #d4edda;
-            color: #155724;
+            background: #e8f5e9;
+            color: #388E3C;
             display: block;
+            border-left: 4px solid #4CAF50;
         }
 
         .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
+            background: #ffebee;
+            color: #c62828;
             display: block;
+            border-left: 4px solid #f44336;
         }
 
         .next-btn {
@@ -205,36 +322,57 @@
             margin-top: 20px;
             transition: all 0.3s ease;
             display: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .next-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .next-btn:active {
+            transform: translateY(0);
         }
 
         .result {
             text-align: center;
-            padding: 50px;
+            padding: 60px;
             display: none;
+            animation: resultFade 0.5s ease;
+        }
+
+        @keyframes resultFade {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .result h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 40px;
+            margin-bottom: 24px;
             color: #667eea;
+            text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.2);
         }
 
         .result-score {
-            font-size: 72px;
+            font-size: 80px;
             font-weight: bold;
             color: #764ba2;
             margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(118, 75, 162, 0.2);
+            animation: scorePulse 1s ease-in-out;
         }
 
         .result-message {
             font-size: 24px;
             margin-bottom: 40px;
             color: #333;
+            line-height: 1.5;
         }
 
         .restart-btn {
@@ -248,11 +386,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin: 10px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
         .restart-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
 
         .home-btn {
@@ -268,35 +407,151 @@
             margin: 10px;
             text-decoration: none;
             display: inline-block;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .home-btn:hover {
             background: #667eea;
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
 
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #f00;
-            border-radius: 50%;
-            animation: confetti 3s ease-in-out forwards;
-            pointer-events: none;
-            z-index: 1000;
+        /* 得分动画 */
+        .score-animation {
+            animation: scorePulse 1s ease-in-out;
         }
 
-        @keyframes confetti {
+        @keyframes scorePulse {
             0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
+                transform: scale(1);
+                color: #667eea;
+            }
+            50% {
+                transform: scale(1.5);
+                color: #764ba2;
+                text-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
             }
             100% {
-                transform: translateY(100vh) rotate(720deg);
+                transform: scale(1);
+                color: #667eea;
+            }
+        }
+
+        /* 选项动画 */
+        .option-animation {
+            animation: optionClick 0.3s ease-in-out;
+        }
+
+        .correct-animation {
+            animation: correctPulse 1s ease-in-out;
+        }
+
+        .incorrect-animation {
+            animation: incorrectShake 0.5s ease-in-out;
+        }
+
+        @keyframes optionClick {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes correctPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+            }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        /* 翻译区域样式 */
+        .translation {
+            margin-top: 12px;
+            padding: 12px 18px;
+            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
+            border-radius: 16px;
+            border: 2px solid #e9ecef;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: translationSlide 0.3s ease;
+        }
+
+        @keyframes translationSlide {
+            from {
+                transform: translateY(20px);
                 opacity: 0;
             }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .translation-content {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            text-align: left;
+        }
+
+        .translation-content strong {
+            display: inline-block;
+            width: 100px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .play-audio-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-audio-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .play-audio-btn:active {
+            transform: translateY(0);
         }
 
         @media (max-width: 768px) {
@@ -325,20 +580,39 @@
             .result-score {
                 font-size: 48px;
             }
+            
+            .play-audio-btn {
+                top: 15px;
+                right: 15px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+                padding: 10px;
+            }
+            
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                padding: 8px 16px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <a href="game_index.html" class="back-btn">⬅ 返回游戏列表</a>
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
             <h1>👤 人称代词游戏</h1>
             <p>选择正确的人称代词填空，一共20道题，满分100分！</p>
         </div>
 
         <div class="game-info">
             <div class="progress">
-                <span>题目: <span id="current-question">1</span>/20</span>
+                <div class="progress-info">
+                    题目: <span id="current-question">1</span>/20
+                </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
@@ -350,7 +624,6 @@
 
         <div class="game-content">
             <div class="question" id="question">
-                <div class="question-number">第 <span id="question-number">1</span> 题</div>
                 <div class="sentence" id="sentence">
                     ______ am a student.
                 </div>
@@ -361,6 +634,9 @@
                     <div class="option" data-answer="She">She</div>
                 </div>
                 <div class="feedback" id="feedback"></div>
+                <div class="translation" id="translation">
+                    <div class="translation-content" id="translation-content"></div>
+                </div>
                 <button class="next-btn" id="next-btn">下一题</button>
             </div>
 
@@ -369,7 +645,6 @@
                 <div class="result-score" id="result-score">0</div>
                 <div class="result-message" id="result-message"></div>
                 <button class="restart-btn" id="restart-btn">再玩一次</button>
-                <a href="game_index.html" class="home-btn">返回游戏列表</a>
             </div>
         </div>
     </div>
@@ -378,110 +653,110 @@
         // 题目数据 - 100个模板
         const allQuestions = [
             // I 相关
-            { sentence: "______ am a student.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ love my family.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ have a dog.", options: ["I", "He", "She", "It"], correctAnswer: "I" },
-            { sentence: "______ am hungry.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ am seven years old.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ am happy today.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ am learning English.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ am going to school.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ am reading a book.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ am playing with my friends.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
+            { sentence: "______ am a student.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用，表示'我是'" },
+            { sentence: "______ love my family.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'my' 是'我的'，所以主语应该是 'I'（我）" },
+            { sentence: "______ have a dog.", options: ["I", "He", "She", "It"], correctAnswer: "I", explanation: "'have' 是动词原形，与 'I' 搭配使用" },
+            { sentence: "______ am hungry.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ am seven years old.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ am happy today.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ am learning English.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ am going to school.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ am reading a book.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ am playing with my friends.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用，且 'my' 表示'我的'" },
             
             // You 相关
-            { sentence: "______ are my friend.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are very kind.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are good at English.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are tall and strong.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are my best friend.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are wearing a blue shirt.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are coming to my party.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are doing a great job.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are my neighbor.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
-            { sentence: "______ are always helpful.", options: ["I", "You", "He", "She"], correctAnswer: "You" },
+            { sentence: "______ are my friend.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用，表示'你是'" },
+            { sentence: "______ are very kind.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are good at English.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are tall and strong.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are my best friend.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用，且 'my' 表示'我的'" },
+            { sentence: "______ are wearing a blue shirt.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are coming to my party.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are doing a great job.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are my neighbor.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
+            { sentence: "______ are always helpful.", options: ["I", "You", "He", "She"], correctAnswer: "You", explanation: "'are' 与 'You' 搭配使用" },
             
             // He 相关
-            { sentence: "______ is a boy.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ likes ice cream.", options: ["I", "You", "He", "They"], correctAnswer: "He" },
-            { sentence: "______ is tall.", options: ["I", "You", "He", "They"], correctAnswer: "He" },
-            { sentence: "______ is my teacher.", options: ["I", "You", "He", "They"], correctAnswer: "He" },
-            { sentence: "______ is playing football.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ is my brother.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ is reading a book.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ is very smart.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ is wearing a red cap.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ is my father.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
+            { sentence: "______ is a boy.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'He' 用于指代男孩或男性" },
+            { sentence: "______ likes ice cream.", options: ["I", "You", "He", "They"], correctAnswer: "He", explanation: "'likes' 是第三人称单数形式，与 'He' 搭配" },
+            { sentence: "______ is tall.", options: ["I", "You", "He", "They"], correctAnswer: "He", explanation: "'is' 与第三人称单数 'He' 搭配使用" },
+            { sentence: "______ is my teacher.", options: ["I", "You", "He", "They"], correctAnswer: "He", explanation: "'is' 与第三人称单数 'He' 搭配使用" },
+            { sentence: "______ is playing football.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'is' 与第三人称单数 'He' 搭配使用，且足球通常是男孩喜欢的运动" },
+            { sentence: "______ is my brother.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'brother' 是兄弟，用 'He' 指代" },
+            { sentence: "______ is reading a book.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'is' 与第三人称单数 'He' 搭配使用" },
+            { sentence: "______ is very smart.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'is' 与第三人称单数 'He' 搭配使用" },
+            { sentence: "______ is wearing a red cap.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'is' 与第三人称单数 'He' 搭配使用" },
+            { sentence: "______ is my father.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'father' 是父亲，用 'He' 指代" },
             
             // She 相关
-            { sentence: "______ is a girl.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is my sister.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is my mother.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is wearing a dress.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is reading a storybook.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is very pretty.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is my teacher.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is playing with a doll.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is my aunt.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ is good at singing.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
+            { sentence: "______ is a girl.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'She' 用于指代女孩或女性" },
+            { sentence: "______ is my sister.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'sister' 是姐妹，用 'She' 指代" },
+            { sentence: "______ is my mother.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'mother' 是母亲，用 'She' 指代" },
+            { sentence: "______ is wearing a dress.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'dress' 是裙子，通常是女性穿着，用 'She' 指代" },
+            { sentence: "______ is reading a storybook.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'is' 与第三人称单数 'She' 搭配使用" },
+            { sentence: "______ is very pretty.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'pretty' 通常用来形容女性，用 'She' 指代" },
+            { sentence: "______ is my teacher.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'is' 与第三人称单数 'She' 搭配使用" },
+            { sentence: "______ is playing with a doll.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'doll' 是洋娃娃，通常是女孩玩的，用 'She' 指代" },
+            { sentence: "______ is my aunt.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'aunt' 是姑姑或阿姨，用 'She' 指代" },
+            { sentence: "______ is good at singing.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'is' 与第三人称单数 'She' 搭配使用" },
             
             // It 相关
-            { sentence: "______ is a cat.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a bird.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a dog.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a book.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a ball.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a tree.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a car.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a house.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a computer.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is a pencil.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
+            { sentence: "______ is a cat.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代动物或物品" },
+            { sentence: "______ is a bird.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代动物或物品" },
+            { sentence: "______ is a dog.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代动物或物品" },
+            { sentence: "______ is a book.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代物品" },
+            { sentence: "______ is a ball.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代物品" },
+            { sentence: "______ is a tree.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代植物或物品" },
+            { sentence: "______ is a car.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代交通工具或物品" },
+            { sentence: "______ is a house.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代建筑物或物品" },
+            { sentence: "______ is a computer.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代电子设备或物品" },
+            { sentence: "______ is a pencil.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'It' 用于指代学习用品或物品" },
             
             // We 相关
-            { sentence: "______ are happy.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are in the park.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are friends.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are going to school together.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are playing games.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are learning English.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are a family.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are having fun.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are watching a movie.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
-            { sentence: "______ are eating lunch.", options: ["I", "You", "We", "He"], correctAnswer: "We" },
+            { sentence: "______ are happy.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are in the park.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are friends.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are going to school together.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'together' 表示一起，'We' 表示'我们'" },
+            { sentence: "______ are playing games.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are learning English.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are a family.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'family' 是家庭，用 'We' 表示'我们'" },
+            { sentence: "______ are having fun.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are watching a movie.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
+            { sentence: "______ are eating lunch.", options: ["I", "You", "We", "He"], correctAnswer: "We", explanation: "'are' 与复数主语搭配，'We' 表示'我们'" },
             
             // They 相关
-            { sentence: "______ are playing football.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are students.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are my parents.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are my classmates.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are my friends.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are playing in the garden.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are happy together.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are going to the zoo.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are eating ice cream.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
-            { sentence: "______ are reading books.", options: ["I", "You", "He", "They"], correctAnswer: "They" },
+            { sentence: "______ are playing football.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'are' 与复数主语搭配，'They' 表示'他们'" },
+            { sentence: "______ are students.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'are' 与复数主语搭配，'They' 表示'他们'" },
+            { sentence: "______ are my parents.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'parents' 是父母（两个人），用 'They' 指代" },
+            { sentence: "______ are my classmates.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'classmates' 是同学（多个人），用 'They' 指代" },
+            { sentence: "______ are my friends.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'friends' 是朋友（多个人），用 'They' 指代" },
+            { sentence: "______ are playing in the garden.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'are' 与复数主语搭配，'They' 表示'他们'" },
+            { sentence: "______ are happy together.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'together' 表示一起，'They' 表示'他们'" },
+            { sentence: "______ are going to the zoo.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'are' 与复数主语搭配，'They' 表示'他们'" },
+            { sentence: "______ are eating ice cream.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'are' 与复数主语搭配，'They' 表示'他们'" },
+            { sentence: "______ are reading books.", options: ["I", "You", "He", "They"], correctAnswer: "They", explanation: "'are' 与复数主语搭配，'They' 表示'他们'" },
             
             // 混合练习
-            { sentence: "______ is my pet.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ is my grandfather.", options: ["I", "You", "He", "She"], correctAnswer: "He" },
-            { sentence: "______ is my grandmother.", options: ["I", "You", "He", "She"], correctAnswer: "She" },
-            { sentence: "______ are my siblings.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ are my cousins.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ am excited about the party.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ are my neighbors.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ is a big dog.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ are my team members.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ is a small cat.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ am ready for the test.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ are my colleagues.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ is my favorite toy.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ are my relatives.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ am a good student.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ is my favorite book.", options: ["I", "You", "He", "It"], correctAnswer: "It" },
-            { sentence: "______ are my favorite foods.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ am looking forward to the holiday.", options: ["I", "You", "He", "She"], correctAnswer: "I" },
-            { sentence: "______ are my favorite animals.", options: ["I", "You", "We", "They"], correctAnswer: "They" },
-            { sentence: "______ is my favorite color.", options: ["I", "You", "He", "It"], correctAnswer: "It" }
+            { sentence: "______ is my pet.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'pet' 是宠物，用 'It' 指代" },
+            { sentence: "______ is my grandfather.", options: ["I", "You", "He", "She"], correctAnswer: "He", explanation: "'grandfather' 是祖父，用 'He' 指代" },
+            { sentence: "______ is my grandmother.", options: ["I", "You", "He", "She"], correctAnswer: "She", explanation: "'grandmother' 是祖母，用 'She' 指代" },
+            { sentence: "______ are my siblings.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'siblings' 是兄弟姐妹（多个人），用 'They' 指代" },
+            { sentence: "______ are my cousins.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'cousins' 是表兄弟姐妹（多个人），用 'They' 指代" },
+            { sentence: "______ am excited about the party.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ are my neighbors.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'neighbors' 是邻居（多个人），用 'They' 指代" },
+            { sentence: "______ is a big dog.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'dog' 是动物，用 'It' 指代" },
+            { sentence: "______ are my team members.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'team members' 是团队成员（多个人），用 'They' 指代" },
+            { sentence: "______ is a small cat.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'cat' 是动物，用 'It' 指代" },
+            { sentence: "______ am ready for the test.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ are my colleagues.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'colleagues' 是同事（多个人），用 'They' 指代" },
+            { sentence: "______ is my favorite toy.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'toy' 是玩具，用 'It' 指代" },
+            { sentence: "______ are my relatives.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'relatives' 是亲戚（多个人），用 'They' 指代" },
+            { sentence: "______ am a good student.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ is my favorite book.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'book' 是书籍，用 'It' 指代" },
+            { sentence: "______ are my favorite foods.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'foods' 是食物（多种），用 'They' 指代" },
+            { sentence: "______ am looking forward to the holiday.", options: ["I", "You", "He", "She"], correctAnswer: "I", explanation: "'am' 只能和 'I' 搭配使用" },
+            { sentence: "______ are my favorite animals.", options: ["I", "You", "We", "They"], correctAnswer: "They", explanation: "'animals' 是动物（多种），用 'They' 指代" },
+            { sentence: "______ is my favorite color.", options: ["I", "You", "He", "It"], correctAnswer: "It", explanation: "'color' 是颜色，用 'It' 指代" }
         ];
         
         // 随机选择20道题
@@ -514,7 +789,6 @@
         // 加载题目
         function loadQuestion() {
             const question = questions[currentQuestion];
-            document.getElementById('question-number').textContent = currentQuestion + 1;
             document.getElementById('sentence').innerHTML = question.sentence;
             
             const optionsContainer = document.getElementById('options');
@@ -534,6 +808,7 @@
             
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('translation').style.display = 'none';
             answered = false;
         }
 
@@ -542,7 +817,9 @@
             if (answered) return;
             
             const selectedOption = e.target;
-            const correctAnswer = questions[currentQuestion].correctAnswer;
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correctAnswer;
+            const explanation = question.explanation || '';
             
             // 禁用所有选项
             const options = document.querySelectorAll('.option');
@@ -550,8 +827,12 @@
                 option.removeEventListener('click', selectOption);
                 if (option.dataset.answer === correctAnswer) {
                     option.classList.add('correct');
+                    if (option === selectedOption) {
+                        animateOption(option, true);
+                    }
                 } else if (option === selectedOption && option.dataset.answer !== correctAnswer) {
                     option.classList.add('incorrect');
+                    animateOption(option, false);
                 }
             });
             
@@ -562,34 +843,177 @@
                 document.getElementById('score').textContent = score;
                 feedback.textContent = '🎉 回答正确！';
                 feedback.className = 'feedback correct';
-                createConfetti();
+                // 添加得分动画
+                animateScore();
             } else {
-                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}。${explanation}`;
                 feedback.className = 'feedback incorrect';
             }
             
             feedback.style.display = 'block';
+            
+            // 将正确答案写进空格处
+            const correctSentenceWithHTML = question.sentence.replace('______', `<span class="blank filled">${question.correctAnswer}</span>`);
+            const correctSentencePlain = question.sentence.replace('______', question.correctAnswer);
+            document.getElementById('sentence').innerHTML = correctSentenceWithHTML;
+            
+            // 显示翻译和语音播放
+            if (questions && questions[currentQuestion]) {
+                const translation = getTranslation(correctSentencePlain);
+                
+                document.getElementById('translation-content').innerHTML = `
+                    <strong>中文翻译：</strong>${translation}
+                `;
+                document.getElementById('translation').style.display = 'block';
+                
+                // 播放语音
+                playAudio(correctSentencePlain);
+            }
+            
             document.getElementById('next-btn').style.display = 'inline-block';
             answered = true;
         }
 
-        // 创建庆祝效果
-        function createConfetti() {
-            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                document.body.appendChild(confetti);
-                
-                // 3秒后移除
-                setTimeout(() => {
-                    confetti.remove();
-                }, 3000);
+        // 得分动画
+        function animateScore() {
+            const scoreElement = document.getElementById('score');
+            scoreElement.classList.add('score-animation');
+            setTimeout(() => {
+                scoreElement.classList.remove('score-animation');
+            }, 1000);
+        }
+
+        // 选项选择动画
+        function animateOption(option, isCorrect) {
+            option.classList.add('option-animation');
+            if (isCorrect) {
+                option.classList.add('correct-animation');
+            } else {
+                option.classList.add('incorrect-animation');
+            }
+            setTimeout(() => {
+                option.classList.remove('option-animation', 'correct-animation', 'incorrect-animation');
+            }, 1000);
+        }
+
+        // 获取翻译
+        function getTranslation(sentence) {
+            // 简单的翻译映射
+            const translations = {
+                'I am a student.': '我是一名学生。',
+                'I love my family.': '我爱我的家人。',
+                'I have a dog.': '我有一只狗。',
+                'I am hungry.': '我饿了。',
+                'I am seven years old.': '我七岁了。',
+                'I am happy today.': '我今天很开心。',
+                'I am learning English.': '我正在学习英语。',
+                'I am going to school.': '我要去上学。',
+                'I am reading a book.': '我正在读书。',
+                'I am playing with my friends.': '我正在和朋友们玩。',
+                'You are my friend.': '你是我的朋友。',
+                'You are very kind.': '你非常善良。',
+                'You are good at English.': '你擅长英语。',
+                'You are tall and strong.': '你又高又壮。',
+                'You are my best friend.': '你是我最好的朋友。',
+                'You are wearing a blue shirt.': '你穿着一件蓝色的衬衫。',
+                'You are coming to my party.': '你要来我的派对。',
+                'You are doing a great job.': '你做得很棒。',
+                'You are my neighbor.': '你是我的邻居。',
+                'You are always helpful.': '你总是乐于助人。',
+                'He is a boy.': '他是一个男孩。',
+                'He likes ice cream.': '他喜欢冰淇淋。',
+                'He is tall.': '他很高。',
+                'He is my teacher.': '他是我的老师。',
+                'He is playing football.': '他正在踢足球。',
+                'He is my brother.': '他是我的兄弟。',
+                'He is reading a book.': '他正在读书。',
+                'He is very smart.': '他非常聪明。',
+                'He is wearing a red cap.': '他戴着一顶红色的帽子。',
+                'He is my father.': '他是我的父亲。',
+                'She is a girl.': '她是一个女孩。',
+                'She is my sister.': '她是我的姐妹。',
+                'She is my mother.': '她是我的母亲。',
+                'She is wearing a dress.': '她穿着一条裙子。',
+                'She is reading a storybook.': '她正在读故事书。',
+                'She is very pretty.': '她非常漂亮。',
+                'She is my teacher.': '她是我的老师。',
+                'She is playing with a doll.': '她正在玩洋娃娃。',
+                'She is my aunt.': '她是我的姑姑。',
+                'She is good at singing.': '她擅长唱歌。',
+                'It is a cat.': '它是一只猫。',
+                'It is a bird.': '它是一只鸟。',
+                'It is a dog.': '它是一只狗。',
+                'It is a book.': '它是一本书。',
+                'It is a ball.': '它是一个球。',
+                'It is a tree.': '它是一棵树。',
+                'It is a car.': '它是一辆汽车。',
+                'It is a house.': '它是一座房子。',
+                'It is a computer.': '它是一台电脑。',
+                'It is a pencil.': '它是一支铅笔。',
+                'We are happy.': '我们很开心。',
+                'We are in the park.': '我们在公园里。',
+                'We are friends.': '我们是朋友。',
+                'We are going to school together.': '我们一起去上学。',
+                'We are playing games.': '我们正在玩游戏。',
+                'We are learning English.': '我们正在学习英语。',
+                'We are a family.': '我们是一个家庭。',
+                'We are having fun.': '我们玩得很开心。',
+                'We are watching a movie.': '我们正在看电影。',
+                'We are eating lunch.': '我们正在吃午饭。',
+                'They are playing football.': '他们正在踢足球。',
+                'They are students.': '他们是学生。',
+                'They are my parents.': '他们是我的父母。',
+                'They are my classmates.': '他们是我的同学。',
+                'They are my friends.': '他们是我的朋友。',
+                'They are playing in the garden.': '他们正在花园里玩。',
+                'They are happy together.': '他们在一起很开心。',
+                'They are going to the zoo.': '他们要去动物园。',
+                'They are eating ice cream.': '他们正在吃冰淇淋。',
+                'They are reading books.': '他们正在读书。',
+                'It is my pet.': '它是我的宠物。',
+                'He is my grandfather.': '他是我的祖父。',
+                'She is my grandmother.': '她是我的祖母。',
+                'They are my siblings.': '他们是我的兄弟姐妹。',
+                'They are my cousins.': '他们是我的表兄弟姐妹。',
+                'I am excited about the party.': '我对派对很兴奋。',
+                'They are my neighbors.': '他们是我的邻居。',
+                'It is a big dog.': '它是一只大狗。',
+                'They are my team members.': '他们是我的团队成员。',
+                'It is a small cat.': '它是一只小猫。',
+                'I am ready for the test.': '我准备好考试了。',
+                'They are my colleagues.': '他们是我的同事。',
+                'It is my favorite toy.': '它是我最喜欢的玩具。',
+                'They are my relatives.': '他们是我的亲戚。',
+                'I am a good student.': '我是一名好学生。',
+                'It is my favorite book.': '它是我最喜欢的书。',
+                'They are my favorite foods.': '它们是我最喜欢的食物。',
+                'I am looking forward to the holiday.': '我期待着假期。',
+                'They are my favorite animals.': '它们是我最喜欢的动物。',
+                'It is my favorite color.': '它是我最喜欢的颜色。'
+            };
+            
+            return translations[sentence] || '翻译不可用';
+        }
+
+        // 播放语音
+        function playAudio(text) {
+            // 使用Web Speech API
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 1.0;
+                speechSynthesis.speak(utterance);
             }
         }
+
+        // 播放语音按钮点击事件
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (questions && questions[currentQuestion]) {
+                const question = questions[currentQuestion];
+                const correctSentence = question.sentence.replace('______', question.correctAnswer);
+                playAudio(correctSentence);
+            }
+        });
 
         // 下一题
         function nextQuestion() {
@@ -612,7 +1036,6 @@
             const message = document.getElementById('result-message');
             if (score === 100) {
                 message.textContent = '太棒了！你是人称代词大师！';
-                createConfetti();
             } else if (score >= 80) {
                 message.textContent = '做得很好！继续加油！';
             } else if (score >= 60) {

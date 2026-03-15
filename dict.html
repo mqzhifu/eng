@@ -496,6 +496,7 @@
 
     <!-- 侧边导航栏 -->
     <nav class="sidebar">
+        <a href="index.html" class="nav-item" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border-left: 4px solid #fff; margin-bottom: 20px;">🏠 返回首页</a>
         <h2>📑 目录索引</h2>
         
         <a href="#section-words" class="nav-item">1️⃣ 单词分类</a>
@@ -1632,9 +1633,16 @@ How many books do you have</td>
         // 平滑滚动
         document.querySelectorAll('.nav-item, .nav-child').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth' });
+                const href = this.getAttribute('href');
+                // 只有当href以#开头时才执行平滑滚动
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+                // 否则正常跳转（如返回首页链接）
             });
         });
     </script>

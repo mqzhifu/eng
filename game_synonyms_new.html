@@ -33,6 +33,7 @@
             color: white;
             padding: 30px;
             text-align: center;
+            position: relative;
         }
 
         .header h1 {
@@ -47,14 +48,15 @@
         }
 
         .back-btn {
-            display: inline-block;
+            position: absolute;
+            top: 20px;
+            left: 20px;
             background: rgba(255,255,255,0.2);
             color: white;
             padding: 10px 20px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            margin-bottom: 20px;
             transition: all 0.3s;
         }
 
@@ -336,7 +338,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <a href="game_index.html" class="back-btn">⬅ 返回游戏列表</a>
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
             <h1>🔤 近似词多选游戏</h1>
             <p>选择所有与中文意思匹配的近似词，一共20道题，满分100分！</p>
         </div>
