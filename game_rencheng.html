@@ -510,7 +510,7 @@
                         speechSynthesis.speak(utterance);
                     } else {
                         // PC端也使用ResponsiveVoice作为回退
-                        if (window.responsiveVoice) {
+                        if (typeof responsiveVoice !== 'undefined') {
                             responsiveVoice.speak(text, 'US English Female', { rate: 0.7 });
                         } else {
                             alert('当前PC浏览器不支持语音合成功能');
@@ -519,7 +519,7 @@
                 } else {
                     // 移动端使用ResponsiveVoice.js库
                     try {
-                        if (window.responsiveVoice) {
+                        if (typeof responsiveVoice !== 'undefined') {
                             responsiveVoice.speak(text, 'US English Female', { rate: 0.7 });
                         } else {
                             alert('ResponsiveVoice.js库加载失败');
