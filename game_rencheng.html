@@ -492,11 +492,17 @@
         // 播放语音
         function playAudio(text) {
             // 使用Web Speech API
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.7;
-                speechSynthesis.speak(utterance);
+            try {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.7;
+                    speechSynthesis.speak(utterance);
+                } else {
+                    alert('当前设备不支持语音合成功能');
+                }
+            } catch (error) {
+                alert('播放音频时出错: ' + error.message);
             }
         }
 
