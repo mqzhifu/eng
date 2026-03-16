@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👤 人称代词游戏 - 英语语法学习乐园</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- 引入ResponsiveVoice.js库 -->
+    <script src="js/responsivevoice.js"></script>
 </head>
 <body>
     <div class="container">
@@ -489,17 +491,42 @@
             return translations[sentence] || '翻译不可用';
         }
 
+        // 检测设备类型
+        function isPC() {
+            const userAgent = navigator.userAgent;
+            const mobileKeywords = ['Android', 'iPhone', 'iPad', 'iPod', 'BlackBerry', 'Windows Phone'];
+            return !mobileKeywords.some(keyword => userAgent.includes(keyword));
+        }
+        
         // 播放语音
         function playAudio(text) {
-            // 使用Web Speech API
             try {
-                if ('speechSynthesis' in window) {
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'en-US';
-                    utterance.rate = 0.7;
-                    speechSynthesis.speak(utterance);
+                if (isPC()) {
+                    // PC端使用原生Web Speech API
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.lang = 'en-US';
+                        utterance.rate = 0.7;
+                        speechSynthesis.speak(utterance);
+                    } else {
+                        // PC端也使用ResponsiveVoice作为回退
+                        if (window.responsiveVoice) {
+                            responsiveVoice.speak(text, 'US English Female', { rate: 0.7 });
+                        } else {
+                            alert('当前PC浏览器不支持语音合成功能');
+                        }
+                    }
                 } else {
-                    alert('当前设备不支持语音合成功能');
+                    // 移动端使用ResponsiveVoice.js库
+                    try {
+                        if (window.responsiveVoice) {
+                            responsiveVoice.speak(text, 'US English Female', { rate: 0.7 });
+                        } else {
+                            alert('ResponsiveVoice.js库加载失败');
+                        }
+                    } catch (error) {
+                        alert('使用ResponsiveVoice播放语音时出错: ' + error.message);
+                    }
                 }
             } catch (error) {
                 alert('播放音频时出错: ' + error.message);
