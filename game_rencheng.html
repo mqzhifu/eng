@@ -4,819 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👤 人称代词游戏 - 英语语法学习乐园</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .ice-princess {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 120px;
-            height: 180px;
-            transition: all 0.5s ease;
-            z-index: 10;
-            animation: princessIdle 6s ease-in-out infinite;
-        }
-
-        @keyframes princessIdle {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            25% {
-                transform: translateY(-5px);
-            }
-            50% {
-                transform: translateY(0px);
-            }
-            75% {
-                transform: translateY(-3px);
-            }
-        }
-
-        .ice-princess svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .princess-face {
-            position: absolute;
-            top: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-            z-index: 15;
-            transition: all 0.3s ease;
-        }
-
-        .ice-princess:hover {
-            animation: princessHover 0.5s ease forwards;
-        }
-
-        .ice-princess.happy {
-            transform: scale(1.1);
-            animation: happyJump 0.8s ease;
-        }
-
-        .ice-princess.sad {
-            transform: scale(0.9);
-            animation: sadShrink 0.5s ease;
-        }
-
-        @keyframes happyJump {
-            0%, 100% {
-                transform: translateY(0) scale(1.1);
-            }
-            50% {
-                transform: translateY(-20px) scale(1.1);
-            }
-        }
-
-        @keyframes sadShrink {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(0.85);
-            }
-            100% {
-                transform: scale(0.9);
-            }
-        }
-
-        @keyframes princessHover {
-            0% {
-                transform: translateY(0px);
-            }
-            100% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes flipAnimation {
-            0% {
-                transform: rotateY(0deg);
-            }
-            50% {
-                transform: rotateY(180deg);
-            }
-            100% {
-                transform: rotateY(360deg);
-            }
-        }
-
-        .ice-princess.flip {
-            animation: flipAnimation 1s ease-in-out;
-        }
-
-        .ice-princess::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 10px;
-            background: rgba(179,229,252,0.5);
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(179,229,252,0.8), 0 0 20px rgba(179,229,252,0.4);
-            animation: iceGlow 2s ease-in-out infinite;
-        }
-
-        @keyframes iceGlow {
-            0%, 100% {
-                opacity: 0.5;
-                transform: translateX(-50%) scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: translateX(-50%) scale(1.1);
-            }
-        }
-
-        .ice-princess::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 5px;
-            background: rgba(0,0,0,0.2);
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            animation: shadowPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes shadowPulse {
-            0%, 100% {
-                transform: translateX(-50%) scale(1);
-                opacity: 0.5;
-            }
-            50% {
-                transform: translateX(-50%) scale(1.2);
-                opacity: 0.8;
-            }
-        }
-
-        .snowflakes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .snowflake {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: snowfall 3s linear infinite;
-        }
-
-        @keyframes snowfall {
-            0% {
-                transform: translateY(-10px) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: translateY(90px) rotate(180deg) scale(1.1);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(180px) rotate(360deg) scale(0.9);
-                opacity: 0;
-            }
-        }
-
-        .header {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        
-
-        .game-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
-            border-bottom: 1px solid #e9ecef;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .progress {
-            display: flex;
-            align-items: center;
-        }
-
-        .progress-info {
-            background: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            font-size: 18px;
-            font-weight: bold;
-            color: #764ba2;
-            margin-right: 15px;
-        }
-
-        .progress-bar {
-            width: 200px;
-            height: 12px;
-            background: white;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            width: 0%;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
-        }
-
-        .score {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-            background: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .game-content {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .question {
-            margin-bottom: 40px;
-        }
-
-        .question-number {
-            font-size: 18px;
-            color: #667eea;
-            margin-bottom: 15px;
-            font-weight: bold;
-            text-align: left;
-        }
-
-        .sentence {
-            font-size: 30px;
-            font-weight: bold;
-            margin: 10px 0 20px;
-            line-height: 1.5;
-            padding: 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
-            border-radius: 20px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-            border-left: 4px solid #667eea;
-            position: relative;
-            overflow: hidden;
-            animation: sentenceFade 0.5s ease;
-        }
-
-        @keyframes sentenceFade {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .sentence::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-        }
-
-        .blank {
-            display: inline-block;
-            width: 130px;
-            height: 55px;
-            background: white;
-            border: 2px dashed #667eea;
-            border-radius: 12px;
-            margin: 0 12px;
-            vertical-align: middle;
-            line-height: 51px;
-            color: #667eea;
-            font-style: italic;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.15);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .blank::after {
-            content: '?';
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            font-size: 20px;
-            color: rgba(102, 126, 234, 0.5);
-        }
-
-        .blank:hover {
-            transform: scale(1.05);
-            border-color: #764ba2;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .blank.filled {
-            background: #e8f5e9;
-            border: 2px solid #4CAF50;
-            color: #388E3C;
-            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.2);
-        }
-
-        .blank.filled::after {
-            display: none;
-        }
-
-        .options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .option {
-            background: white;
-            border: 2px solid #e9ecef;
-            border-radius: 16px;
-            padding: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .option:hover::before {
-            left: 100%;
-        }
-
-        .option:hover {
-            border-color: #667eea;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .option.correct {
-            background: #e8f5e9;
-            border-color: #4CAF50;
-            color: #388E3C;
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
-
-        .option.incorrect {
-            background: #ffebee;
-            border-color: #f44336;
-            color: #c62828;
-            box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
-        }
-
-        .feedback {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: bold;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            animation: feedbackSlide 0.3s ease;
-        }
-
-        @keyframes feedbackSlide {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .feedback.correct {
-            background: #e8f5e9;
-            color: #388E3C;
-            display: block;
-            border-left: 4px solid #4CAF50;
-        }
-
-        .feedback.incorrect {
-            background: #ffebee;
-            color: #c62828;
-            display: block;
-            border-left: 4px solid #f44336;
-        }
-
-        .next-btn {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            display: none;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .next-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .next-btn:active {
-            transform: translateY(0);
-        }
-
-        .result {
-            text-align: center;
-            padding: 60px;
-            display: none;
-            animation: resultFade 0.5s ease;
-        }
-
-        @keyframes resultFade {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .result h2 {
-            font-size: 40px;
-            margin-bottom: 24px;
-            color: #667eea;
-            text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.2);
-        }
-
-        .result-score {
-            font-size: 80px;
-            font-weight: bold;
-            color: #764ba2;
-            margin: 30px 0;
-            text-shadow: 2px 2px 4px rgba(118, 75, 162, 0.2);
-            animation: scorePulse 1s ease-in-out;
-        }
-
-        .result-message {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .result-stats {
-            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
-            border-radius: 16px;
-            padding: 20px;
-            margin: 20px auto;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 300px;
-        }
-
-        .stat-item {
-            display: flex;
-            margin: 10px 0;
-            font-size: 18px;
-        }
-
-        .stat-label {
-            font-weight: bold;
-            color: #667eea;
-            width: 100px;
-            text-align: right;
-        }
-
-        .stat-value {
-            font-weight: bold;
-            color: #764ba2;
-            flex: 1;
-            text-align: left;
-        }
-
-        .restart-btn {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-        }
-
-        .restart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .home-btn {
-            background: #f8f9fa;
-            color: #667eea;
-            border: 2px solid #667eea;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .home-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-
-        /* 得分动画 */
-        .score-animation {
-            animation: scorePulse 1s ease-in-out;
-        }
-
-        @keyframes scorePulse {
-            0% {
-                transform: scale(1);
-                color: #667eea;
-            }
-            50% {
-                transform: scale(1.5);
-                color: #764ba2;
-                text-shadow: 0 0 10px rgba(118, 75, 162, 0.5);
-            }
-            100% {
-                transform: scale(1);
-                color: #667eea;
-            }
-        }
-
-        /* 选项动画 */
-        .option-animation {
-            animation: optionClick 0.3s ease-in-out;
-        }
-
-        .correct-animation {
-            animation: correctPulse 1s ease-in-out;
-        }
-
-        .incorrect-animation {
-            animation: incorrectShake 0.5s ease-in-out;
-        }
-
-        @keyframes optionClick {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(0.95);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes correctPulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
-            }
-        }
-
-        @keyframes incorrectShake {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-5px);
-            }
-            75% {
-                transform: translateX(5px);
-            }
-        }
-
-        /* 翻译区域样式 */
-        .translation {
-            margin-top: 12px;
-            padding: 12px 18px;
-            background: linear-gradient(135deg, #f8f9fa, #e3f2fd);
-            border-radius: 16px;
-            border: 2px solid #e9ecef;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            animation: translationSlide 0.3s ease;
-        }
-
-        @keyframes translationSlide {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .translation-content {
-            font-size: 16px;
-            line-height: 1.5;
-            color: #333;
-            text-align: left;
-        }
-
-        .translation-content strong {
-            display: inline-block;
-            width: 100px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .play-audio-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 50%;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .play-audio-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .play-audio-btn:active {
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-            }
-            
-            .game-content {
-                padding: 20px;
-            }
-            
-            .sentence {
-                font-size: 18px;
-            }
-            
-            .blank {
-                width: 100px;
-                height: 40px;
-                line-height: 36px;
-            }
-            
-            .options {
-                grid-template-columns: 1fr;
-            }
-            
-            .result-score {
-                font-size: 48px;
-            }
-            
-            .play-audio-btn {
-                top: 15px;
-                right: 15px;
-                width: 36px;
-                height: 36px;
-                font-size: 16px;
-                padding: 10px;
-            }
-            
-            .back-btn {
-                top: 15px;
-                left: 15px;
-                padding: 8px 16px;
-                font-size: 14px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
             <h1>👤 人称代词游戏</h1>
             <p>选择正确的人称代词填空，一共20道题，满分100分！</p>
         </div>
@@ -830,8 +24,11 @@
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
             </div>
+            <div class="error-count">
+                错误: <span id="error-count">0</span>
+            </div>
             <div class="score">
-                分数: <span id="score">0</span>/100
+                分数: <span id="score">0</span>
             </div>
         </div>
 
@@ -851,6 +48,7 @@
                     <div class="translation-content" id="translation-content"></div>
                 </div>
                 <button class="next-btn" id="next-btn">下一题</button>
+                <button class="restart-btn" id="game-restart-btn" style="display: inline-block; margin-left: 10px;">重新开始</button>
             </div>
 
             <div class="result" id="result">
@@ -873,39 +71,39 @@
                 </div>
                 <button class="restart-btn" id="restart-btn">再玩一次</button>
             </div>
-        </div>
-        <div class="ice-princess" id="ice-princess">
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                viewBox="0 0 1008.131 1628.738" enable-background="new 0 0 1008.131 1628.738" xml:space="preserve">
-                <path d="M633.241,730.119c-16.585-34.552-24.082-25.527-20.89-40.503c5.323-24.936,40.335-70.209,45.529-85.305
-                    c4.345-12.622,6.164-15.432,10.745-16.58c5.242-1.316,7.271-5.225,7.281-14.044c0.034-19.543,7.305-12.556-2.395-31.454
-                    c-12.362-24.129-31.391-37.107-56.448-86.535c-24.075-47.481-30.45-51.866-65.391-118.174
-                    c-62.012-23.643-60.006-23.195-71.329-29.559c0-25.398-1.405-25.717,10.639-27.637c27.73-4.414,45.007-57.442,43.812-80.841
-                    c-0.665-13.037-0.521-13.743,3.111-15.398c4.382-1.997,5.033-4.482,1.175-4.482c-1.888,0-2.278-0.809-1.384-2.864
-                    c2.647-6.089,0.773-23.202,5.855-29.679c8.739-11.11-6.781-22.904-9.374-43.165c-1.443-11.307-3.885-15.751-11.91-21.661
-                    c-3.885-2.864-6.678-6.277-6.702-8.189c-0.058-4.961-16.073-23.717-20.273-23.744c-6.88-0.045-10.121-1.95-15.621-9.186
-                    c-7.932-10.438-13.045-10.034-19.03-15.494c-2.813-2.563-4.29-2.782-9.35-1.384c-11.246,3.112-5.596,9.351-18.392-1.723
-                    c-9.114-7.891-12.475-8.854-27.205-7.798c-8.549,0.613-14.044,2.165-22.066,6.236c-14.555,7.387-18.992,14.822-19.969,33.461
-                    c-1.822,34.652,11.702,46.106,17.957,52.81l-2.015,15.418c-5.476,41.829,11.658,23.462,9.162,52.344
-                    c-1.186,13.767,0.61,19.657,7.74,25.338c14.954,11.924,4.943,18.241,13.472,22.124c4.691,2.138,4.65,1.813,2.392,18.814
-                    c-18.537,139.685-70.019,34.369-90.924,164.172c-4.643,28.837-39.828,82.629-46.598,92.484c-4.375,6.369-10.312,8.296-15.493,13.732
-                    c-3.719,3.902-2.954,7.236-3.837,11.949c-2.661,14.189-13.274,10.751-13.274,28.732c0,10.683,3.474,25.745,8.206,35.572
-                    c5.316,11.053,13.679,9.155,23.803,22.422c20.232,26.529,68.004,56.736,83.304,69.982c7.801,6.754,12.627,10.113,16.254,12.756
-                    c-29.252,61.545-14.391,40.531-30.95,70.661C216.463,993.57,16.238,1479.367,23.439,1494.468
-                    c5.278,11.078,20.376,13.223,51.066,27.475c22.875,10.625,82.67,35.335,108.62,33.177c59.797-4.955,49.075,12.844,78.818,30.89
-                    c25.44,15.435,56.786,15.879,85.03,22.904c25.338,6.301,32.653,6.801,47.459,3.248c28.871-6.927,58.962-9.516,88.323-13.588
-                    c69.871-9.691,65.801-16.757,80.335-12.308c10.423,3.191,20.585,2.567,30.985,5.479c40.903,11.431,47.237,15.961,94.097,4.482
-                    c43.35-10.611,45.99-4.594,81.101-25.728c16.43-9.888,28.992-12.502,37.501-19.311c32.591-26.112,52.093-0.963,132.531-47.42
-                    c10.806-6.241,43.898-22.475,43.898-22.475c1.824-1.81,2.217,2.145-32.873-69.74c-49.56-101.531-191.979-412.685-279.028-600.194
-                    C658.711,784.236,646.177,757.079,633.241,730.119z M398.556,627.024c-2.906,16.299-5.469,19.451-9.769,12.013
-                    c-14.613-25.305-39.433-44.747-50.134-60.68c-6.709-10.001-6.764-10.204-5.828-21.552c0.997-12.068,4.745-24.772,10.889-36.898
-                    c3.981-7.867,27.476-42.469,28.832-42.469C390.987,477.438,407.739,575.506,398.556,627.024z M603.895,598.641
-                    c-25.288,54.126-23.556,52.669-23.556,52.669c-1.151,4.927-5.9,6.243-5.9,1.638c-0.004-1.576-2.289-7.651-5.081-13.5
-                    c-9.282-19.44-1.099-18.012-7.932-51.193c-9.292-45.097-7.791-75.835,4.602-94.279c2.217-3.303,11.149,2.601,21.579,14.264
-                    c8.069,9.021,24.478,38.683,24.464,44.213c-0.007,1.494-1.823,5.664-4.043,9.261C603.46,569.136,603.986,571.522,603.895,598.641z"/>
-            </svg>
-            <div class="princess-face" id="princess-face">😊</div>
-            <div class="snowflakes" id="snowflakes"></div>
+            <div class="ice-princess" id="ice-princess">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 1008.131 1628.738" enable-background="new 0 0 1008.131 1628.738" xml:space="preserve">
+                    <path d="M633.241,730.119c-16.585-34.552-24.082-25.527-20.89-40.503c5.323-24.936,40.335-70.209,45.529-85.305
+                        c4.345-12.622,6.164-15.432,10.745-16.58c5.242-1.316,7.271-5.225,7.281-14.044c0.034-19.543,7.305-12.556-2.395-31.454
+                        c-12.362-24.129-31.391-37.107-56.448-86.535c-24.075-47.481-30.45-51.866-65.391-118.174
+                        c-62.012-23.643-60.006-23.195-71.329-29.559c0-25.398-1.405-25.717,10.639-27.637c27.73-4.414,45.007-57.442,43.812-80.841
+                        c-0.665-13.037-0.521-13.743,3.111-15.398c4.382-1.997,5.033-4.482,1.175-4.482c-1.888,0-2.278-0.809-1.384-2.864
+                        c2.647-6.089,0.773-23.202,5.855-29.679c8.739-11.11-6.781-22.904-9.374-43.165c-1.443-11.307-3.885-15.751-11.91-21.661
+                        c-3.885-2.864-6.678-6.277-6.702-8.189c-0.058-4.961-16.073-23.717-20.273-23.744c-6.88-0.045-10.121-1.95-15.621-9.186
+                        c-7.932-10.438-13.045-10.034-19.03-15.494c-2.813-2.563-4.29-2.782-9.35-1.384c-11.246,3.112-5.596,9.351-18.392-1.723
+                        c-9.114-7.891-12.475-8.854-27.205-7.798c-8.549,0.613-14.044,2.165-22.066,6.236c-14.555,7.387-18.992,14.822-19.969,33.461
+                        c-1.822,34.652,11.702,46.106,17.957,52.81l-2.015,15.418c-5.476,41.829,11.658,23.462,9.162,52.344
+                        c-1.186,13.767,0.61,19.657,7.74,25.338c14.954,11.924,4.943,18.241,13.472,22.124c4.691,2.138,4.65,1.813,2.392,18.814
+                        c-18.537,139.685-70.019,34.369-90.924,164.172c-4.643,28.837-39.828,82.629-46.598,92.484c-4.375,6.369-10.312,8.296-15.493,13.732
+                        c-3.719,3.902-2.954,7.236-3.837,11.949c-2.661,14.189-13.274,10.751-13.274,28.732c0,10.683,3.474,25.745,8.206,35.572
+                        c5.316,11.053,13.679,9.155,23.803,22.422c20.232,26.529,68.004,56.736,83.304,69.982c7.801,6.754,12.627,10.113,16.254,12.756
+                        c-29.252,61.545-14.391,40.531-30.95,70.661C216.463,993.57,16.238,1479.367,23.439,1494.468
+                        c5.278,11.078,20.376,13.223,51.066,27.475c22.875,10.625,82.67,35.335,108.62,33.177c59.797-4.955,49.075,12.844,78.818,30.89
+                        c25.44,15.435,56.786,15.879,85.03,22.904c25.338,6.301,32.653,6.801,47.459,3.248c28.871-6.927,58.962-9.516,88.323-13.588
+                        c69.871-9.691,65.801-16.757,80.335-12.308c10.423,3.191,20.585,2.567,30.985,5.479c40.903,11.431,47.237,15.961,94.097,4.482
+                        c43.35-10.611,45.99-4.594,81.101-25.728c16.43-9.888,28.992-12.502,37.501-19.311c32.591-26.112,52.093-0.963,132.531-47.42
+                        c10.806-6.241,43.898-22.475,43.898-22.475c1.824-1.81,2.217,2.145-32.873-69.74c-49.56-101.531-191.979-412.685-279.028-600.194
+                        C658.711,784.236,646.177,757.079,633.241,730.119z M398.556,627.024c-2.906,16.299-5.469,19.451-9.769,12.013
+                        c-14.613-25.305-39.433-44.747-50.134-60.68c-6.709-10.001-6.764-10.204-5.828-21.552c0.997-12.068,4.745-24.772,10.889-36.898
+                        c3.981-7.867,27.476-42.469,28.832-42.469C390.987,477.438,407.739,575.506,398.556,627.024z M603.895,598.641
+                        c-25.288,54.126-23.556,52.669-23.556,52.669c-1.151,4.927-5.9,6.243-5.9,1.638c-0.004-1.576-2.289-7.651-5.081-13.5
+                        c-9.282-19.44-1.099-18.012-7.932-51.193c-9.292-45.097-7.791-75.835,4.602-94.279c2.217-3.303,11.149,2.601,21.579,14.264
+                        c8.069,9.021,24.478,38.683,24.464,44.213c-0.007,1.494-1.823,5.664-4.043,9.261C603.46,569.136,603.986,571.522,603.895,598.641z"/>
+                </svg>
+                <div class="princess-face" id="princess-face">😊</div>
+                <div class="snowflakes" id="snowflakes"></div>
+            </div>
         </div>
     </div>
 
@@ -1029,6 +227,7 @@
 
         let currentQuestion = 0;
         let score = 0;
+        let errorCount = 0;
         let answered = false;
         let startTime = 0;
         let correctAnswers = 0;
@@ -1039,11 +238,13 @@
             questions = getRandomQuestions();
             currentQuestion = 0;
             score = 0;
+            errorCount = 0;
             answered = false;
             correctAnswers = 0;
             startTime = Date.now(); // 记录开始时间
             document.getElementById('current-question').textContent = 1;
             document.getElementById('score').textContent = 0;
+            document.getElementById('error-count').textContent = 0;
             document.getElementById('progress-fill').style.width = '0%';
             document.getElementById('result').style.display = 'none';
             document.getElementById('question').style.display = 'block';
@@ -1071,8 +272,9 @@
             });
             
             document.getElementById('feedback').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
         }
 
@@ -1119,6 +321,8 @@
                     icePrincess.className = 'ice-princess';
                 }, 1000);
             } else {
+                errorCount++; // 增加错误次数
+                document.getElementById('error-count').textContent = errorCount;
                 feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}。${explanation}`;
                 feedback.className = 'feedback incorrect';
                 // 冰雪公主伤心表情
@@ -1147,6 +351,9 @@
                 
                 // 播放语音
                 playAudio(correctSentencePlain);
+                
+                // 显示音频播放按钮
+                document.getElementById('play-audio-btn').style.display = 'flex';
             }
             
             // 添加翻转动画
@@ -1352,6 +559,7 @@
         // 事件监听
         document.getElementById('next-btn').addEventListener('click', nextQuestion);
         document.getElementById('restart-btn').addEventListener('click', initGame);
+        document.getElementById('game-restart-btn').addEventListener('click', initGame);
 
         // 生成雪花
         function generateSnowflakes() {

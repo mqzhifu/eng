@@ -4,493 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>📚 英语基础语法词典</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* 侧边导航栏 */
-        .sidebar {
-            width: 280px;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 30px 15px;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            box-shadow: 2px 0 15px rgba(0,0,0,0.15);
-            z-index: 1000;
-        }
-
-        .sidebar h2 {
-            color: #667eea;
-            font-size: 22px;
-            margin-bottom: 25px;
-            padding-bottom: 12px;
-            border-bottom: 3px solid #667eea;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        /* 折叠菜单样式 */
-        .nav-category {
-            margin: 8px 0;
-        }
-
-        .nav-parent {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 18px;
-            background: #f8f9fa;
-            color: #333;
-            text-decoration: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            border-left: 4px solid transparent;
-            font-weight: 500;
-            user-select: none;
-        }
-
-        .nav-parent:hover {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-left: 4px solid #fff;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
-        }
-
-        .nav-parent.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-left: 4px solid #fff;
-        }
-
-        .nav-parent .arrow {
-            font-size: 12px;
-            transition: transform 0.3s ease;
-            margin-left: 8px;
-        }
-
-        .nav-parent.collapsed .arrow {
-            transform: rotate(-90deg);
-        }
-
-        .nav-children {
-            max-height: 500px;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            margin-left: 15px;
-            margin-top: 5px;
-        }
-
-        .nav-children.collapsed {
-            max-height: 0;
-        }
-
-        .nav-child {
-            padding: 8px 18px;
-            color: #555;
-            text-decoration: none;
-            display: block;
-            font-size: 13px;
-            border-radius: 8px;
-            margin: 3px 0;
-            transition: all 0.2s ease;
-            border-left: 3px solid transparent;
-        }
-
-        .nav-child:hover {
-            background: #e3f2fd;
-            color: #667eea;
-            border-left: 3px solid #667eea;
-            transform: translateX(5px);
-        }
-
-        .nav-child.active {
-            background: #e3f2fd;
-            color: #667eea;
-            border-left: 3px solid #667eea;
-            font-weight: bold;
-        }
-
-        /* 普通菜单项 */
-        .nav-item {
-            display: block;
-            padding: 12px 18px;
-            margin: 8px 0;
-            background: #f8f9fa;
-            color: #333;
-            text-decoration: none;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            border-left: 4px solid transparent;
-            font-weight: 500;
-        }
-
-        .nav-item:hover {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            transform: translateX(8px);
-            border-left: 4px solid #fff;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
-        }
-
-        .nav-item.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-left: 4px solid #fff;
-            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.4);
-        }
-
-        /* 主内容区 */
-        .main-content {
-            margin-left: 280px;
-            flex: 1;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .content-wrapper {
-            width: 100%;
-            max-width: 1200px;
-        }
-
-        .header {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            text-align: center;
-            background: linear-gradient(135deg, #ffffff, #f8f9ff);
-        }
-
-        .header h1 {
-            color: #667eea;
-            font-size: 42px;
-            margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(102, 126, 234, 0.2);
-        }
-
-        .header p {
-            color: #666;
-            font-size: 18px;
-            line-height: 1.8;
-        }
-
-        /* 章节卡片 */
-        .section {
-            background: white;
-            border-radius: 20px;
-            padding: 35px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            scroll-margin-top: 30px;
-            width: 100%;
-        }
-
-        .section h2 {
-            color: #667eea;
-            font-size: 28px;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 4px solid #667eea;
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            justify-content: center;
-        }
-
-        .section h2::before {
-            content: '📌';
-            margin-right: 12px;
-            font-size: 32px;
-        }
-
-        .section-desc {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            border-left: 5px solid #667eea;
-            color: #555;
-            line-height: 2;
-            font-size: 15px;
-            text-align: center;
-        }
-
-        /* 表格通用样式 */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 25px auto;
-            font-size: 14px;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        th, td {
-            padding: 16px 14px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-
-        th {
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: white;
-            font-size: 13px;
-        }
-
-        tbody tr {
-            transition: all 0.25s ease;
-        }
-
-        tbody tr:hover {
-            transform: scale(1.005);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1;
-            position: relative;
-        }
-
-        /* 🎯 换行优化样式 */
-        .wrap-text {
-            white-space: pre-line;
-            word-break: break-word;
-            line-height: 1.8;
-            text-align: left;
-            padding: 12px 10px;
-        }
-
-        .wrap-text-center {
-            white-space: pre-line;
-            word-break: break-word;
-            line-height: 1.8;
-            text-align: center;
-            padding: 12px 10px;
-        }
-
-        /* 不同表格的颜色主题 */
-        .table-words th {
-            background: linear-gradient(135deg, #2196F3, #1976D2);
-        }
-        .table-words tbody tr:nth-child(odd) {
-            background-color: #E3F2FD;
-        }
-        .table-words tbody tr:nth-child(even) {
-            background-color: #BBDEFB;
-        }
-
-        .table-svo th {
-            background: linear-gradient(135deg, #4CAF50, #388E3C);
-        }
-        .table-svo tbody tr:nth-child(odd) {
-            background-color: #E8F5E9;
-        }
-        .table-svo tbody tr:nth-child(even) {
-            background-color: #C8E6C9;
-        }
-
-        .table-verb-type th {
-            background: linear-gradient(135deg, #FF9800, #F57C00);
-        }
-        .table-verb-type tbody tr:nth-child(odd) {
-            background-color: #FFF3E0;
-        }
-        .table-verb-type tbody tr:nth-child(even) {
-            background-color: #FFE0B2;
-        }
-
-        .table-linking th {
-            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
-        }
-        .table-linking tr.present {
-            background-color: #E1BEE7;
-        }
-        .table-linking tr.past {
-            background-color: #F8BBD0;
-        }
-        .table-linking tr.other {
-            background-color: #B3E5FC;
-        }
-
-        .table-aux th {
-            background: linear-gradient(135deg, #00BCD4, #0097A7);
-        }
-        .table-aux tbody tr:nth-child(odd) {
-            background-color: #B2DFDB;
-        }
-        .table-aux tbody tr:nth-child(even) {
-            background-color: #80CBC4;
-        }
-
-        .table-pronoun th {
-            background: linear-gradient(135deg, #673AB7, #512DA8);
-        }
-        .table-pronoun tr.first-person {
-            background-color: #D1C4E9;
-        }
-        .table-pronoun tr.second-person {
-            background-color: #FFE0B2;
-        }
-        .table-pronoun tr.third-person {
-            background-color: #B3E5FC;
-        }
-
-        .table-demo th {
-            background: linear-gradient(135deg, #E91E63, #C2185B);
-        }
-        .table-demo tr.near {
-            background-color: #F8BBD0;
-        }
-        .table-demo tr.far {
-            background-color: #FFCDD2;
-        }
-
-        .table-indef th {
-            background: linear-gradient(135deg, #009688, #00796B);
-        }
-        .table-indef tr.quantity {
-            background-color: #B2DFDB;
-        }
-        .table-indef tr.scope {
-            background-color: #B3E5FC;
-        }
-        .table-indef tr.individual {
-            background-color: #FFE0B2;
-        }
-
-        .table-tense th {
-            background: linear-gradient(135deg, #3F51B5, #303F9F);
-        }
-        .table-tense tbody tr:nth-child(odd) {
-            background-color: #C5CAE9;
-        }
-        .table-tense tbody tr:nth-child(even) {
-            background-color: #9FA8DA;
-        }
-
-        .table-prep th {
-            background: linear-gradient(135deg, #795548, #5D4037);
-        }
-        .table-prep tbody tr:nth-child(odd) {
-            background-color: #D7CCC8;
-        }
-        .table-prep tbody tr:nth-child(even) {
-            background-color: #BCAAA4;
-        }
-
-        .table-explain th {
-            background: linear-gradient(135deg, #00BCD4, #0097A7);
-        }
-        .table-explain td:first-child {
-            font-weight: bold;
-            color: #0097A7;
-            background-color: #E0F7FA;
-        }
-
-        .small-table {
-            font-size: 13px;
-        }
-        .small-table th, .small-table td {
-            padding: 10px 8px;
-        }
-
-        /* 返回顶部按钮 */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
-            transition: all 0.3s ease;
-            z-index: 999;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 35px rgba(102, 126, 234, 0.7);
-        }
-
-        /* 打印样式 */
-        @media print {
-            .sidebar, .back-to-top {
-                display: none;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            body {
-                background: white;
-            }
-            .section {
-                box-shadow: none;
-                border: 1px solid #ddd;
-                page-break-inside: avoid;
-            }
-        }
-
-        /* 移动端适配 */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                padding: 20px 10px;
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .header h1 {
-                font-size: 28px;
-            }
-            table {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 10px 6px;
-            }
-        }
-
-        .highlight {
-            background: linear-gradient(135deg, #FFF9C4, #FFEB3B);
-            padding: 3px 8px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-
-        .tip-box {
-            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
-            border-left: 5px solid #2196F3;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin: 15px 0;
-            color: #1565C0;
-            font-size: 14px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -540,7 +54,7 @@
         <div class="content-wrapper">
             
             <!-- 页头 -->
-            <header class="header">
+            <header class="dict-header">
                 <h1>📖 英语基础语法词典</h1>
                 <p>📚 完整语法体系 · 彩色表格 · 清晰易懂 · 适合小学至初中</p>
             </header>
@@ -1116,173 +630,126 @@
             <!-- 9. 不定代词 -->
             <section id="section-indef" class="section">
                 <h2>不定代词 (Indefinite Pronouns)</h2>
-                <table class="table-indef">
+                <div class="section-desc">
+                    指代不确定的人或事物，没有特定所指
+                </div>
+                <table class="table-words">
                     <thead>
                         <tr>
-                            <th>类别</th>
                             <th>单词</th>
                             <th>中文</th>
+                            <th>用法</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="quantity">
-                            <td rowspan="6">数量</td>
+                        <tr>
                             <td><b>some</b></td>
-                            <td>一些/若干</td>
+                            <td>一些</td>
+                            <td>用于肯定句</td>
                         </tr>
-                        <tr class="quantity">
+                        <tr>
                             <td><b>any</b></td>
-                            <td>任何/一些</td>
+                            <td>任何</td>
+                            <td>用于否定句/疑问句</td>
                         </tr>
-                        <tr class="quantity">
+                        <tr>
                             <td><b>many</b></td>
-                            <td>许多/大量</td>
+                            <td>许多</td>
+                            <td>修饰可数名词复数</td>
                         </tr>
-                        <tr class="quantity">
+                        <tr>
                             <td><b>much</b></td>
-                            <td>许多/大量</td>
+                            <td>许多</td>
+                            <td>修饰不可数名词</td>
                         </tr>
-                        <tr class="quantity">
+                        <tr>
                             <td><b>few</b></td>
-                            <td>几乎没有</td>
+                            <td>很少</td>
+                            <td>修饰可数名词复数</td>
                         </tr>
-                        <tr class="quantity">
+                        <tr>
                             <td><b>little</b></td>
-                            <td>很少/几乎没有</td>
+                            <td>很少</td>
+                            <td>修饰不可数名词</td>
                         </tr>
-                        <tr class="scope">
-                            <td rowspan="5">范围</td>
+                        <tr>
                             <td><b>all</b></td>
-                            <td>全部/所有</td>
+                            <td>全部</td>
+                            <td>指三者或以上</td>
                         </tr>
-                        <tr class="scope">
-                            <td><b>none</b></td>
-                            <td>没有一个</td>
-                        </tr>
-                        <tr class="scope">
+                        <tr>
                             <td><b>both</b></td>
                             <td>两者都</td>
+                            <td>指两者</td>
                         </tr>
-                        <tr class="scope">
+                        <tr>
+                            <td><b>either</b></td>
+                            <td>两者之一</td>
+                            <td>指两者中的任意一个</td>
+                        </tr>
+                        <tr>
                             <td><b>neither</b></td>
                             <td>两者都不</td>
-                        </tr>
-                        <tr class="scope">
-                            <td><b>either</b></td>
-                            <td>两者其一</td>
-                        </tr>
-                        <tr class="individual">
-                            <td rowspan="5">个体</td>
-                            <td><b>each</b></td>
-                            <td>每个/各自</td>
-                        </tr>
-                        <tr class="individual">
-                            <td><b>every</b></td>
-                            <td>每个</td>
-                        </tr>
-                        <tr class="individual">
-                            <td><b>one</b></td>
-                            <td>一个/某人</td>
-                        </tr>
-                        <tr class="individual">
-                            <td><b>other</b></td>
-                            <td>其他的/另外的</td>
-                        </tr>
-                        <tr class="individual">
-                            <td><b>others</b></td>
-                            <td>其他人/物</td>
+                            <td>指两者都不</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
 
-            <!-- 10. 不定代词合成词 -->
+            <!-- 10. 不定代词合成 -->
             <section id="section-indef-compound" class="section">
                 <h2>不定代词合成词</h2>
                 <div class="section-desc">
-                    🟣 紫色 = 指人 &nbsp;|&nbsp; 🟠 橙色 = 指物 &nbsp;|&nbsp; 🔵 蓝色 = 指地点
+                    由 some/any/no/every + thing/one/body 构成
                 </div>
-                <table class="table-indef">
+                <table class="table-words">
                     <thead>
                         <tr>
-                            <th>类别</th>
                             <th>单词</th>
                             <th>中文</th>
-                            <th>用法说明</th>
+                            <th>用法</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="quantity">
-                            <td>指人</td>
+                        <tr>
                             <td><b>someone</b></td>
                             <td>某人</td>
-                            <td>肯定句中</td>
+                            <td>用于肯定句</td>
                         </tr>
-                        <tr class="quantity">
-                            <td>指人</td>
+                        <tr>
                             <td><b>anyone</b></td>
                             <td>任何人</td>
-                            <td>否定句、疑问句</td>
+                            <td>用于否定句/疑问句</td>
                         </tr>
-                        <tr class="quantity">
-                            <td>指人</td>
-                            <td><b>everyone</b></td>
-                            <td>每个人</td>
-                            <td>所有人，全体</td>
-                        </tr>
-                        <tr class="quantity">
-                            <td>指人</td>
+                        <tr>
                             <td><b>no one</b></td>
                             <td>没有人</td>
-                            <td>表全部否定</td>
+                            <td>表示否定</td>
                         </tr>
-                        <tr class="scope">
-                            <td>指物</td>
+                        <tr>
+                            <td><b>everyone</b></td>
+                            <td>每个人</td>
+                            <td>指所有人</td>
+                        </tr>
+                        <tr>
                             <td><b>something</b></td>
-                            <td>某事；某物</td>
-                            <td>肯定句中</td>
+                            <td>某物</td>
+                            <td>用于肯定句</td>
                         </tr>
-                        <tr class="scope">
-                            <td>指物</td>
+                        <tr>
                             <td><b>anything</b></td>
-                            <td>任何事/物</td>
-                            <td>否定句、疑问句</td>
+                            <td>任何物</td>
+                            <td>用于否定句/疑问句</td>
                         </tr>
-                        <tr class="scope">
-                            <td>指物</td>
-                            <td><b>everything</b></td>
-                            <td>一切；所有物</td>
-                            <td>全部事物</td>
-                        </tr>
-                        <tr class="scope">
-                            <td>指物</td>
+                        <tr>
                             <td><b>nothing</b></td>
-                            <td>没有什么</td>
-                            <td>表全部否定</td>
+                            <td>没有东西</td>
+                            <td>表示否定</td>
                         </tr>
-                        <tr class="individual">
-                            <td>指地点</td>
-                            <td><b>somewhere</b></td>
-                            <td>在某处</td>
-                            <td>肯定句中</td>
-                        </tr>
-                        <tr class="individual">
-                            <td>指地点</td>
-                            <td><b>anywhere</b></td>
-                            <td>在任何地方</td>
-                            <td>否定句、疑问句</td>
-                        </tr>
-                        <tr class="individual">
-                            <td>指地点</td>
-                            <td><b>everywhere</b></td>
-                            <td>到处；处处</td>
-                            <td>各个地方</td>
-                        </tr>
-                        <tr class="individual">
-                            <td>指地点</td>
-                            <td><b>nowhere</b></td>
-                            <td>无处；没有地方</td>
-                            <td>表否定</td>
+                        <tr>
+                            <td><b>everything</b></td>
+                            <td>所有东西</td>
+                            <td>指所有事物</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1290,25 +757,33 @@
 
             <!-- 11. 地点代词 -->
             <section id="section-location" class="section">
-                <h2>地点代词/副词</h2>
-                <table class="table-explain small-table">
+                <h2>地点代词 (Location Pronouns)</h2>
+                <div class="section-desc">
+                    表示地点的代词
+                </div>
+                <table class="table-words">
                     <thead>
                         <tr>
                             <th>单词</th>
                             <th>中文</th>
-                            <th>描述</th>
+                            <th>用法</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><b>here</b></td>
                             <td>这里</td>
-                            <td>指自己所在的近处</td>
+                            <td>指说话人所在的位置</td>
                         </tr>
                         <tr>
                             <td><b>there</b></td>
                             <td>那里</td>
-                            <td>指离自己较远的地方</td>
+                            <td>指离说话人较远的位置</td>
+                        </tr>
+                        <tr>
+                            <td><b>where</b></td>
+                            <td>哪里</td>
+                            <td>用于疑问句</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1318,214 +793,242 @@
             <section id="section-conjunction" class="section">
                 <h2>连词 (Conjunctions)</h2>
                 <div class="section-desc">
-                    连接词、短语、句子的"桥梁"
+                    连接词、短语或句子的词
                 </div>
-                
-                <h3 style="color: #2196F3; margin: 20px 0 10px; font-size: 20px; text-align: center;">🔗 并列连词</h3>
-                <table class="table-words small-table">
+                <table class="table-words">
                     <thead>
                         <tr>
-                            <th>英文单词</th>
-                            <th>中文含义</th>
+                            <th>类型</th>
+                            <th>单词</th>
+                            <th>中文</th>
+                            <th>例子</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td><b>and</b></td><td>和，并且</td></tr>
-                        <tr><td><b>but</b></td><td>但是</td></tr>
-                        <tr><td><b>or</b></td><td>或者，否则</td></tr>
-                        <tr><td><b>so</b></td><td>所以</td></tr>
-                        <tr><td><b>for</b></td><td>因为</td></tr>
-                        <tr><td><b>nor</b></td><td>也不</td></tr>
-                        <tr><td><b>yet</b></td><td>然而</td></tr>
-                    </tbody>
-                </table>
-
-                <h3 style="color: #9C27B0; margin: 20px 0 10px; font-size: 20px; text-align: center;">🔗 从属连词</h3>
-                <table class="table-linking small-table">
-                    <thead>
                         <tr>
-                            <th>英文单词</th>
-                            <th>中文含义</th>
+                            <td rowspan="7">并列连词</td>
+                            <td><b>and</b></td>
+                            <td>和</td>
+                            <td>I like apples and bananas.</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td><b>when</b></td><td>当……时候</td></tr>
-                        <tr><td><b>while</b></td><td>当……时候，然而</td></tr>
-                        <tr><td><b>before</b></td><td>在……之前</td></tr>
-                        <tr><td><b>after</b></td><td>在……之后</td></tr>
-                        <tr><td><b>since</b></td><td>自从，因为</td></tr>
-                        <tr><td><b>until / till</b></td><td>直到</td></tr>
-                        <tr><td><b>as soon as</b></td><td>一……就……</td></tr>
-                        <tr><td><b>because</b></td><td>因为</td></tr>
-                        <tr><td><b>as</b></td><td>由于，像</td></tr>
-                        <tr><td><b>if</b></td><td>如果</td></tr>
-                        <tr><td><b>unless</b></td><td>除非</td></tr>
-                        <tr><td><b>as long as</b></td><td>只要</td></tr>
-                        <tr><td><b>though</b></td><td>虽然</td></tr>
-                        <tr><td><b>although</b></td><td>虽然</td></tr>
-                        <tr><td><b>that</b></td><td>为了，以便</td></tr>
-                        <tr><td><b>than</b></td><td>比</td></tr>
+                        <tr>
+                            <td><b>or</b></td>
+                            <td>或者</td>
+                            <td>Do you like tea or coffee?</td>
+                        </tr>
+                        <tr>
+                            <td><b>but</b></td>
+                            <td>但是</td>
+                            <td>He is tall but thin.</td>
+                        </tr>
+                        <tr>
+                            <td><b>so</b></td>
+                            <td>所以</td>
+                            <td>I was tired so I went to bed.</td>
+                        </tr>
+                        <tr>
+                            <td><b>for</b></td>
+                            <td>因为</td>
+                            <td>I stayed home, for it was raining.</td>
+                        </tr>
+                        <tr>
+                            <td><b>nor</b></td>
+                            <td>也不</td>
+                            <td>He doesn't like coffee nor tea.</td>
+                        </tr>
+                        <tr>
+                            <td><b>yet</b></td>
+                            <td>然而</td>
+                            <td>He is young yet experienced.</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="8">从属连词</td>
+                            <td><b>because</b></td>
+                            <td>因为</td>
+                            <td>I stayed home because it was raining.</td>
+                        </tr>
+                        <tr>
+                            <td><b>if</b></td>
+                            <td>如果</td>
+                            <td>If it rains, we will stay home.</td>
+                        </tr>
+                        <tr>
+                            <td><b>when</b></td>
+                            <td>当...时</td>
+                            <td>When I was young, I lived in Beijing.</td>
+                        </tr>
+                        <tr>
+                            <td><b>while</b></td>
+                            <td>当...时</td>
+                            <td>While I was studying, he was watching TV.</td>
+                        </tr>
+                        <tr>
+                            <td><b>since</b></td>
+                            <td>自从</td>
+                            <td>Since I was a child, I have loved reading.</td>
+                        </tr>
+                        <tr>
+                            <td><b>until</b></td>
+                            <td>直到</td>
+                            <td>I will wait until you come back.</td>
+                        </tr>
+                        <tr>
+                            <td><b>before</b></td>
+                            <td>在...之前</td>
+                            <td>Wash your hands before you eat.</td>
+                        </tr>
+                        <tr>
+                            <td><b>after</b></td>
+                            <td>在...之后</td>
+                            <td>After I finish my homework, I will play.</td>
+                        </tr>
                     </tbody>
                 </table>
             </section>
 
             <!-- 13. 疑问句 -->
             <section id="section-question" class="section">
-                <h2>特殊疑问句 (Wh- Questions)</h2>
+                <h2>疑问句 (Questions)</h2>
                 <div class="section-desc">
-                    用于提问的疑问词，放在句首
+                    用于提问的句子类型
                 </div>
-                <table class="table-tense">
+                <table class="table-words">
                     <thead>
                         <tr>
-                            <th>单词</th>
+                            <th>类型</th>
+                            <th>疑问词</th>
                             <th>中文</th>
-                            <th style="width: 50%;">常用例句（5 句，中英对照）</th>
+                            <th>例子</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td rowspan="7">特殊疑问句</td>
                             <td><b>what</b></td>
                             <td>什么</td>
-                            <td class="wrap-text-center">What's your name
-What are you doing
-What color is your bag
-What do you like to eat
-What time is it</td>
+                            <td>What is your name?</td>
                         </tr>
                         <tr>
                             <td><b>who</b></td>
                             <td>谁</td>
-                            <td class="wrap-text-center">Who is that girl
-Who is your English teacher
-Who can help me
-Who has a new ruler
-Who are they</td>
+                            <td>Who is that girl?</td>
                         </tr>
                         <tr>
                             <td><b>where</b></td>
                             <td>哪里</td>
-                            <td class="wrap-text-center">Where is my pencil
-Where are you from
-Where do you live
-Where is your school
-Where do you want to go</td>
+                            <td>Where are you from?</td>
                         </tr>
                         <tr>
                             <td><b>when</b></td>
-                            <td>何时</td>
-                            <td class="wrap-text-center">When do you get up
-When is your birthday
-When do you go to school
-When will you come back
-When do you watch TV</td>
+                            <td>什么时候</td>
+                            <td>When is your birthday?</td>
                         </tr>
                         <tr>
                             <td><b>why</b></td>
                             <td>为什么</td>
-                            <td class="wrap-text-center">Why are you late
-Why do you like dogs
-Why is he happy
-Why not go with us
-Why do you get up early</td>
+                            <td>Why are you late?</td>
+                        </tr>
+                        <tr>
+                            <td><b>how</b></td>
+                            <td>怎么样</td>
+                            <td>How are you?</td>
                         </tr>
                         <tr>
                             <td><b>which</b></td>
                             <td>哪一个</td>
-                            <td class="wrap-text-center">Which do you like best
-Which is your pen
-Which one is bigger
-Which class are you in
-Which season do you like</td>
+                            <td>Which book do you like?</td>
                         </tr>
                         <tr>
-                            <td><b>how</b></td>
-                            <td>怎样/如何</td>
-                            <td class="wrap-text-center">How are you
-How do you go to school
-How old are you
-How much is it
-How many books do you have</td>
+                            <td>一般疑问句</td>
+                            <td><b>do/does/did</b></td>
+                            <td>-</td>
+                            <td>Do you like English?</td>
+                        </tr>
+                        <tr>
+                            <td>一般疑问句</td>
+                            <td><b>is/am/are</b></td>
+                            <td>-</td>
+                            <td>Are you happy?</td>
+                        </tr>
+                        <tr>
+                            <td>选择疑问句</td>
+                            <td><b>or</b></td>
+                            <td>或者</td>
+                            <td>Do you like tea or coffee?</td>
+                        </tr>
+                        <tr>
+                            <td>反意疑问句</td>
+                            <td><b>...</b></td>
+                            <td>-</td>
+                            <td>You like English, don't you?</td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="tip-box">
-                    💡 <b>一般疑问句规则</b>：be 动词、情态词，提到主语最前面。
-                </div>
             </section>
 
             <!-- 14. 时态 -->
             <section id="section-tense" class="section">
                 <h2>时态 (Tenses)</h2>
-                <table class="table-tense">
+                <div class="section-desc">
+                    表示动作发生的时间和状态
+                </div>
+                <table class="table-words">
                     <thead>
                         <tr>
-                            <th>时态名称</th>
-                            <th>核心结构</th>
-                            <th>时间轴符号</th>
-                            <th>核心含义</th>
+                            <th>时态</th>
+                            <th>中文</th>
+                            <th>结构</th>
+                            <th>例子</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>一般现在时</td>
-                            <td><b>do / does</b></td>
-                            <td>│●│</td>
-                            <td>现在的习惯、客观事实</td>
-                        </tr>
-                        <tr>
-                            <td>一般过去时</td>
-                            <td><b>did</b></td>
-                            <td>◀──●──</td>
-                            <td>过去发生的动作</td>
-                        </tr>
-                        <tr>
-                            <td>一般将来时</td>
-                            <td><b>will do</b></td>
-                            <td>──●──▶</td>
-                            <td>将来发生的动作</td>
+                            <td>现在经常发生的动作</td>
+                            <td>主语 + 动词原形/第三人称单数</td>
+                            <td>I study English every day.</td>
                         </tr>
                         <tr>
                             <td>现在进行时</td>
-                            <td><b>am/is/are doing</b></td>
-                            <td>───●───</td>
-                            <td>此刻正在进行的动作</td>
+                            <td>现在正在进行的动作</td>
+                            <td>主语 + am/is/are + 动词-ing</td>
+                            <td>I am studying English now.</td>
+                        </tr>
+                        <tr>
+                            <td>一般过去时</td>
+                            <td>过去发生的动作</td>
+                            <td>主语 + 动词过去式</td>
+                            <td>I studied English yesterday.</td>
                         </tr>
                         <tr>
                             <td>过去进行时</td>
-                            <td><b>was/were doing</b></td>
-                            <td>◀───●──</td>
-                            <td>过去某时刻正在进行</td>
+                            <td>过去正在进行的动作</td>
+                            <td>主语 + was/were + 动词-ing</td>
+                            <td>I was studying English at 8 PM yesterday.</td>
                         </tr>
                         <tr>
-                            <td>将来进行时</td>
-                            <td><b>will be doing</b></td>
-                            <td>──●───▶</td>
-                            <td>将来某时刻正在进行</td>
+                            <td>一般将来时</td>
+                            <td>将来要发生的动作</td>
+                            <td>主语 + will + 动词原形</td>
+                            <td>I will study English tomorrow.</td>
                         </tr>
                         <tr>
                             <td>现在完成时</td>
-                            <td><b>have/has done</b></td>
-                            <td>◀────●──</td>
-                            <td>过去动作持续到现在/对现在有影响</td>
+                            <td>过去发生的动作对现在的影响</td>
+                            <td>主语 + have/has + 动词过去分词</td>
+                            <td>I have studied English for 3 years.</td>
                         </tr>
                         <tr>
                             <td>过去完成时</td>
-                            <td><b>had done</b></td>
-                            <td>◀────◀──</td>
-                            <td>过去某时刻之前已完成的动作</td>
+                            <td>过去的过去发生的动作</td>
+                            <td>主语 + had + 动词过去分词</td>
+                            <td>I had studied English before I came here.</td>
                         </tr>
                         <tr>
-                            <td>过去将来时</td>
-                            <td><b>would do</b></td>
-                            <td>◀──●──▶</td>
-                            <td>过去视角下的将来动作</td>
-                        </tr>
-                        <tr>
-                            <td>现在完成进行时</td>
-                            <td><b>have/has been doing</b></td>
-                            <td>◀────●───</td>
-                            <td>过去开始并持续到现在，仍在进行</td>
+                            <td>将来完成时</td>
+                            <td>将来某个时间前完成的动作</td>
+                            <td>主语 + will have + 动词过去分词</td>
+                            <td>I will have studied English for 4 years by next year.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1533,118 +1036,121 @@ How many books do you have</td>
 
             <!-- 15. 介词 -->
             <section id="section-prep" class="section">
-                <h2>介词/方向/地点/位置</h2>
+                <h2>介词 (Prepositions)</h2>
                 <div class="section-desc">
-                    表示名词与其他词的关系（时间/地点/方向）
+                    表示名词与其他词之间的关系
                 </div>
-                <table class="table-prep">
+                <table class="table-words">
                     <thead>
                         <tr>
-                            <th>单词</th>
-                            <th>中文</th>
-                            <th>补充说明</th>
+                            <th>类型</th>
                             <th>介词</th>
+                            <th>中文</th>
+                            <th>例子</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td><b>in</b></td><td>在……里面</td><td>静态，在内部</td><td>是</td></tr>
-                        <tr><td><b>into</b></td><td>到……里面</td><td>动态，强调进入动作</td><td>是</td></tr>
-                        <tr><td><b>inside</b></td><td>在里面/在内部</td><td>静态，侧重内侧</td><td>是</td></tr>
-                        <tr><td><b>out</b></td><td>在外面/向外</td><td>副词，表向外</td><td>否</td></tr>
-                        <tr><td><b>outside</b></td><td>在外面/在外部</td><td>静态，侧重外侧</td><td>是</td></tr>
-                        <tr><td><b>on</b></td><td>在……上面（有接触）</td><td>与表面相接触</td><td>是</td></tr>
-                        <tr><td><b>above</b></td><td>在……上方（无接触，非正上方）</td><td>无垂直正对关系</td><td>是</td></tr>
-                        <tr><td><b>over</b></td><td>在……正上方/越过</td><td>垂直正上方或跨越</td><td>是</td></tr>
-                        <tr><td><b>under</b></td><td>在……正下方</td><td>垂直正下方，对应 over</td><td>是</td></tr>
-                        <tr><td><b>below</b></td><td>在……下方（非正下方）</td><td>无垂直正对关系，对应 above</td><td>是</td></tr>
-                        <tr><td><b>in front of</b></td><td>在……前面（外部）</td><td>在物体外部前方</td><td>是</td></tr>
-                        <tr><td><b>in the front of</b></td><td>在……前部（内部）</td><td>在物体内部靠前</td><td>是</td></tr>
-                        <tr><td><b>behind</b></td><td>在……后面</td><td>空间位置在后</td><td>是</td></tr>
-                        <tr><td><b>back</b></td><td>向后/后面</td><td>表方向或位置</td><td>否</td></tr>
-                        <tr><td><b>forward</b></td><td>向前</td><td>表朝前方向</td><td>否</td></tr>
-                        <tr><td><b>left</b></td><td>左/向左</td><td>表方向</td><td>否</td></tr>
-                        <tr><td><b>right</b></td><td>右/向右</td><td>表方向</td><td>否</td></tr>
-                        <tr><td><b>up</b></td><td>向上</td><td>表朝上方向</td><td>否</td></tr>
-                        <tr><td><b>down</b></td><td>向下</td><td>表朝下方向</td><td>否</td></tr>
-                        <tr><td><b>before</b></td><td>在……之前/在……前面</td><td>多用于时间在前；也可表位置在前方</td><td>是</td></tr>
-                        <tr><td><b>after</b></td><td>在……之后</td><td>多用于时间在后；也可表顺序在后</td><td>是</td></tr>
-                        <tr><td><b>at</b></td><td>在（某处/某时刻）</td><td>表具体地点、具体时间点</td><td>是</td></tr>
-                        <tr><td><b>beside</b></td><td>在……旁边</td><td>紧邻、在一侧</td><td>是</td></tr>
-                        <tr><td><b>near</b></td><td>在……附近</td><td>距离较近，不一定紧挨</td><td>是</td></tr>
-                        <tr><td><b>between</b></td><td>在……（两者）之间</td><td>用于两者之间</td><td>是</td></tr>
-                        <tr><td><b>around</b></td><td>在……周围/环绕</td><td>表环绕、四周位置</td><td>是</td></tr>
-                        <tr><td><b>along</b></td><td>沿着</td><td>表顺着某物延伸方向</td><td>是</td></tr>
-                        <tr><td><b>with</b></td><td>和……一起/用/带有</td><td>表伴随、方式、拥有</td><td>是</td></tr>
-                        <tr><td><b>from</b></td><td>从……/来自</td><td>表起点、来源、出处</td><td>是</td></tr>
-                        <tr><td><b>to</b></td><td>到/向/对着</td><td>表方向、目的地、对象</td><td>是</td></tr>
-                        <tr><td><b>for</b></td><td>为了/给/持续（一段时间）</td><td>表目的、对象、时长</td><td>是</td></tr>
-                        <tr><td><b>of</b></td><td>……的</td><td>表所属、部分、数量关系</td><td>是</td></tr>
-                        <tr><td><b>by</b></td><td>被/由/通过/不迟于</td><td>表方式、执行者、截止时间</td><td>是</td></tr>
-                        <tr><td><b>about</b></td><td>关于/大约</td><td>表内容、话题、大概数量</td><td>是</td></tr>
-                        <tr><td><b>as</b></td><td>作为/如同</td><td>表身份/当作，可作介词</td><td>是</td></tr>
+                        <tr>
+                            <td rowspan="6">时间介词</td>
+                            <td><b>in</b></td>
+                            <td>在...里</td>
+                            <td>in the morning, in 2023</td>
+                        </tr>
+                        <tr>
+                            <td><b>on</b></td>
+                            <td>在...上</td>
+                            <td>on Monday, on June 1st</td>
+                        </tr>
+                        <tr>
+                            <td><b>at</b></td>
+                            <td>在...时刻</td>
+                            <td>at 8:00, at noon</td>
+                        </tr>
+                        <tr>
+                            <td><b>before</b></td>
+                            <td>在...之前</td>
+                            <td>before breakfast</td>
+                        </tr>
+                        <tr>
+                            <td><b>after</b></td>
+                            <td>在...之后</td>
+                            <td>after school</td>
+                        </tr>
+                        <tr>
+                            <td><b>during</b></td>
+                            <td>在...期间</td>
+                            <td>during the summer</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="6">地点介词</td>
+                            <td><b>in</b></td>
+                            <td>在...里</td>
+                            <td>in the room</td>
+                        </tr>
+                        <tr>
+                            <td><b>on</b></td>
+                            <td>在...上</td>
+                            <td>on the table</td>
+                        </tr>
+                        <tr>
+                            <td><b>under</b></td>
+                            <td>在...下面</td>
+                            <td>under the chair</td>
+                        </tr>
+                        <tr>
+                            <td><b>above</b></td>
+                            <td>在...上面</td>
+                            <td>above the desk</td>
+                        </tr>
+                        <tr>
+                            <td><b>below</b></td>
+                            <td>在...下面</td>
+                            <td>below the window</td>
+                        </tr>
+                        <tr>
+                            <td><b>near</b></td>
+                            <td>在...附近</td>
+                            <td>near the park</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4">方向介词</td>
+                            <td><b>to</b></td>
+                            <td>到...</td>
+                            <td>go to school</td>
+                        </tr>
+                        <tr>
+                            <td><b>from</b></td>
+                            <td>从...</td>
+                            <td>come from China</td>
+                        </tr>
+                        <tr>
+                            <td><b>into</b></td>
+                            <td>进入...</td>
+                            <td>go into the room</td>
+                        </tr>
+                        <tr>
+                            <td><b>out of</b></td>
+                            <td>从...出来</td>
+                            <td>go out of the room</td>
+                        </tr>
                     </tbody>
                 </table>
             </section>
-
         </div>
     </main>
 
-    <!-- 返回顶部按钮 -->
-    <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
-
     <script>
-        // 折叠菜单功能
+        // 侧边栏菜单展开/收起
         function toggleMenu(element) {
-            const parent = element;
-            const children = parent.nextElementSibling;
+            const children = element.nextElementSibling;
+            const arrow = element.querySelector('.arrow');
             
-            parent.classList.toggle('collapsed');
-            children.classList.toggle('collapsed');
+            if (children.style.display === 'block') {
+                children.style.display = 'none';
+                arrow.textContent = '▶';
+            } else {
+                children.style.display = 'block';
+                arrow.textContent = '▼';
+            }
         }
-
-        // 导航栏高亮当前章节
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('.section');
-            const navItems = document.querySelectorAll('.nav-item, .nav-child');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href') === '#' + current) {
-                    item.classList.add('active');
-                    const parentCategory = item.closest('.nav-category');
-                    if (parentCategory) {
-                        const parent = parentCategory.querySelector('.nav-parent');
-                        const children = parentCategory.querySelector('.nav-children');
-                        parent.classList.remove('collapsed');
-                        children.classList.remove('collapsed');
-                    }
-                }
-            });
-        });
-
-        // 平滑滚动
-        document.querySelectorAll('.nav-item, .nav-child').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                // 只有当href以#开头时才执行平滑滚动
-                if (href.startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-                // 否则正常跳转（如返回首页链接）
-            });
-        });
     </script>
-</body>
-</html>

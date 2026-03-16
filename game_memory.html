@@ -4,340 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧠 翻版记忆短语 - 英语语法学习乐园</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-
-        .game-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
-        }
-
-        .score {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .time {
-            font-size: 24px;
-            font-weight: bold;
-            color: #764ba2;
-        }
-
-        .game-content {
-            padding: 40px;
-            text-align: center;
-        }
-
-        .game-board {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin: 30px 0;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .card {
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 12px;
-            padding: 20px;
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            z-index: 1;
-            transition: all 0.3s ease;
-        }
-
-        .card.flipped::before {
-            transform: rotateY(180deg);
-            opacity: 0;
-        }
-
-        .card-content {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            opacity: 0;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card.flipped .card-content {
-            opacity: 1;
-        }
-
-        .card.matched {
-            background: #d4edda;
-            border: 2px solid #28a745;
-            cursor: default;
-            transform: scale(0.95);
-        }
-
-        .card.matched::before {
-            transform: rotateY(180deg);
-            opacity: 0;
-        }
-
-        .card.matched .card-content {
-            color: #155724;
-        }
-
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
-            font-weight: bold;
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .instructions {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        .instructions h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .instructions p {
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .controls {
-            margin-top: 30px;
-        }
-
-        .start-btn,
-        .restart-btn {
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .give-up-btn {
-            background: linear-gradient(90deg, #f44336, #d32f2f);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .start-btn:hover,
-        .restart-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .give-up-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
-        }
-
-        .result {
-            text-align: center;
-            padding: 50px;
-            display: none;
-        }
-
-        .result h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: #667eea;
-        }
-
-        .result-score {
-            font-size: 72px;
-            font-weight: bold;
-            color: #764ba2;
-            margin: 30px 0;
-        }
-
-        .result-message {
-            font-size: 24px;
-            margin-bottom: 40px;
-            color: #333;
-        }
-
-        .home-btn {
-            background: #f8f9fa;
-            color: #667eea;
-            border: 2px solid #667eea;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .home-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #f00;
-            border-radius: 50%;
-            animation: confetti 3s ease-in-out forwards;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        @keyframes confetti {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-            }
-            
-            .game-content {
-                padding: 20px;
-            }
-            
-            .game-board {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 10px;
-            }
-            
-            .card {
-                height: 100px;
-                padding: 15px;
-            }
-            
-            .card-content {
-                font-size: 14px;
-            }
-            
-            .result-score {
-                font-size: 48px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
@@ -357,7 +24,7 @@
         </div>
 
         <div class="game-content">
-            <div class="game-board" id="game-board">
+            <div class="memory-game-board" id="game-board">
                 <!-- 卡片将通过JavaScript动态生成 -->
             </div>
 
@@ -499,7 +166,7 @@
             
             cards.forEach(card => {
                 const cardElement = document.createElement('div');
-                cardElement.className = 'card';
+                cardElement.className = 'memory-card';
                 cardElement.dataset.id = card.id;
                 cardElement.dataset.matchId = card.matchId;
                 cardElement.dataset.type = card.type;
@@ -539,57 +206,11 @@
                     </div>
                 `;
                 
-                // 添加弹窗样式
-                const style = document.createElement('style');
-                style.textContent = `
-                    .modal {
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        height: 100%;
-                        background: rgba(0, 0, 0, 0.5);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        z-index: 2000;
-                        animation: fadeIn 0.3s ease;
-                    }
-                    .modal-content {
-                        background: white;
-                        border-radius: 20px;
-                        padding: 40px;
-                        text-align: center;
-                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                        max-width: 400px;
-                        width: 90%;
-                        animation: slideIn 0.3s ease;
-                    }
-                    .modal-content h3 {
-                        color: #667eea;
-                        margin-bottom: 20px;
-                    }
-                    .modal-content p {
-                        font-size: 18px;
-                        margin-bottom: 30px;
-                        color: #333;
-                    }
-                    @keyframes fadeIn {
-                        from { opacity: 0; }
-                        to { opacity: 1; }
-                    }
-                    @keyframes slideIn {
-                        from { opacity: 0; transform: translateY(-20px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-                `;
-                document.head.appendChild(style);
                 document.body.appendChild(modal);
                 
                 // 添加事件监听
                 document.getElementById('modal-start-btn').addEventListener('click', () => {
                     modal.remove();
-                    style.remove();
                     startGame();
                 });
                 return;
@@ -723,63 +344,6 @@
                 </div>
             `;
             
-            // 添加弹窗样式
-            const style = document.createElement('style');
-            style.textContent = `
-                .modal {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: rgba(0, 0, 0, 0.5);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    z-index: 2000;
-                    animation: fadeIn 0.3s ease;
-                }
-                .modal-content {
-                    background: white;
-                    border-radius: 20px;
-                    padding: 40px;
-                    text-align: center;
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-                    max-width: 500px;
-                    width: 90%;
-                    animation: slideIn 0.3s ease;
-                }
-                .modal-score {
-                    font-size: 72px;
-                    font-weight: bold;
-                    color: #764ba2;
-                    margin: 30px 0;
-                }
-                .modal-time {
-                    font-size: 20px;
-                    color: #667eea;
-                    margin-bottom: 20px;
-                }
-                .modal-message {
-                    font-size: 24px;
-                    margin-bottom: 40px;
-                    color: #333;
-                }
-                .modal-buttons {
-                    display: flex;
-                    justify-content: center;
-                    gap: 20px;
-                }
-                @keyframes fadeIn {
-                    from { opacity: 0; }
-                    to { opacity: 1; }
-                }
-                @keyframes slideIn {
-                    from { opacity: 0; transform: translateY(-20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-            `;
-            document.head.appendChild(style);
             document.body.appendChild(modal);
             
             // 设置消息
@@ -798,7 +362,6 @@
             // 添加事件监听
             document.getElementById('modal-restart-btn').addEventListener('click', () => {
                 modal.remove();
-                style.remove();
                 initGame();
             });
             
