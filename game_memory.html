@@ -111,22 +111,25 @@
 
         // 初始化游戏
         function initGame() {
-            // 随机选择10个短语（20张卡片）
+            // 随机选择10个短语（20张卡片，4行5列）
             const shuffledPhrases = [...phrases].sort(() => Math.random() - 0.5);
             const selectedPhrases = shuffledPhrases.slice(0, 10);
             
-            // 创建卡片数组
-            cards = [];
+            // 创建英文卡片数组
+            const englishCards = [];
             selectedPhrases.forEach(phrase => {
-                // 添加英文卡片
-                cards.push({
+                englishCards.push({
                     id: Math.random().toString(36).substr(2, 9),
                     text: phrase.english,
                     type: 'english',
                     matchId: phrase.english
                 });
-                // 添加中文卡片
-                cards.push({
+            });
+            
+            // 创建中文卡片数组
+            const chineseCards = [];
+            selectedPhrases.forEach(phrase => {
+                chineseCards.push({
                     id: Math.random().toString(36).substr(2, 9),
                     text: phrase.chinese,
                     type: 'chinese',
@@ -134,8 +137,14 @@
                 });
             });
             
-            // 打乱卡片顺序
-            cards.sort(() => Math.random() - 0.5);
+            // 打乱英文卡片顺序
+            englishCards.sort(() => Math.random() - 0.5);
+            
+            // 打乱中文卡片顺序
+            chineseCards.sort(() => Math.random() - 0.5);
+            
+            // 合并卡片数组：先添加英文卡片（第1和第2行），再添加中文卡片（第3和第4行）
+            cards = [...englishCards, ...chineseCards];
             
             // 重置游戏状态
             flippedCards = [];
@@ -164,7 +173,14 @@
             const gameBoard = document.getElementById('game-board');
             gameBoard.innerHTML = '';
             
-            cards.forEach(card => {
+            cards.forEach((card, index) => {
+                // 在第2行和第3行之间添加分隔线（即第10张卡片后）
+                if (index === 10) {
+                    const divider = document.createElement('div');
+                    divider.className = 'memory-board-divider';
+                    gameBoard.appendChild(divider);
+                }
+                
                 const cardElement = document.createElement('div');
                 cardElement.className = 'memory-card';
                 cardElement.dataset.id = card.id;
@@ -176,7 +192,19 @@
                 cardContent.textContent = card.text;
                 
                 cardElement.appendChild(cardContent);
-                cardElement.addEventListener('click', () => flipCard(cardElement));
+                
+                // 英文卡片默认是背面
+                if (card.type === 'english') {
+                    cardElement.addEventListener('click', () => flipCard(cardElement));
+                } 
+                // 中文卡片默认是正面（明牌）
+                else {
+                    cardElement.classList.add('flipped');
+                    cardElement.classList.add('chinese-card');
+                    // 中文卡片也需要点击事件监听器，用于匹配
+                    cardElement.addEventListener('click', () => flipCard(cardElement));
+                }
+                
                 gameBoard.appendChild(cardElement);
             });
         }
@@ -216,63 +244,63 @@
                 return;
             }
             
-            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
-            if (flippedCards.length >= 2) return;
+            // 检查卡片是否已经匹配或翻转
+            if (card.classList.contains('matched')) return;
             
-            card.classList.add('flipped');
-            flippedCards.push(card);
-            
-            // 播放卡片内容的语音
-            const cardText = card.querySelector('.card-content').textContent;
-            playAudio(cardText);
-            
-            if (flippedCards.length === 2) {
-                setTimeout(checkMatch, 1000);
+            // 如果是英文卡片
+            if (card.dataset.type === 'english') {
+                if (card.classList.contains('flipped')) return;
+                if (flippedCards.length >= 1) return; // 只允许翻转一张英文卡片
+                
+                card.classList.add('flipped');
+                flippedCards.push(card);
+                
+                // 播放卡片内容的语音
+                const cardText = card.querySelector('.card-content').textContent;
+                playAudio(cardText);
             }
-        }
-
-        // 检查匹配
-        function checkMatch() {
-            const [card1, card2] = flippedCards;
-            const matchId1 = card1.dataset.matchId;
-            const matchId2 = card2.dataset.matchId;
-            const type1 = card1.dataset.type;
-            const type2 = card2.dataset.type;
-            
-            // 检查是否是不同类型的卡片（一张英文，一张中文）并且匹配ID相同
-            if (matchId1 === matchId2 && type1 !== type2) {
-                // 匹配成功
-                card1.classList.add('matched');
-                card2.classList.add('matched');
-                matchedPairs++;
-                score += 10;
-                document.getElementById('score').textContent = score;
-                createConfetti();
+            // 如果是中文卡片
+            else if (card.dataset.type === 'chinese') {
+                if (flippedCards.length !== 1) return; // 必须先翻转一张英文卡片
                 
-                // 隐藏错误消息
-                document.getElementById('error-message').style.display = 'none';
+                const englishCard = flippedCards[0];
+                const englishMatchId = englishCard.dataset.matchId;
+                const chineseMatchId = card.dataset.matchId;
                 
-                // 检查游戏是否结束
-                if (matchedPairs === cards.length / 2) {
-                    endGame();
+                // 检查是否匹配
+                if (englishMatchId === chineseMatchId) {
+                    // 匹配成功
+                    englishCard.classList.add('matched');
+                    card.classList.add('matched');
+                    matchedPairs++;
+                    score += 10;
+                    document.getElementById('score').textContent = score;
+                    createConfetti();
+                    
+                    // 隐藏错误消息
+                    document.getElementById('error-message').style.display = 'none';
+                    
+                    // 检查游戏是否结束
+                    if (matchedPairs === cards.length / 2) {
+                        endGame();
+                    }
+                } else {
+                    // 匹配失败
+                    englishCard.classList.remove('flipped');
+                    
+                    // 显示错误消息
+                    const errorMessage = document.getElementById('error-message');
+                    errorMessage.textContent = '❌ 匹配错误！再试一次';
+                    errorMessage.style.display = 'block';
+                    
+                    // 2秒后隐藏错误消息
+                    setTimeout(() => {
+                        errorMessage.style.display = 'none';
+                    }, 2000);
                 }
-            } else {
-                // 匹配失败
-                card1.classList.remove('flipped');
-                card2.classList.remove('flipped');
                 
-                // 显示错误消息
-                const errorMessage = document.getElementById('error-message');
-                errorMessage.textContent = '❌ 匹配错误！再试一次';
-                errorMessage.style.display = 'block';
-                
-                // 2秒后隐藏错误消息
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 2000);
+                flippedCards = [];
             }
-            
-            flippedCards = [];
         }
 
         // 创建庆祝效果

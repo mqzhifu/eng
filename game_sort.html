@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔠 单词排序游戏 - 英语语法学习乐园</title>
+    <title>🧩 单词排序游戏 - 英语语法学习乐园</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
             <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
-            <h1>🔠 单词排序游戏</h1>
+            <h1>🧩 单词排序游戏</h1>
             <p>点击单词，将它们拖放到正确的位置，完成句子！</p>
         </div>
 
@@ -207,7 +207,16 @@
                 const blank = document.createElement('div');
                 blank.className = 'blank';
                 blank.dataset.index = index;
-                blank.addEventListener('click', () => placeWord(blank));
+                blank.addEventListener('click', function() {
+                    if (answered) return;
+                    if (blank.classList.contains('filled')) {
+                        // 如果已填充，则移除单词
+                        removeWord(blank);
+                    } else if (selectedWord) {
+                        // 如果未填充且有选中的单词，则放置单词
+                        placeWord(blank);
+                    }
+                });
                 sentenceElement.appendChild(blank);
             });
             
@@ -231,6 +240,25 @@
             document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
             selectedWord = null;
+        }
+
+        // 从空白处移除单词
+        function removeWord(blank) {
+            if (answered) return;
+            
+            const word = blank.textContent;
+            
+            // 清空空白处
+            blank.textContent = '';
+            blank.classList.remove('filled');
+            
+            // 找到对应的单词并恢复
+            const wordElements = document.querySelectorAll('.word');
+            wordElements.forEach(wordElement => {
+                if (wordElement.dataset.word === word && wordElement.classList.contains('used')) {
+                    wordElement.classList.remove('used');
+                }
+            });
         }
 
         // 选择单词

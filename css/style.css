@@ -1239,6 +1239,15 @@ body {
     margin-right: auto;
 }
 
+.memory-board-divider {
+    grid-column: 1 / -1;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
 .memory-card {
     background: white;
     border: 2px solid #667eea;
@@ -1273,7 +1282,7 @@ body {
 }
 
 .memory-card .card-content {
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
     color: #333;
     opacity: 0;
@@ -2190,6 +2199,83 @@ tbody tr:hover {
     background: linear-gradient(135deg, #795548, #5D4037);
 }
 .table-prep tbody tr:nth-child(odd) {
+    background-color: #D7CCC8;
+}
+
+/* 不定代词表格样式 */
+.table-indef th {
+    background: linear-gradient(135deg, #009688, #00796B);
+}
+.table-indef tbody tr:nth-child(odd) {
+    background-color: #E0F2F1;
+}
+.table-indef tbody tr:nth-child(even) {
+    background-color: #B2DFDB;
+}
+
+/* 不定代词合成词表格样式 */
+.table-indef-compound th {
+    background: linear-gradient(135deg, #FF5722, #E64A19);
+}
+.table-indef-compound tbody tr:nth-child(odd) {
+    background-color: #FBE9E7;
+}
+.table-indef-compound tbody tr:nth-child(even) {
+    background-color: #FFCCBC;
+}
+
+/* 地点代词表格样式 */
+.table-location th {
+    background: linear-gradient(135deg, #607D8B, #455A64);
+}
+.table-location tbody tr:nth-child(odd) {
+    background-color: #ECEFF1;
+}
+.table-location tbody tr:nth-child(even) {
+    background-color: #CFD8DC;
+}
+
+/* 连词表格样式 */
+.table-conjunction th {
+    background: linear-gradient(135deg, #3F51B5, #303F9F);
+}
+.table-conjunction tbody tr:nth-child(odd) {
+    background-color: #E3F2FD;
+}
+.table-conjunction tbody tr:nth-child(even) {
+    background-color: #BBDEFB;
+}
+
+/* 疑问句表格样式 */
+.table-question th {
+    background: linear-gradient(135deg, #FFC107, #F57F17);
+}
+.table-question tbody tr:nth-child(odd) {
+    background-color: #FFF8E1;
+}
+.table-question tbody tr:nth-child(even) {
+    background-color: #FFE082;
+}
+
+/* 时态表格样式 */
+.table-tense th {
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+}
+.table-tense tbody tr:nth-child(odd) {
+    background-color: #F3E5F5;
+}
+.table-tense tbody tr:nth-child(even) {
+    background-color: #E1BEE7;
+}
+
+/* 介词表格样式 */
+.table-prep th {
+    background: linear-gradient(135deg, #795548, #5D4037);
+}
+.table-prep tbody tr:nth-child(odd) {
+    background-color: #EFEBE9;
+}
+.table-prep tbody tr:nth-child(even) {
     background-color: #D7CCC8;
 }
 .table-prep tbody tr:nth-child(even) {
