@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧩 单词排序游戏 - 英语语法学习乐园</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <h1>🧩 单词排序游戏</h1>
+            <p>点击单词，将它们拖放到正确的位置，完成句子！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <div class="progress-info">
+                    题目: <span id="current-question">1</span>/20
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="error-count">
+                错误: <span id="error-count">0</span>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <div class="sentence" id="sentence">
+                    <!-- 空格将通过JavaScript动态生成 -->
+                </div>
+                <div class="word-bank">
+                    <h3>单词库</h3>
+                    <div class="words" id="words">
+                        <!-- 单词将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <div class="translation" id="translation" style="display: none;">
+                    <div class="translation-content" id="translation-content"></div>
+                </div>
+                <button class="next-btn" id="next-btn">下一题</button>
+                <button class="restart-btn" id="game-restart-btn" style="display: inline-block; margin-left: 10px;">重新开始</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <button class="restart-btn" id="restart-btn">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 小学英语句子数据源
+        const sentences = [
+            "I love my family",
+            "The cat is black",
+            "We go to school",
+            "She has a book",
+            "He can play football",
+            "They are happy",
+            "The sun is shining",
+            "I eat apples",
+            "We drink water",
+            "She likes dogs",
+            "He reads a story",
+            "The bird can fly",
+            "I have a pen",
+            "We watch TV",
+            "She sings a song",
+            "He runs fast",
+            "They play games",
+            "The flower is red",
+            "I brush my teeth",
+            "We learn English",
+            "She dances well",
+            "He draws a picture",
+            "The dog barks loudly",
+            "I wear a coat",
+            "We go to the park",
+            "She writes a letter",
+            "He jumps high",
+            "They eat lunch",
+            "The moon is bright",
+            "I listen to music",
+            "We clean the room",
+            "She cooks dinner",
+            "He rides a bike",
+            "They go swimming",
+            "The tree is tall",
+            "I wash my hands",
+            "We play basketball",
+            "She studies hard",
+            "He watches a movie",
+            "They go to bed",
+            "The sky is blue",
+            "I help my mom",
+            "We plant flowers",
+            "She plays the piano",
+            "He does his homework",
+            "They go to the zoo",
+            "The snow is white",
+            "I take a shower",
+            "We go shopping",
+            "She feeds the cat",
+            "He plays computer games",
+            "They go hiking",
+            "The wind is blowing",
+            "I read a book",
+            "We play soccer",
+            "She waters the plants",
+            "He goes to work",
+            "They have a picnic",
+            "The rain is falling",
+            "I make a cake",
+            "We go to the beach",
+            "She paints a picture",
+            "He goes fishing",
+            "They play baseball",
+            "The fire is hot",
+            "I take a walk",
+            "We go to the museum",
+            "She sews a dress",
+            "He fixes the bike",
+            "They go to the library",
+            "The ice is cold",
+            "I play with my friends",
+            "We go to the cinema",
+            "She takes a photo",
+            "He climbs a mountain",
+            "They go to the concert",
+            "The grass is green",
+            "I do exercise",
+            "We go to the supermarket",
+            "She dances ballet",
+            "He plays the guitar",
+            "They go to the aquarium",
+            "The sand is soft",
+            "I write a story",
+            "We go to the amusement park",
+            "She plays the violin",
+            "He goes skiing",
+            "They go to the botanical garden",
+            "The rock is hard",
+            "I play chess",
+            "We go to the planetarium",
+            "She plays the flute",
+            "He goes camping",
+            "They go to the art gallery"
+        ];
+
+        // 随机选择20道题
+        function getRandomQuestions() {
+            const shuffled = [...sentences].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 20);
+        }
+
+        let questions = getRandomQuestions();
+        let currentQuestion = 0;
+        let score = 0;
+        let errorCount = 0;
+        let answered = false;
+        let selectedWord = null;
+
+        // 初始化游戏
+        function initGame() {
+            questions = getRandomQuestions();
+            currentQuestion = 0;
+            score = 0;
+            errorCount = 0;
+            answered = false;
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('error-count').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const sentence = questions[currentQuestion];
+            
+            // 拆分句子为单词
+            const words = sentence.split(' ');
+            
+            // 打乱单词顺序
+            const shuffledWords = [...words].sort(() => Math.random() - 0.5);
+            
+            // 生成句子空格
+            const sentenceElement = document.getElementById('sentence');
+            sentenceElement.innerHTML = '';
+            
+            words.forEach((word, index) => {
+                const blank = document.createElement('div');
+                blank.className = 'blank';
+                blank.dataset.index = index;
+                blank.addEventListener('click', function() {
+                    if (answered) return;
+                    if (blank.classList.contains('filled')) {
+                        // 如果已填充，则移除单词
+                        removeWord(blank);
+                    } else if (selectedWord) {
+                        // 如果未填充且有选中的单词，则放置单词
+                        placeWord(blank);
+                    }
+                });
+                blank.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    if (answered) return;
+                    if (blank.classList.contains('filled')) {
+                        // 如果已填充，则移除单词
+                        removeWord(blank);
+                    } else if (selectedWord) {
+                        // 如果未填充且有选中的单词，则放置单词
+                        placeWord(blank);
+                    }
+                });
+                sentenceElement.appendChild(blank);
+            });
+            
+            // 生成单词库
+            const wordsElement = document.getElementById('words');
+            wordsElement.innerHTML = '';
+            
+            shuffledWords.forEach((word, index) => {
+                const wordElement = document.createElement('div');
+                wordElement.className = 'word';
+                wordElement.textContent = word;
+                wordElement.dataset.word = word;
+                wordElement.dataset.index = index;
+                wordElement.addEventListener('click', () => selectWord(wordElement));
+                wordElement.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    selectWord(wordElement);
+                });
+                wordsElement.appendChild(wordElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('translation').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
+            answered = false;
+            selectedWord = null;
+        }
+
+        // 从空白处移除单词
+        function removeWord(blank) {
+            if (answered) return;
+            
+            const word = blank.textContent;
+            
+            // 清空空白处
+            blank.textContent = '';
+            blank.classList.remove('filled');
+            
+            // 找到对应的单词并恢复
+            const wordElements = document.querySelectorAll('.word');
+            wordElements.forEach(wordElement => {
+                if (wordElement.dataset.word === word && wordElement.classList.contains('used')) {
+                    wordElement.classList.remove('used');
+                }
+            });
+        }
+
+        // 选择单词
+        function selectWord(wordElement) {
+            if (answered) return;
+            
+            // 移除之前的选中状态
+            document.querySelectorAll('.word').forEach(w => w.classList.remove('selected'));
+            
+            // 添加选中状态
+            wordElement.classList.add('selected');
+            selectedWord = wordElement;
+        }
+
+        // 放置单词到空格
+        function placeWord(blank) {
+            if (!selectedWord || answered) return;
+            
+            const word = selectedWord.dataset.word;
+            const blankIndex = parseInt(blank.dataset.index);
+            
+            // 填充空格
+            blank.textContent = word;
+            blank.classList.add('filled');
+            
+            // 标记单词为已使用
+            selectedWord.classList.add('used');
+            selectedWord.classList.remove('selected');
+            
+            // 检查是否所有空格都已填充
+            const blanks = document.querySelectorAll('.blank');
+            const allFilled = Array.from(blanks).every(blank => blank.classList.contains('filled'));
+            
+            if (allFilled) {
+                checkAnswer();
+            }
+            
+            selectedWord = null;
+        }
+
+        // 播放语音
+        function playAudio(text) {
+            // 使用Web Speech API
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.7;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // 获取翻译
+        function getTranslation(sentence) {
+            // 简单的翻译映射
+            const translations = {
+                "I love my family": "我爱我的家人",
+                "The cat is black": "这只猫是黑色的",
+                "We go to school": "我们去上学",
+                "She has a book": "她有一本书",
+                "He can play football": "他会踢足球",
+                "They are happy": "他们很开心",
+                "The sun is shining": "阳光明媚",
+                "I eat apples": "我吃苹果",
+                "We drink water": "我们喝水",
+                "She likes dogs": "她喜欢狗",
+                "He reads a story": "他读故事",
+                "The bird can fly": "这只鸟会飞",
+                "I have a pen": "我有一支笔",
+                "We watch TV": "我们看电视",
+                "She sings a song": "她唱歌",
+                "He runs fast": "他跑得快",
+                "They play games": "他们玩游戏",
+                "The flower is red": "这朵花是红色的",
+                "I brush my teeth": "我刷牙",
+                "We learn English": "我们学习英语",
+                "She dances well": "她跳舞跳得好",
+                "He draws a picture": "他画画",
+                "The dog barks loudly": "这只狗大声叫",
+                "I wear a coat": "我穿外套",
+                "We go to the park": "我们去公园",
+                "She writes a letter": "她写信",
+                "He jumps high": "他跳得高",
+                "They eat lunch": "他们吃午饭",
+                "The moon is bright": "月亮很亮",
+                "I listen to music": "我听音乐",
+                "We clean the room": "我们打扫房间",
+                "She cooks dinner": "她做晚饭",
+                "He rides a bike": "他骑自行车",
+                "They go swimming": "他们去游泳",
+                "The tree is tall": "这棵树很高",
+                "I wash my hands": "我洗手",
+                "We play basketball": "我们打篮球",
+                "She studies hard": "她努力学习",
+                "He watches a movie": "他看电影",
+                "They go to bed": "他们去睡觉",
+                "The sky is blue": "天空是蓝色的",
+                "I help my mom": "我帮助妈妈",
+                "We plant flowers": "我们种花",
+                "She plays the piano": "她弹钢琴",
+                "He does his homework": "他做作业",
+                "They go to the zoo": "他们去动物园",
+                "The snow is white": "雪是白色的",
+                "I take a shower": "我洗澡",
+                "We go shopping": "我们去购物",
+                "She feeds the cat": "她喂猫",
+                "He plays computer games": "他玩电脑游戏",
+                "They go hiking": "他们去徒步旅行",
+                "The wind is blowing": "风吹着",
+                "I read a book": "我读书",
+                "We play soccer": "我们踢足球",
+                "She waters the plants": "她给植物浇水",
+                "He goes to work": "他去上班",
+                "They have a picnic": "他们野餐",
+                "The rain is falling": "下雨了",
+                "I make a cake": "我做蛋糕",
+                "We go to the beach": "我们去海滩",
+                "She paints a picture": "她画画",
+                "He goes fishing": "他去钓鱼",
+                "They play baseball": "他们打棒球",
+                "The fire is hot": "火是热的",
+                "I take a walk": "我散步",
+                "We go to the museum": "我们去博物馆",
+                "She sews a dress": "她缝衣服",
+                "He fixes the bike": "他修自行车",
+                "They go to the library": "他们去图书馆",
+                "The ice is cold": "冰是冷的",
+                "I play with my friends": "我和朋友玩",
+                "We go to the cinema": "我们去电影院",
+                "She takes a photo": "她拍照",
+                "He climbs a mountain": "他爬山",
+                "They go to the concert": "他们去音乐会",
+                "The grass is green": "草是绿色的",
+                "I do exercise": "我做运动",
+                "We go to the supermarket": "我们去超市",
+                "She dances ballet": "她跳芭蕾舞",
+                "He plays the guitar": "他弹吉他",
+                "They go to the aquarium": "他们去水族馆",
+                "The sand is soft": "沙子很软",
+                "I write a story": "我写故事",
+                "We go to the amusement park": "我们去游乐园",
+                "She plays the violin": "她拉小提琴",
+                "He goes skiing": "他去滑雪",
+                "They go to the botanical garden": "他们去植物园",
+                "The rock is hard": "石头很硬",
+                "I play chess": "我下棋",
+                "We go to the planetarium": "我们去天文馆",
+                "She plays the flute": "她吹长笛",
+                "He goes camping": "他去露营",
+                "They go to the art gallery": "他们去美术馆"
+            };
+            
+            return translations[sentence] || '翻译不可用';
+        }
+
+        // 检查答案
+        function checkAnswer() {
+            const blanks = document.querySelectorAll('.blank');
+            const userAnswer = Array.from(blanks).map(blank => blank.textContent).join(' ');
+            const correctAnswer = questions[currentQuestion];
+            
+            const feedback = document.getElementById('feedback');
+            if (userAnswer === correctAnswer) {
+                score += 5; // 每题5分
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                errorCount++; // 增加错误次数
+                document.getElementById('error-count').textContent = errorCount;
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            
+            // 显示翻译和播放音频
+            const translation = getTranslation(correctAnswer);
+            document.getElementById('translation-content').innerHTML = `
+                <strong>中文翻译：</strong>${translation}
+            `;
+            document.getElementById('translation').style.display = 'block';
+            
+            // 播放语音
+            playAudio(correctAnswer);
+            
+            // 显示音频播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
+            
+            document.getElementById('next-btn').style.display = 'inline-block';
+            answered = true;
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('current-question').textContent = currentQuestion + 1;
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            const message = document.getElementById('result-message');
+            if (score === 100) {
+                message.textContent = '太棒了！你是单词排序大师！';
+                createConfetti();
+            } else if (score >= 80) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 60) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 播放音频按钮点击事件
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            const correctAnswer = questions[currentQuestion];
+            playAudio(correctAnswer);
+        });
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+        document.getElementById('game-restart-btn').addEventListener('click', initGame);
+
+        // 初始化游戏
+        initGame();
+    </script>
+</body>
+</html>
