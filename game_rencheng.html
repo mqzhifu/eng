@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>👤 人称代词游戏 - 英语语法学习乐园</title>
     <link rel="stylesheet" href="css/style.css">
-    <!-- 引入ResponsiveVoice.js库 -->
-    <script src="js/responsivevoice.js"></script>
 </head>
 <body>
     <div class="container">
@@ -501,36 +499,75 @@
         // 播放语音
         function playAudio(text) {
             try {
-                if (isPC()) {
-                    // PC端使用原生Web Speech API
-                    if ('speechSynthesis' in window) {
-                        const utterance = new SpeechSynthesisUtterance(text);
-                        utterance.lang = 'en-US';
-                        utterance.rate = 0.7;
-                        speechSynthesis.speak(utterance);
+                if ('speechSynthesis' in window) {
+                    // 检查是否有可用的语音
+                    const voices = speechSynthesis.getVoices();
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    
+                    // 尝试设置英语语音
+                    const englishVoice = voices.find(voice => 
+                        voice.lang.includes('en-US') || voice.lang.includes('en-GB')
+                    );
+                    
+                    if (englishVoice) {
+                        utterance.voice = englishVoice;
                     } else {
-                        // PC端也使用ResponsiveVoice作为回退
-                        if (typeof responsiveVoice !== 'undefined') {
-                            responsiveVoice.speak(text, 'US English Female', { rate: 0.7 });
-                        } else {
-                            alert('当前PC浏览器不支持语音合成功能');
-                        }
+                        // 如果没有找到英语语音，使用默认语音
+                        utterance.lang = 'en-US';
                     }
+                    
+                    utterance.rate = 0.7;
+                    utterance.pitch = 1;
+                    utterance.volume = 1;
+                    
+                    // 添加事件监听器
+                    utterance.onstart = function() {
+                        console.log('音频播放开始');
+                    };
+                    
+                    utterance.onend = function() {
+                        console.log('音频播放结束');
+                    };
+                    
+                    utterance.onerror = function(event) {
+                        console.error('音频播放错误:', event);
+                        alert('播放音频时出错: ' + event.error);
+                    };
+                    
+                    speechSynthesis.speak(utterance);
                 } else {
-                    // 移动端使用ResponsiveVoice.js库
-                    try {
-                        if (typeof responsiveVoice !== 'undefined') {
-                            responsiveVoice.speak(text, 'US English Female', { rate: 0.7 });
-                        } else {
-                            alert('ResponsiveVoice.js库加载失败');
-                        }
-                    } catch (error) {
-                        alert('使用ResponsiveVoice播放语音时出错: ' + error.message);
-                    }
+                    // 不支持Web Speech API的情况
+                    alert('当前设备不支持语音合成功能');
+                    
+                    // 提供视觉反馈替代
+                    showPronunciationGuide(text);
                 }
             } catch (error) {
+                console.error('播放音频时出错:', error);
                 alert('播放音频时出错: ' + error.message);
+                
+                // 提供视觉反馈替代
+                showPronunciationGuide(text);
             }
+        }
+        
+        // 显示发音指南（视觉反馈）
+        function showPronunciationGuide(text) {
+            // 简单的发音映射表
+            const pronunciationMap = {
+                'I am a student.': '发音: 艾 爱姆 呃 斯丢登特',
+                'I love my family.': '发音: 艾 拉乌 迈 范密丽',
+                'I have a dog.': '发音: 艾 海夫 呃 道格',
+                'You are my friend.': '发音: 由 阿 迈 弗润德',
+                'He is a boy.': '发音: 嘿 易兹 呃 波伊',
+                'She is a girl.': '发音: 西 易兹 呃 格尔',
+                'It is a cat.': '发音: 伊特 易兹 呃 凯特',
+                'We are happy.': '发音: 威 阿 海皮',
+                'They are students.': '发音: 贼 阿 斯丢登茨'
+            };
+            
+            const pronunciation = pronunciationMap[text] || '发音指南不可用';
+            alert(pronunciation);
         }
 
         // 播放语音按钮点击事件
