@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
             <h1>🧩 单词排序游戏</h1>
             <p>点击单词，将它们拖放到正确的位置，完成句子！</p>
         </div>
@@ -237,7 +237,6 @@
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
-            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
             selectedWord = null;
         }

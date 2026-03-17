@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
             <h1>🎯 系动词游戏</h1>
             <p>选择正确的系动词填空，一共20道题，满分100分！</p>
         </div>
@@ -226,9 +226,8 @@
             });
             
             document.getElementById('feedback').style.display = 'none';
-            document.getElementById('next-btn').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
-            document.getElementById('play-audio-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
             answered = false;
         }
 

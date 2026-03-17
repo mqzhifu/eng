@@ -209,14 +209,58 @@
             });
         }
 
+        // 音频文件映射
+        const audioMapping = {
+            "get up": "voice/game_memory/sentence_0.mp3",
+            "get on": "voice/game_memory/sentence_1.mp3",
+            "get off": "voice/game_memory/sentence_2.mp3",
+            "get in": "voice/game_memory/sentence_3.mp3",
+            "get to": "voice/game_memory/sentence_4.mp3",
+            "get ready for": "voice/game_memory/sentence_5.mp3",
+            "get back": "voice/game_memory/sentence_6.mp3",
+            "get dressed": "voice/game_memory/sentence_7.mp3",
+            "come on": "voice/game_memory/sentence_8.mp3",
+            "come in": "voice/game_memory/sentence_9.mp3",
+            "come out": "voice/game_memory/sentence_10.mp3",
+            "come back": "voice/game_memory/sentence_11.mp3",
+            "come from": "voice/game_memory/sentence_12.mp3",
+            "come true": "voice/game_memory/sentence_13.mp3",
+            "come over": "voice/game_memory/sentence_14.mp3",
+            "come up": "voice/game_memory/sentence_15.mp3",
+            "take off": "voice/game_memory/sentence_16.mp3",
+            "take out": "voice/game_memory/sentence_17.mp3",
+            "take away": "voice/game_memory/sentence_18.mp3",
+            "take back": "voice/game_memory/sentence_19.mp3",
+            "take care": "voice/game_memory/sentence_20.mp3",
+            "take a walk": "voice/game_memory/sentence_21.mp3",
+            "take a rest": "voice/game_memory/sentence_22.mp3",
+            "take a look": "voice/game_memory/sentence_23.mp3",
+            "put on": "voice/game_memory/sentence_24.mp3",
+            "put off": "voice/game_memory/sentence_25.mp3",
+            "put up": "voice/game_memory/sentence_26.mp3",
+            "put down": "voice/game_memory/sentence_27.mp3",
+            "put away": "voice/game_memory/sentence_28.mp3",
+            "put out": "voice/game_memory/sentence_29.mp3",
+            "put back": "voice/game_memory/sentence_30.mp3",
+            "put into": "voice/game_memory/sentence_31.mp3",
+            "turn on": "voice/game_memory/sentence_32.mp3",
+            "turn off": "voice/game_memory/sentence_33.mp3",
+            "turn up": "voice/game_memory/sentence_34.mp3",
+            "turn down": "voice/game_memory/sentence_35.mp3",
+            "turn left": "voice/game_memory/sentence_36.mp3",
+            "turn right": "voice/game_memory/sentence_37.mp3",
+            "turn around": "voice/game_memory/sentence_38.mp3",
+            "turn into": "voice/game_memory/sentence_39.mp3"
+        };
+
         // 播放语音
         function playAudio(text) {
-            // 使用Web Speech API
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.7;
-                speechSynthesis.speak(utterance);
+            const audioPath = audioMapping[text];
+            if (audioPath) {
+                const audio = new Audio(audioPath);
+                audio.play().catch(error => {
+                    console.error('音频播放失败:', error);
+                });
             }
         }
 
