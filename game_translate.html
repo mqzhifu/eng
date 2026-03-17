@@ -402,13 +402,7 @@
                 optionElement.className = 'option';
                 optionElement.textContent = option;
                 optionElement.dataset.answer = option;
-                // 添加点击事件支持
                 optionElement.addEventListener('click', selectOption);
-                // 添加触摸事件支持
-                optionElement.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // 防止触发点击事件
-                    selectOption(e);
-                });
                 optionsContainer.appendChild(optionElement);
             });
             

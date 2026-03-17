@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
             <h1>🧩 单词排序游戏</h1>
             <p>点击单词，将它们拖放到正确的位置，完成句子！</p>
         </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="feedback" id="feedback"></div>
-                <div class="translation" id="translation" style="display: none;">
+                <div class="translation-box" id="translation" style="display: none;">
                     <div class="translation-content" id="translation-content"></div>
                 </div>
                 <button class="next-btn" id="next-btn">下一题</button>
@@ -207,20 +207,7 @@
                 const blank = document.createElement('div');
                 blank.className = 'blank';
                 blank.dataset.index = index;
-                // 添加点击事件支持
                 blank.addEventListener('click', function() {
-                    if (answered) return;
-                    if (blank.classList.contains('filled')) {
-                        // 如果已填充，则移除单词
-                        removeWord(blank);
-                    } else if (selectedWord) {
-                        // 如果未填充且有选中的单词，则放置单词
-                        placeWord(blank);
-                    }
-                });
-                // 添加触摸事件支持
-                blank.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // 防止触发点击事件
                     if (answered) return;
                     if (blank.classList.contains('filled')) {
                         // 如果已填充，则移除单词
@@ -243,19 +230,14 @@
                 wordElement.textContent = word;
                 wordElement.dataset.word = word;
                 wordElement.dataset.index = index;
-                // 添加点击事件支持
                 wordElement.addEventListener('click', () => selectWord(wordElement));
-                // 添加触摸事件支持
-                wordElement.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // 防止触发点击事件
-                    selectWord(wordElement);
-                });
                 wordsElement.appendChild(wordElement);
             });
             
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
             selectedWord = null;
         }
@@ -343,7 +325,76 @@
             "He draws a picture": "voice/game_sort/sentence_21.mp3",
             "The dog barks loudly": "voice/game_sort/sentence_22.mp3",
             "I wear a coat": "voice/game_sort/sentence_23.mp3",
-            "We go to the park": "voice/game_sort/sentence_24.mp3"
+            "We go to the park": "voice/game_sort/sentence_24.mp3",
+            "She writes a letter": "voice/game_sort/sentence_25.mp3",
+            "He jumps high": "voice/game_sort/sentence_26.mp3",
+            "They eat lunch": "voice/game_sort/sentence_27.mp3",
+            "The moon is bright": "voice/game_sort/sentence_28.mp3",
+            "I listen to music": "voice/game_sort/sentence_29.mp3",
+            "We clean the room": "voice/game_sort/sentence_30.mp3",
+            "She cooks dinner": "voice/game_sort/sentence_31.mp3",
+            "He rides a bike": "voice/game_sort/sentence_32.mp3",
+            "They go swimming": "voice/game_sort/sentence_33.mp3",
+            "The tree is tall": "voice/game_sort/sentence_34.mp3",
+            "I wash my hands": "voice/game_sort/sentence_35.mp3",
+            "We play basketball": "voice/game_sort/sentence_36.mp3",
+            "She studies hard": "voice/game_sort/sentence_37.mp3",
+            "He watches a movie": "voice/game_sort/sentence_38.mp3",
+            "They go to bed": "voice/game_sort/sentence_39.mp3",
+            "The sky is blue": "voice/game_sort/sentence_40.mp3",
+            "I help my mom": "voice/game_sort/sentence_41.mp3",
+            "We plant flowers": "voice/game_sort/sentence_42.mp3",
+            "She plays the piano": "voice/game_sort/sentence_43.mp3",
+            "He does his homework": "voice/game_sort/sentence_44.mp3",
+            "They go to the zoo": "voice/game_sort/sentence_45.mp3",
+            "The snow is white": "voice/game_sort/sentence_46.mp3",
+            "I take a shower": "voice/game_sort/sentence_47.mp3",
+            "We go shopping": "voice/game_sort/sentence_48.mp3",
+            "She feeds the cat": "voice/game_sort/sentence_49.mp3",
+            "He plays computer games": "voice/game_sort/sentence_50.mp3",
+            "They go hiking": "voice/game_sort/sentence_51.mp3",
+            "The wind is blowing": "voice/game_sort/sentence_52.mp3",
+            "I read a book": "voice/game_sort/sentence_53.mp3",
+            "We play soccer": "voice/game_sort/sentence_54.mp3",
+            "She waters the plants": "voice/game_sort/sentence_55.mp3",
+            "He goes to work": "voice/game_sort/sentence_56.mp3",
+            "They have a picnic": "voice/game_sort/sentence_57.mp3",
+            "The rain is falling": "voice/game_sort/sentence_58.mp3",
+            "I make a cake": "voice/game_sort/sentence_59.mp3",
+            "We go to the beach": "voice/game_sort/sentence_60.mp3",
+            "She paints a picture": "voice/game_sort/sentence_61.mp3",
+            "He goes fishing": "voice/game_sort/sentence_62.mp3",
+            "They play baseball": "voice/game_sort/sentence_63.mp3",
+            "The fire is hot": "voice/game_sort/sentence_64.mp3",
+            "I take a walk": "voice/game_sort/sentence_65.mp3",
+            "We go to the museum": "voice/game_sort/sentence_66.mp3",
+            "She sews a dress": "voice/game_sort/sentence_67.mp3",
+            "He fixes the bike": "voice/game_sort/sentence_68.mp3",
+            "They go to the library": "voice/game_sort/sentence_69.mp3",
+            "The ice is cold": "voice/game_sort/sentence_70.mp3",
+            "I play with my friends": "voice/game_sort/sentence_71.mp3",
+            "We go to the cinema": "voice/game_sort/sentence_72.mp3",
+            "She takes a photo": "voice/game_sort/sentence_73.mp3",
+            "He climbs a mountain": "voice/game_sort/sentence_74.mp3",
+            "They go to the concert": "voice/game_sort/sentence_75.mp3",
+            "The grass is green": "voice/game_sort/sentence_76.mp3",
+            "I do exercise": "voice/game_sort/sentence_77.mp3",
+            "We go to the supermarket": "voice/game_sort/sentence_78.mp3",
+            "She dances ballet": "voice/game_sort/sentence_79.mp3",
+            "He plays the guitar": "voice/game_sort/sentence_80.mp3",
+            "They go to the aquarium": "voice/game_sort/sentence_81.mp3",
+            "The sand is soft": "voice/game_sort/sentence_82.mp3",
+            "I write a story": "voice/game_sort/sentence_83.mp3",
+            "We go to the amusement park": "voice/game_sort/sentence_84.mp3",
+            "She plays the violin": "voice/game_sort/sentence_85.mp3",
+            "He goes skiing": "voice/game_sort/sentence_86.mp3",
+            "They go to the botanical garden": "voice/game_sort/sentence_87.mp3",
+            "The rock is hard": "voice/game_sort/sentence_88.mp3",
+            "I play chess": "voice/game_sort/sentence_89.mp3",
+            "We go to the planetarium": "voice/game_sort/sentence_90.mp3",
+            "She plays the flute": "voice/game_sort/sentence_91.mp3",
+            "He goes camping": "voice/game_sort/sentence_92.mp3",
+            "They go to the art gallery": "voice/game_sort/sentence_93.mp3"
         };
 
         // 播放语音

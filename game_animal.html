@@ -10,6 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
             <h1>🐾 动物猜猜猜</h1>
             <p>根据描述猜测动物，选择正确的答案！</p>
         </div>
@@ -40,7 +41,7 @@
                     <!-- 选项将通过JavaScript动态生成 -->
                 </div>
                 <div class="feedback" id="feedback"></div>
-                <div class="translation" id="translation" style="display: none;">
+                <div class="translation-box" id="translation" style="display: none;">
                     <div class="translation-content" id="translation-content"></div>
                 </div>
                 <button class="next-btn" id="next-btn">下一题</button>
@@ -58,6 +59,173 @@
     </div>
 
     <script>
+        // 动物名称到中文的映射
+        const animalTranslations = {
+            "lion": "狮子",
+            "tiger": "老虎",
+            "elephant": "大象",
+            "giraffe": "长颈鹿",
+            "zebra": "斑马",
+            "panda": "熊猫",
+            "whale": "鲸鱼",
+            "monkey": "猴子",
+            "crocodile": "鳄鱼",
+            "penguin": "企鹅",
+            "mouse": "老鼠",
+            "eagle": "鹰",
+            "cat": "猫",
+            "dog": "狗",
+            "cow": "牛",
+            "bee": "蜜蜂",
+            "shark": "鲨鱼",
+            "kangaroo": "袋鼠",
+            "owl": "猫头鹰",
+            "frog": "青蛙",
+            "cheetah": "猎豹",
+            "squirrel": "松鼠",
+            "snake": "蛇",
+            "dolphin": "海豚",
+            "camel": "骆驼",
+            "nightingale": "夜莺",
+            "rabbit": "兔子",
+            "wolf": "狼",
+            "parrot": "鹦鹉",
+            "porcupine": "豪猪",
+            "turtle": "海龟",
+            "deer": "鹿",
+            "butterfly": "蝴蝶",
+            "anteater": "食蚁兽",
+            "flamingo": "火烈鸟",
+            "fox": "狐狸",
+            "walrus": "海象",
+            "tortoise": "陆龟",
+            "toucan": "巨嘴鸟",
+            "hedgehog": "刺猬",
+            "horse": "马",
+            "migration bird": "候鸟",
+            "raccoon": "浣熊",
+            "polar bear": "北极熊",
+            "peacock": "孔雀",
+            "koala": "考拉",
+            "hippopotamus": "河马",
+            "rhinoceros": "犀牛",
+            "leopard": "豹子",
+            "gorilla": "大猩猩",
+            "chimpanzee": "黑猩猩",
+            "orangutan": "猩猩",
+            "alligator": "短吻鳄",
+            "lizard": "蜥蜴",
+            "ostrich": "鸵鸟",
+            "emu": "鸸鹋",
+            "kiwi": "几维鸟",
+            "rat": "大鼠",
+            "squirrel": "松鼠",
+            "hamster": "仓鼠",
+            "hawk": "鹰",
+            "vulture": "秃鹫",
+            "sheep": "绵羊",
+            "goat": "山羊",
+            "ant": "蚂蚁",
+            "fly": "苍蝇",
+            "tuna": "金枪鱼",
+            "opossum": "负鼠",
+            "wallaby": "小袋鼠",
+            "salamander": "蝾螈",
+            "newt": "蝾螈",
+            "toad": "蟾蜍",
+            "donkey": "驴",
+            "mule": "骡子",
+            "sparrow": "麻雀",
+            "pigeon": "鸽子",
+            "crow": "乌鸦",
+            "coyote": "郊狼",
+            "jackal": "豺",
+            "armadillo": "犰狳",
+            "mole": "鼹鼠",
+            "shrew": "鼩鼱",
+            "tortoise": "陆龟",
+            "stork": "鹳",
+            "crane": "鹤",
+            "heron": "鹭",
+            "badger": "獾",
+            "skunk": "臭鼬",
+            "brown bear": "棕熊",
+            "black bear": "黑熊",
+            "grizzly bear": "灰熊",
+            "pheasant": "雉鸡",
+            "turkey": "火鸡",
+            "quail": "鹌鹑",
+            "wombat": "袋熊"
+        };
+
+        // 音频文件映射
+        const audioMapping = {
+            "This animal is called the king of the forest. It has long hair on its head and makes loud sounds.": "voice/game_animal/question_1.mp3",
+            "This is the biggest animal on land. It has a long nose and big ears.": "voice/game_animal/question_2.mp3",
+            "This animal has black and white stripes. It lives in Africa.": "voice/game_animal/question_3.mp3",
+            "This animal is a big cat with orange fur and black stripes.": "voice/game_animal/question_4.mp3",
+            "This animal has a long neck and spots. It is the tallest animal on land.": "voice/game_animal/question_5.mp3",
+            "This bear is from China. It has black and white fur.": "voice/game_animal/question_6.mp3",
+            "This is a big animal that lives in the sea. It is very big and kind.": "voice/game_animal/question_7.mp3",
+            "This animal lives in trees and is smart.": "voice/game_animal/question_8.mp3",
+            "This is a big reptile with a long tail and sharp teeth.": "voice/game_animal/question_9.mp3",
+            "This bird cannot fly. It lives in a very cold place.": "voice/game_animal/question_10.mp3",
+            "This small animal has a long tail and likes to eat cheese.": "voice/game_animal/question_11.mp3",
+            "This big bird flies high and has sharp claws and a curved beak.": "voice/game_animal/question_12.mp3",
+            "This pet likes to chase mice.": "voice/game_animal/question_13.mp3",
+            "This pet is people's best friend.": "voice/game_animal/question_14.mp3",
+            "This big animal eats grass. It has horns and lives in groups.": "voice/game_animal/question_15.mp3",
+            "This small insect gets sweet juice from flowers.": "voice/game_animal/question_16.mp3",
+            "This big fish has sharp teeth and is a top hunter in the sea.": "voice/game_animal/question_17.mp3",
+            "This animal carries its babies in a bag on its belly. It hops around.": "voice/game_animal/question_18.mp3",
+            "This bird is active at night. It has big eyes and can turn its head almost all the way around.": "voice/game_animal/question_19.mp3",
+            "This small animal can live in water and on land. It has smooth skin and can jump high.": "voice/game_animal/question_20.mp3",
+            "This big cat has spots and runs very fast.": "voice/game_animal/question_21.mp3",
+            "This small animal has a bushy tail and likes to eat nuts.": "voice/game_animal/question_22.mp3",
+            "This long reptile sheds its skin as it grows.": "voice/game_animal/question_23.mp3",
+            "This sea animal is smart and likes to play.": "voice/game_animal/question_24.mp3",
+            "This big animal has a hump on its back and lives in hot, dry places.": "voice/game_animal/question_25.mp3",
+            "This bird sings very beautifully.": "voice/game_animal/question_26.mp3",
+            "This small animal has long ears and a fluffy tail.": "voice/game_animal/question_27.mp3",
+            "This wild animal has thick fur and lives in cold places. It howls at night.": "voice/game_animal/question_28.mp3",
+            "This bird has colorful feathers and can copy what people say.": "voice/game_animal/question_29.mp3",
+            "This small animal has sharp spines on its back to protect itself.": "voice/game_animal/question_30.mp3",
+            "This reptile lives in the sea. It has a hard shell and lays eggs on beaches.": "voice/game_animal/question_31.mp3",
+            "This big animal eats grass. It has horns on its head and lives in forests.": "voice/game_animal/question_32.mp3",
+            "This small insect has six legs and pretty wings.": "voice/game_animal/question_33.mp3",
+            "This big cat has long hair on its head and lives in groups.": "voice/game_animal/question_34.mp3",
+            "This small animal has a long nose and eats insects.": "voice/game_animal/question_35.mp3",
+            "This big animal has a hump and is used for carrying things in the desert.": "voice/game_animal/question_36.mp3",
+            "This bird has a very long neck and long legs.": "voice/game_animal/question_37.mp3",
+            "This small animal has a bushy tail and is very clever.": "voice/game_animal/question_38.mp3",
+            "This big sea animal has long tusks and whiskers.": "voice/game_animal/question_39.mp3",
+            "This bird can swim underwater very well.": "voice/game_animal/question_40.mp3",
+            "This small animal has a long tail and can jump from tree to tree.": "voice/game_animal/question_41.mp3",
+            "This reptile has a hard shell and moves very slowly.": "voice/game_animal/question_42.mp3",
+            "This bird has a very long beak and colorful feathers.": "voice/game_animal/question_43.mp3",
+            "This small animal has a pointy nose and comes out at night.": "voice/game_animal/question_44.mp3",
+            "This big animal eats grass. It has a long tail and lives in groups.": "voice/game_animal/question_45.mp3",
+            "This bird can fly very far in different seasons.": "voice/game_animal/question_46.mp3",
+            "This small animal has a striped tail and is very curious.": "voice/game_animal/question_47.mp3",
+            "This big bear has thick white fur and lives in very cold places.": "voice/game_animal/question_48.mp3",
+            "This bird has beautiful feathers and does a special dance to find a friend.": "voice/game_animal/question_49.mp3",
+            "This small animal has a bag and lives in Australia. It eats leaves.": "voice/game_animal/question_50.mp3"
+        };
+
+        // 播放音频
+        function playAudio(text) {
+            // 使用本地MP3文件
+            const audioPath = audioMapping[text];
+            if (audioPath) {
+                const audio = new Audio(audioPath);
+                audio.play().catch(error => {
+                    console.error('播放音频失败:', error);
+                });
+            } else {
+                console.error('未找到音频文件:', text);
+            }
+        }
+
         // 动物数据源
         const animalQuestions = [
             {
@@ -451,7 +619,8 @@
             shuffledOptions.forEach(option => {
                 const optionElement = document.createElement('div');
                 optionElement.className = 'option';
-                optionElement.textContent = option;
+                const translation = animalTranslations[option] || '';
+                optionElement.innerHTML = `${option} <span class="translation">(${translation})</span>`;
                 optionElement.dataset.answer = option;
                 optionElement.addEventListener('click', selectOption);
                 optionsContainer.appendChild(optionElement);
@@ -460,6 +629,7 @@
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
         }
 
@@ -511,6 +681,12 @@
             feedback.style.display = 'block';
             document.getElementById('next-btn').style.display = 'inline-block';
             answered = true;
+            
+            // 播放问题描述的音频
+            playAudio(question.description);
+            
+            // 显示音频播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
         }
 
         // 选项选择动画
@@ -581,6 +757,14 @@
                 message.textContent = '没关系，再试一次吧！';
             }
         }
+
+        // 播放音频按钮点击事件
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (currentQuestion < questions.length) {
+                const question = questions[currentQuestion];
+                playAudio(question.description);
+            }
+        });
 
         // 事件监听
         document.getElementById('next-btn').addEventListener('click', nextQuestion);

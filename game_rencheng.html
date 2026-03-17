@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
             <h1>👤 人称代词游戏</h1>
             <p>选择正确的人称代词填空，一共20道题，满分100分！</p>
         </div>
@@ -267,19 +267,15 @@
                 optionElement.className = 'option';
                 optionElement.textContent = option;
                 optionElement.dataset.answer = option;
-                // 添加点击事件支持
                 optionElement.addEventListener('click', selectOption);
-                // 添加触摸事件支持
-                optionElement.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // 防止触发点击事件
-                    selectOption(e);
-                });
                 optionsContainer.appendChild(optionElement);
             });
             
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
+            // 隐藏播放按钮
+            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
         }
 
@@ -367,6 +363,8 @@
             }, 1000);
             
             document.getElementById('next-btn').style.display = 'inline-block';
+            // 显示播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
             answered = true;
         }
 

@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
             <h1>🔤 英语问答游戏</h1>
             <p>回答问题，选择正确的答案，一共20道题，满分100分！</p>
         </div>
@@ -314,19 +314,14 @@
                 const optionElement = document.createElement('div');
                 optionElement.className = 'option';
                 optionElement.textContent = option;
-                // 添加点击事件支持
                 optionElement.addEventListener('click', () => selectOption(optionElement));
-                // 添加触摸事件支持
-                optionElement.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // 防止触发点击事件
-                    selectOption(optionElement);
-                });
                 optionsContainer.appendChild(optionElement);
             });
             
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
         }
 
@@ -373,34 +368,95 @@
             // 播放语音
             playAudio(question.question, question.correctAnswer);
             
+            // 显示音频播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
+            
             document.getElementById('next-btn').style.display = 'inline-block';
             answered = true;
         }
 
+        // 音频文件映射
+        const audioMapping = {
+            "How are you today?": "voice/game_qa/question_0.mp3",
+            "I'm fine.": "voice/game_qa/answer_0.mp3",
+            "What's your name?": "voice/game_qa/question_1.mp3",
+            "My name is Tom.": "voice/game_qa/answer_1.mp3",
+            "How old are you?": "voice/game_qa/question_2.mp3",
+            "I'm ten years old.": "voice/game_qa/answer_2.mp3",
+            "Where are you from?": "voice/game_qa/question_3.mp3",
+            "I'm from China.": "voice/game_qa/answer_3.mp3",
+            "Nice to meet you.": "voice/game_qa/question_4.mp3",
+            "Nice to meet you, too.": "voice/game_qa/answer_4.mp3",
+            "How do you do?": "voice/game_qa/question_5.mp3",
+            "How do you do?": "voice/game_qa/answer_5.mp3",
+            "Where do you live?": "voice/game_qa/question_6.mp3",
+            "I live in China.": "voice/game_qa/answer_6.mp3",
+            "What's your favorite subject?": "voice/game_qa/question_7.mp3",
+            "My favorite subject is English.": "voice/game_qa/answer_7.mp3",
+            "What's in your schoolbag?": "voice/game_qa/question_8.mp3",
+            "A book and a pencil.": "voice/game_qa/answer_8.mp3"
+        };
+
         // 播放音频
         function playAudio(question, answer) {
-            if ('speechSynthesis' in window) {
-                // 播放问题
-                const questionUtterance = new SpeechSynthesisUtterance(question);
-                questionUtterance.lang = 'en-US';
-                questionUtterance.rate = 0.7;
-                questionUtterance.pitch = 1.0;
-                questionUtterance.volume = 1.0;
-                
-                // 播放答案
-                const answerUtterance = new SpeechSynthesisUtterance(answer);
-                answerUtterance.lang = 'en-US';
-                answerUtterance.rate = 0.7;
-                answerUtterance.pitch = 1.0;
-                answerUtterance.volume = 1.0;
-                
-                // 先播放问题，然后播放答案
-                questionUtterance.onend = function() {
-                    speechSynthesis.speak(answerUtterance);
-                };
-                
-                speechSynthesis.speak(questionUtterance);
+            // 尝试使用本地MP3文件播放问题
+            const questionAudioPath = audioMapping[question];
+            if (questionAudioPath) {
+                const questionAudio = new Audio(questionAudioPath);
+                questionAudio.play().catch(error => {
+                    console.error('播放问题音频失败:', error);
+                    // 如果本地音频播放失败，回退到Web Speech API
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(question);
+                        utterance.lang = 'en-US';
+                        utterance.rate = 0.7;
+                        utterance.pitch = 1.0;
+                        utterance.volume = 1.0;
+                        speechSynthesis.speak(utterance);
+                    }
+                });
+            } else {
+                // 如果没有本地音频文件，使用Web Speech API
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(question);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.7;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+                    speechSynthesis.speak(utterance);
+                }
             }
+            
+            // 延迟播放答案
+            setTimeout(() => {
+                // 尝试使用本地MP3文件播放答案
+                const answerAudioPath = audioMapping[answer];
+                if (answerAudioPath) {
+                    const answerAudio = new Audio(answerAudioPath);
+                    answerAudio.play().catch(error => {
+                        console.error('播放答案音频失败:', error);
+                        // 如果本地音频播放失败，回退到Web Speech API
+                        if ('speechSynthesis' in window) {
+                            const utterance = new SpeechSynthesisUtterance(answer);
+                            utterance.lang = 'en-US';
+                            utterance.rate = 0.7;
+                            utterance.pitch = 1.0;
+                            utterance.volume = 1.0;
+                            speechSynthesis.speak(utterance);
+                        }
+                    });
+                } else {
+                    // 如果没有本地音频文件，使用Web Speech API
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(answer);
+                        utterance.lang = 'en-US';
+                        utterance.rate = 0.7;
+                        utterance.pitch = 1.0;
+                        utterance.volume = 1.0;
+                        speechSynthesis.speak(utterance);
+                    }
+                }
+            }, 1500); // 延迟1.5秒播放答案
         }
 
         // 创建庆祝效果
