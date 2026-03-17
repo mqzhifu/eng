@@ -299,14 +299,43 @@
             selectedWord = null;
         }
 
+        // 音频文件映射
+        const audioMapping = {
+            "I love my family": "voice/game_sort/sentence_0.mp3",
+            "The cat is black": "voice/game_sort/sentence_1.mp3",
+            "We go to school": "voice/game_sort/sentence_2.mp3",
+            "She has a book": "voice/game_sort/sentence_3.mp3",
+            "He can play football": "voice/game_sort/sentence_4.mp3",
+            "They are happy": "voice/game_sort/sentence_5.mp3",
+            "The sun is shining": "voice/game_sort/sentence_6.mp3",
+            "I eat apples": "voice/game_sort/sentence_7.mp3",
+            "We drink water": "voice/game_sort/sentence_8.mp3",
+            "She likes dogs": "voice/game_sort/sentence_9.mp3",
+            "He reads a story": "voice/game_sort/sentence_10.mp3",
+            "The bird can fly": "voice/game_sort/sentence_11.mp3",
+            "I have a pen": "voice/game_sort/sentence_12.mp3",
+            "We watch TV": "voice/game_sort/sentence_13.mp3",
+            "She sings a song": "voice/game_sort/sentence_14.mp3",
+            "He runs fast": "voice/game_sort/sentence_15.mp3",
+            "They play games": "voice/game_sort/sentence_16.mp3",
+            "The flower is red": "voice/game_sort/sentence_17.mp3",
+            "I brush my teeth": "voice/game_sort/sentence_18.mp3",
+            "We learn English": "voice/game_sort/sentence_19.mp3",
+            "She dances well": "voice/game_sort/sentence_20.mp3",
+            "He draws a picture": "voice/game_sort/sentence_21.mp3",
+            "The dog barks loudly": "voice/game_sort/sentence_22.mp3",
+            "I wear a coat": "voice/game_sort/sentence_23.mp3",
+            "We go to the park": "voice/game_sort/sentence_24.mp3"
+        };
+
         // 播放语音
         function playAudio(text) {
-            // 使用Web Speech API
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.7;
-                speechSynthesis.speak(utterance);
+            const audioPath = audioMapping[text];
+            if (audioPath) {
+                const audio = new Audio(audioPath);
+                audio.play().catch(error => {
+                    console.error('音频播放失败:', error);
+                });
             }
         }
 
