@@ -348,8 +348,8 @@
                 `;
                 document.getElementById('translation').style.display = 'block';
                 
-                // 播放语音
-                playAudio(correctSentencePlain);
+                // 播放语音 - 只播放问题句子，不播放答案
+                playAudio(question.sentence);
             }
             
             // 添加翻转动画
@@ -492,86 +492,126 @@
             return !mobileKeywords.some(keyword => userAgent.includes(keyword));
         }
         
+        // 音频文件映射表
+        const audioMapping = {
+            "______ am a student.": "voice/game_rencheng/sentence_0.mp3",
+            "______ love my family.": "voice/game_rencheng/sentence_1.mp3",
+            "______ have a dog.": "voice/game_rencheng/sentence_2.mp3",
+            "______ am hungry.": "voice/game_rencheng/sentence_3.mp3",
+            "______ am seven years old.": "voice/game_rencheng/sentence_4.mp3",
+            "______ am happy today.": "voice/game_rencheng/sentence_5.mp3",
+            "______ am learning English.": "voice/game_rencheng/sentence_6.mp3",
+            "______ am going to school.": "voice/game_rencheng/sentence_7.mp3",
+            "______ am reading a book.": "voice/game_rencheng/sentence_8.mp3",
+            "______ am playing with my friends.": "voice/game_rencheng/sentence_9.mp3",
+            "______ are my friend.": "voice/game_rencheng/sentence_10.mp3",
+            "______ are very kind.": "voice/game_rencheng/sentence_11.mp3",
+            "______ are good at English.": "voice/game_rencheng/sentence_12.mp3",
+            "______ are tall and strong.": "voice/game_rencheng/sentence_13.mp3",
+            "______ are my best friend.": "voice/game_rencheng/sentence_14.mp3",
+            "______ are wearing a blue shirt.": "voice/game_rencheng/sentence_15.mp3",
+            "______ are coming to my party.": "voice/game_rencheng/sentence_16.mp3",
+            "______ are doing a great job.": "voice/game_rencheng/sentence_17.mp3",
+            "______ are my neighbor.": "voice/game_rencheng/sentence_18.mp3",
+            "______ are always helpful.": "voice/game_rencheng/sentence_19.mp3",
+            "______ is a boy.": "voice/game_rencheng/sentence_20.mp3",
+            "______ likes ice cream.": "voice/game_rencheng/sentence_21.mp3",
+            "______ is tall.": "voice/game_rencheng/sentence_22.mp3",
+            "______ is my teacher.": "voice/game_rencheng/sentence_23.mp3",
+            "______ is playing football.": "voice/game_rencheng/sentence_24.mp3",
+            "______ is my brother.": "voice/game_rencheng/sentence_25.mp3",
+            "______ is reading a book.": "voice/game_rencheng/sentence_26.mp3",
+            "______ is very smart.": "voice/game_rencheng/sentence_27.mp3",
+            "______ is wearing a red cap.": "voice/game_rencheng/sentence_28.mp3",
+            "______ is my father.": "voice/game_rencheng/sentence_29.mp3",
+            "______ is a girl.": "voice/game_rencheng/sentence_30.mp3",
+            "______ is my sister.": "voice/game_rencheng/sentence_31.mp3",
+            "______ is my mother.": "voice/game_rencheng/sentence_32.mp3",
+            "______ is wearing a dress.": "voice/game_rencheng/sentence_33.mp3",
+            "______ is reading a storybook.": "voice/game_rencheng/sentence_34.mp3",
+            "______ is very pretty.": "voice/game_rencheng/sentence_35.mp3",
+            "______ is playing with a doll.": "voice/game_rencheng/sentence_36.mp3",
+            "______ is my aunt.": "voice/game_rencheng/sentence_37.mp3",
+            "______ is good at singing.": "voice/game_rencheng/sentence_38.mp3",
+            "______ is a cat.": "voice/game_rencheng/sentence_39.mp3",
+            "______ is a bird.": "voice/game_rencheng/sentence_40.mp3",
+            "______ is a dog.": "voice/game_rencheng/sentence_41.mp3",
+            "______ is a book.": "voice/game_rencheng/sentence_42.mp3",
+            "______ is a ball.": "voice/game_rencheng/sentence_43.mp3",
+            "______ is a tree.": "voice/game_rencheng/sentence_44.mp3",
+            "______ is a car.": "voice/game_rencheng/sentence_45.mp3",
+            "______ is a house.": "voice/game_rencheng/sentence_46.mp3",
+            "______ is a computer.": "voice/game_rencheng/sentence_47.mp3",
+            "______ is a pencil.": "voice/game_rencheng/sentence_48.mp3",
+            "______ are happy.": "voice/game_rencheng/sentence_49.mp3",
+            "______ are in the park.": "voice/game_rencheng/sentence_50.mp3",
+            "______ are friends.": "voice/game_rencheng/sentence_51.mp3",
+            "______ are going to school together.": "voice/game_rencheng/sentence_52.mp3",
+            "______ are playing games.": "voice/game_rencheng/sentence_53.mp3",
+            "______ are learning English.": "voice/game_rencheng/sentence_54.mp3",
+            "______ are a family.": "voice/game_rencheng/sentence_55.mp3",
+            "______ are having fun.": "voice/game_rencheng/sentence_56.mp3",
+            "______ are watching a movie.": "voice/game_rencheng/sentence_57.mp3",
+            "______ are eating lunch.": "voice/game_rencheng/sentence_58.mp3",
+            "______ are playing football.": "voice/game_rencheng/sentence_59.mp3",
+            "______ are students.": "voice/game_rencheng/sentence_60.mp3",
+            "______ are my parents.": "voice/game_rencheng/sentence_61.mp3",
+            "______ are my classmates.": "voice/game_rencheng/sentence_62.mp3",
+            "______ are my friends.": "voice/game_rencheng/sentence_63.mp3",
+            "______ are playing in the garden.": "voice/game_rencheng/sentence_64.mp3",
+            "______ are happy together.": "voice/game_rencheng/sentence_65.mp3",
+            "______ are going to the zoo.": "voice/game_rencheng/sentence_66.mp3",
+            "______ are eating ice cream.": "voice/game_rencheng/sentence_67.mp3",
+            "______ are reading books.": "voice/game_rencheng/sentence_68.mp3",
+            "______ is my pet.": "voice/game_rencheng/sentence_69.mp3",
+            "______ is my grandfather.": "voice/game_rencheng/sentence_70.mp3",
+            "______ is my grandmother.": "voice/game_rencheng/sentence_71.mp3",
+            "______ are my siblings.": "voice/game_rencheng/sentence_72.mp3",
+            "______ are my cousins.": "voice/game_rencheng/sentence_73.mp3",
+            "______ am excited about the party.": "voice/game_rencheng/sentence_74.mp3",
+            "______ are my neighbors.": "voice/game_rencheng/sentence_75.mp3",
+            "______ is a big dog.": "voice/game_rencheng/sentence_76.mp3",
+            "______ are my team members.": "voice/game_rencheng/sentence_77.mp3",
+            "______ is a small cat.": "voice/game_rencheng/sentence_78.mp3",
+            "______ am ready for the test.": "voice/game_rencheng/sentence_79.mp3",
+            "______ are my colleagues.": "voice/game_rencheng/sentence_80.mp3",
+            "______ is my favorite toy.": "voice/game_rencheng/sentence_81.mp3",
+            "______ are my relatives.": "voice/game_rencheng/sentence_82.mp3",
+            "______ am a good student.": "voice/game_rencheng/sentence_83.mp3",
+            "______ is my favorite book.": "voice/game_rencheng/sentence_84.mp3",
+            "______ are my favorite foods.": "voice/game_rencheng/sentence_85.mp3",
+            "______ am looking forward to the holiday.": "voice/game_rencheng/sentence_86.mp3",
+            "______ are my favorite animals.": "voice/game_rencheng/sentence_87.mp3",
+            "______ is my favorite color.": "voice/game_rencheng/sentence_88.mp3"
+        };
+
         // 播放语音
         function playAudio(text) {
             try {
-                if ('speechSynthesis' in window) {
-                    // 检查是否有可用的语音
-                    const voices = speechSynthesis.getVoices();
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    
-                    // 尝试设置英语语音
-                    const englishVoice = voices.find(voice => 
-                        voice.lang.includes('en-US') || voice.lang.includes('en-GB')
-                    );
-                    
-                    if (englishVoice) {
-                        utterance.voice = englishVoice;
-                    } else {
-                        // 如果没有找到英语语音，使用默认语音
-                        utterance.lang = 'en-US';
-                    }
-                    
-                    utterance.rate = 0.7;
-                    utterance.pitch = 1;
-                    utterance.volume = 1;
-                    
-                    // 添加事件监听器
-                    utterance.onstart = function() {
-                        console.log('音频播放开始');
-                    };
-                    
-                    utterance.onend = function() {
-                        console.log('音频播放结束');
-                    };
-                    
-                    utterance.onerror = function(event) {
-                        console.error('音频播放错误:', event);
-                        alert('播放音频时出错: ' + event.error);
-                    };
-                    
-                    speechSynthesis.speak(utterance);
+                // 查找对应的音频文件
+                const audioPath = audioMapping[text];
+                if (audioPath) {
+                    // 创建音频对象并播放
+                    const audio = new Audio(audioPath);
+                    audio.play().catch(error => {
+                        console.error('播放音频失败:', error);
+                        alert('播放音频时出错: ' + error.message);
+                    });
                 } else {
-                    // 不支持Web Speech API的情况
-                    alert('当前设备不支持语音合成功能');
-                    
-                    // 提供视觉反馈替代
-                    showPronunciationGuide(text);
+                    alert('未找到对应的音频文件');
                 }
             } catch (error) {
                 console.error('播放音频时出错:', error);
                 alert('播放音频时出错: ' + error.message);
-                
-                // 提供视觉反馈替代
-                showPronunciationGuide(text);
             }
-        }
-        
-        // 显示发音指南（视觉反馈）
-        function showPronunciationGuide(text) {
-            // 简单的发音映射表
-            const pronunciationMap = {
-                'I am a student.': '发音: 艾 爱姆 呃 斯丢登特',
-                'I love my family.': '发音: 艾 拉乌 迈 范密丽',
-                'I have a dog.': '发音: 艾 海夫 呃 道格',
-                'You are my friend.': '发音: 由 阿 迈 弗润德',
-                'He is a boy.': '发音: 嘿 易兹 呃 波伊',
-                'She is a girl.': '发音: 西 易兹 呃 格尔',
-                'It is a cat.': '发音: 伊特 易兹 呃 凯特',
-                'We are happy.': '发音: 威 阿 海皮',
-                'They are students.': '发音: 贼 阿 斯丢登茨'
-            };
-            
-            const pronunciation = pronunciationMap[text] || '发音指南不可用';
-            alert(pronunciation);
         }
 
         // 播放语音按钮点击事件
         document.getElementById('play-audio-btn').addEventListener('click', function() {
             if (questions && questions[currentQuestion]) {
                 const question = questions[currentQuestion];
-                const correctSentence = question.sentence.replace('______', question.correctAnswer);
-                playAudio(correctSentence);
+                // 只播放问题句子，不播放答案
+                playAudio(question.sentence);
             }
         });
 
@@ -647,23 +687,19 @@
                 
                 // 随机位置
                 snowflake.style.left = `${Math.random() * 100}%`;
+                snowflake.style.animationDelay = `${Math.random() * 10}s`;
+                snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
                 
-                // 随机延迟
-                snowflake.style.animationDelay = `${Math.random() * 3}s`;
-                
-                // 随机持续时间
-                snowflake.style.animationDuration = `${Math.random() * 2 + 2}s`;
+                // 随机透明度
+                snowflake.style.opacity = Math.random() * 0.8 + 0.2;
                 
                 snowflakesContainer.appendChild(snowflake);
             }
         }
 
-        // 初始化游戏
+        // 初始化
         initGame();
         generateSnowflakes();
-        
-        // 每3秒重新生成雪花
-        setInterval(generateSnowflakes, 3000);
     </script>
 </body>
 </html>

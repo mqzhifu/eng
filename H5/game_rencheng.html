@@ -10,7 +10,7 @@
     <div class="container">
         <div class="header">
             <a href="game_index.html" class="back-btn">⬅ 返回</a>
-            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <button class="play-audio-btn" id="play-audio-btn">🔊</button>
             <h1>👤 人称代词游戏</h1>
             <p>选择正确的人称代词填空，一共20道题，满分100分！</p>
         </div>
@@ -274,7 +274,6 @@
             document.getElementById('feedback').style.display = 'none';
             document.getElementById('translation').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
-            document.getElementById('play-audio-btn').style.display = 'none';
             answered = false;
         }
 
@@ -349,11 +348,8 @@
                 `;
                 document.getElementById('translation').style.display = 'block';
                 
-                // 播放语音
-                playAudio(correctSentencePlain);
-                
-                // 显示音频播放按钮
-                document.getElementById('play-audio-btn').style.display = 'flex';
+                // 播放语音（使用问题句子，而不是已填充答案的句子）
+                playAudio(question.sentence);
             }
             
             // 添加翻转动画
@@ -489,14 +485,171 @@
             return translations[sentence] || '翻译不可用';
         }
 
+        // 音频文件映射
+        const audioMapping = {
+            "______ am a student.": "/voice/game_rencheng/sentence_0.mp3",
+            "______ love my family.": "/voice/game_rencheng/sentence_1.mp3",
+            "______ have a dog.": "/voice/game_rencheng/sentence_2.mp3",
+            "______ am hungry.": "/voice/game_rencheng/sentence_3.mp3",
+            "______ am seven years old.": "/voice/game_rencheng/sentence_4.mp3",
+            "______ am happy today.": "/voice/game_rencheng/sentence_5.mp3",
+            "______ am learning English.": "/voice/game_rencheng/sentence_6.mp3",
+            "______ am going to school.": "/voice/game_rencheng/sentence_7.mp3",
+            "______ am reading a book.": "/voice/game_rencheng/sentence_8.mp3",
+            "______ am playing with my friends.": "/voice/game_rencheng/sentence_9.mp3",
+            "______ are my friend.": "/voice/game_rencheng/sentence_10.mp3",
+            "______ are very kind.": "/voice/game_rencheng/sentence_11.mp3",
+            "______ are good at English.": "/voice/game_rencheng/sentence_12.mp3",
+            "______ are tall and strong.": "/voice/game_rencheng/sentence_13.mp3",
+            "______ are my best friend.": "/voice/game_rencheng/sentence_14.mp3",
+            "______ are wearing a blue shirt.": "/voice/game_rencheng/sentence_15.mp3",
+            "______ are coming to my party.": "/voice/game_rencheng/sentence_16.mp3",
+            "______ are doing a great job.": "/voice/game_rencheng/sentence_17.mp3",
+            "______ are my neighbor.": "/voice/game_rencheng/sentence_18.mp3",
+            "______ are always helpful.": "/voice/game_rencheng/sentence_19.mp3",
+            "______ is a boy.": "/voice/game_rencheng/sentence_20.mp3",
+            "______ likes ice cream.": "/voice/game_rencheng/sentence_21.mp3",
+            "______ is tall.": "/voice/game_rencheng/sentence_22.mp3",
+            "______ is my teacher.": "/voice/game_rencheng/sentence_23.mp3",
+            "______ is playing football.": "/voice/game_rencheng/sentence_24.mp3",
+            "______ is my brother.": "/voice/game_rencheng/sentence_25.mp3",
+            "______ is reading a book.": "/voice/game_rencheng/sentence_26.mp3",
+            "______ is very smart.": "/voice/game_rencheng/sentence_27.mp3",
+            "______ is wearing a red cap.": "/voice/game_rencheng/sentence_28.mp3",
+            "______ is my father.": "/voice/game_rencheng/sentence_29.mp3",
+            "______ is a girl.": "/voice/game_rencheng/sentence_30.mp3",
+            "______ is my sister.": "/voice/game_rencheng/sentence_31.mp3",
+            "______ is my mother.": "/voice/game_rencheng/sentence_32.mp3",
+            "______ is wearing a dress.": "/voice/game_rencheng/sentence_33.mp3",
+            "______ is reading a storybook.": "/voice/game_rencheng/sentence_34.mp3",
+            "______ is very pretty.": "/voice/game_rencheng/sentence_35.mp3",
+            "______ is playing with a doll.": "/voice/game_rencheng/sentence_36.mp3",
+            "______ is my aunt.": "/voice/game_rencheng/sentence_37.mp3",
+            "______ is good at singing.": "/voice/game_rencheng/sentence_38.mp3",
+            "______ is a cat.": "/voice/game_rencheng/sentence_39.mp3",
+            "______ is a bird.": "/voice/game_rencheng/sentence_40.mp3",
+            "______ is a dog.": "/voice/game_rencheng/sentence_41.mp3",
+            "______ is a book.": "/voice/game_rencheng/sentence_42.mp3",
+            "______ is a ball.": "/voice/game_rencheng/sentence_43.mp3",
+            "______ is a tree.": "/voice/game_rencheng/sentence_44.mp3",
+            "______ is a car.": "/voice/game_rencheng/sentence_45.mp3",
+            "______ is a house.": "/voice/game_rencheng/sentence_46.mp3",
+            "______ is a computer.": "/voice/game_rencheng/sentence_47.mp3",
+            "______ is a pencil.": "/voice/game_rencheng/sentence_48.mp3",
+            "______ are happy.": "/voice/game_rencheng/sentence_49.mp3",
+            "______ are in the park.": "/voice/game_rencheng/sentence_50.mp3",
+            "______ are friends.": "/voice/game_rencheng/sentence_51.mp3",
+            "______ are going to school together.": "/voice/game_rencheng/sentence_52.mp3",
+            "______ are playing games.": "/voice/game_rencheng/sentence_53.mp3",
+            "______ are learning English.": "/voice/game_rencheng/sentence_54.mp3",
+            "______ are a family.": "/voice/game_rencheng/sentence_55.mp3",
+            "______ are having fun.": "/voice/game_rencheng/sentence_56.mp3",
+            "______ are watching a movie.": "/voice/game_rencheng/sentence_57.mp3",
+            "______ are eating lunch.": "/voice/game_rencheng/sentence_58.mp3",
+            "______ are playing football.": "/voice/game_rencheng/sentence_59.mp3",
+            "______ are students.": "/voice/game_rencheng/sentence_60.mp3",
+            "______ are my parents.": "/voice/game_rencheng/sentence_61.mp3",
+            "______ are my classmates.": "/voice/game_rencheng/sentence_62.mp3",
+            "______ are my friends.": "/voice/game_rencheng/sentence_63.mp3",
+            "______ are playing in the garden.": "/voice/game_rencheng/sentence_64.mp3",
+            "______ are happy together.": "/voice/game_rencheng/sentence_65.mp3",
+            "______ are going to the zoo.": "/voice/game_rencheng/sentence_66.mp3",
+            "______ are eating ice cream.": "/voice/game_rencheng/sentence_67.mp3",
+            "______ are reading books.": "/voice/game_rencheng/sentence_68.mp3",
+            "______ is my pet.": "/voice/game_rencheng/sentence_69.mp3",
+            "______ is my grandfather.": "/voice/game_rencheng/sentence_70.mp3",
+            "______ is my grandmother.": "/voice/game_rencheng/sentence_71.mp3",
+            "______ are my siblings.": "/voice/game_rencheng/sentence_72.mp3",
+            "______ are my cousins.": "/voice/game_rencheng/sentence_73.mp3",
+            "______ am excited about the party.": "/voice/game_rencheng/sentence_74.mp3",
+            "______ are my neighbors.": "/voice/game_rencheng/sentence_75.mp3",
+            "______ is a big dog.": "/voice/game_rencheng/sentence_76.mp3",
+            "______ are my team members.": "/voice/game_rencheng/sentence_77.mp3",
+            "______ is a small cat.": "/voice/game_rencheng/sentence_78.mp3",
+            "______ am ready for the test.": "/voice/game_rencheng/sentence_79.mp3",
+            "______ are my colleagues.": "/voice/game_rencheng/sentence_80.mp3",
+            "______ is my favorite toy.": "/voice/game_rencheng/sentence_81.mp3",
+            "______ are my relatives.": "/voice/game_rencheng/sentence_82.mp3",
+            "______ am a good student.": "/voice/game_rencheng/sentence_83.mp3",
+            "______ is my favorite book.": "/voice/game_rencheng/sentence_84.mp3",
+            "______ are my favorite foods.": "/voice/game_rencheng/sentence_85.mp3",
+            "______ am looking forward to the holiday.": "/voice/game_rencheng/sentence_86.mp3",
+            "______ are my favorite animals.": "/voice/game_rencheng/sentence_87.mp3",
+            "______ is my favorite color.": "/voice/game_rencheng/sentence_88.mp3"
+        };
+
         // 播放语音
         function playAudio(text) {
-            // 使用Web Speech API
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'en-US';
-                utterance.rate = 0.7;
-                speechSynthesis.speak(utterance);
+            try {
+                console.log('播放音频请求:', text);
+                
+                // 首先尝试直接使用文本作为键
+                if (audioMapping[text]) {
+                    console.log('直接匹配到音频文件:', audioMapping[text]);
+                    const audio = new Audio(audioMapping[text]);
+                    audio.play().catch(error => {
+                        console.error('播放音频失败:', error);
+                        // 尝试使用绝对路径
+                        const absolutePath = 'voice/game_rencheng/' + audioMapping[text].split('/').pop();
+                        console.log('尝试使用绝对路径:', absolutePath);
+                        const audio2 = new Audio(absolutePath);
+                        audio2.play().catch(error2 => {
+                            console.error('使用绝对路径播放失败:', error2);
+                        });
+                    });
+                } else {
+                    // 对于已填充答案的句子，找到对应的问题句子
+                    let questionSentence = null;
+                    // 遍历所有问题句子
+                    for (const key of Object.keys(audioMapping)) {
+                        // 提取问题模板（移除______）
+                        const template = key.replace('______', '').trim();
+                        // 检查文本是否包含问题模板
+                        if (text.trim().includes(template)) {
+                            questionSentence = key;
+                            break;
+                        }
+                    }
+                    
+                    if (questionSentence && audioMapping[questionSentence]) {
+                        console.log('找到匹配的问题句子:', questionSentence);
+                        console.log('对应的音频文件:', audioMapping[questionSentence]);
+                        const audio = new Audio(audioMapping[questionSentence]);
+                        audio.play().catch(error => {
+                            console.error('播放音频失败:', error);
+                            // 尝试使用绝对路径
+                            const absolutePath = 'voice/game_rencheng/' + audioMapping[questionSentence].split('/').pop();
+                            console.log('尝试使用绝对路径:', absolutePath);
+                            const audio2 = new Audio(absolutePath);
+                            audio2.play().catch(error2 => {
+                                console.error('使用绝对路径播放失败:', error2);
+                            });
+                        });
+                    } else {
+                        // 尝试另一种方法：根据句子结构匹配
+                        console.log('未找到匹配的音频文件:', text);
+                        // 遍历所有问题句子，尝试更宽松的匹配
+                        for (const key of Object.keys(audioMapping)) {
+                            const keyWords = key.split(' ').filter(word => word !== '______');
+                            const textWords = text.split(' ');
+                            const commonWords = keyWords.filter(word => textWords.includes(word));
+                            if (commonWords.length >= 2) {
+                                questionSentence = key;
+                                console.log('宽松匹配到问题句子:', questionSentence);
+                                if (audioMapping[questionSentence]) {
+                                    console.log('对应的音频文件:', audioMapping[questionSentence]);
+                                    const audio = new Audio(audioMapping[questionSentence]);
+                                    audio.play().catch(error => {
+                                        console.error('播放音频失败:', error);
+                                    });
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('播放音频时出错:', error);
             }
         }
 
@@ -504,8 +657,8 @@
         document.getElementById('play-audio-btn').addEventListener('click', function() {
             if (questions && questions[currentQuestion]) {
                 const question = questions[currentQuestion];
-                const correctSentence = question.sentence.replace('______', question.correctAnswer);
-                playAudio(correctSentence);
+                // 使用问题句子，而不是已填充答案的句子
+                playAudio(question.sentence);
             }
         });
 
