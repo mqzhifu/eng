@@ -207,7 +207,20 @@
                 const blank = document.createElement('div');
                 blank.className = 'blank';
                 blank.dataset.index = index;
+                // 添加点击事件支持
                 blank.addEventListener('click', function() {
+                    if (answered) return;
+                    if (blank.classList.contains('filled')) {
+                        // 如果已填充，则移除单词
+                        removeWord(blank);
+                    } else if (selectedWord) {
+                        // 如果未填充且有选中的单词，则放置单词
+                        placeWord(blank);
+                    }
+                });
+                // 添加触摸事件支持
+                blank.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // 防止触发点击事件
                     if (answered) return;
                     if (blank.classList.contains('filled')) {
                         // 如果已填充，则移除单词
@@ -230,7 +243,13 @@
                 wordElement.textContent = word;
                 wordElement.dataset.word = word;
                 wordElement.dataset.index = index;
+                // 添加点击事件支持
                 wordElement.addEventListener('click', () => selectWord(wordElement));
+                // 添加触摸事件支持
+                wordElement.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // 防止触发点击事件
+                    selectWord(wordElement);
+                });
                 wordsElement.appendChild(wordElement);
             });
             

@@ -244,11 +244,37 @@
                     document.getElementById('next-btn').style.display = 'inline-block';
                 });
                 
+                // 添加触摸事件到整个选项
+                optionElement.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    if (e.target.type !== 'checkbox') {
+                        const checkbox = this.querySelector('input[type="checkbox"]');
+                        checkbox.checked = !checkbox.checked;
+                    }
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    this.classList.toggle('selected', checkbox.checked);
+                    
+                    // 显示下一题按钮
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                });
+                
                 // 为复选框添加点击事件
                 const checkbox = optionElement.querySelector('input[type="checkbox"]');
                 checkbox.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const option = this.closest('.option');
+                    option.classList.toggle('selected', this.checked);
+                    
+                    // 显示下一题按钮
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                });
+                
+                // 为复选框添加触摸事件
+                checkbox.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const option = this.closest('.option');
+                    this.checked = !this.checked;
                     option.classList.toggle('selected', this.checked);
                     
                     // 显示下一题按钮
