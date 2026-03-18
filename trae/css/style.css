@@ -335,6 +335,33 @@ body {
 
 #translation {
     display: none;
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: translationSlide 0.3s ease;
+}
+
+#translation-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    text-align: left;
+}
+
+#translation-content strong {
+    display: inline-block;
+    width: 100px;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.translation {
+    font-size: 14px;
+    font-weight: normal;
+    color: #666;
+    margin-left: 8px;
 }
 
 .next-btn:hover {

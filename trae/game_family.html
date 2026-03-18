@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👨‍👩‍👧‍👦 看图回答问题 - 英语语法学习乐园</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .family-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 30px 0;
+        }
+        
+        .game-content {
+            text-align: center;
+        }
+        
+        .question-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .family-description {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .family-description h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .family-description p {
+            color: #555;
+            line-height: 1.6;
+            text-align: left;
+        }
+        
+        @media (max-width: 768px) {
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .family-description {
+                padding: 15px;
+                margin: 15px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <h1>👨‍👩‍👧‍👦 看图回答问题</h1>
+            <p>观察图片，选择正确的答案！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <div class="progress-info">
+                    题目: <span id="current-question">1</span>/11
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <img src="image/family_in_house.png" alt="Family in house" class="family-image">
+                <div class="question-number">第 <span id="question-number">1</span> 题</div>
+                <div class="question-text" id="question-text">
+                    What is Dad doing?
+                </div>
+                <div class="options" id="options">
+                    <div class="option">Reading a newspaper</div>
+                    <div class="option">Watching TV</div>
+                    <div class="option">Cooking</div>
+                    <div class="option">Watering flowers</div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <div class="translation" id="translation">
+                    <div class="translation-content" id="translation-content"></div>
+                </div>
+                <button class="next-btn" id="next-btn">下一题</button>
+                <button class="restart-btn" id="game-restart-btn" style="display: inline-block; margin-left: 10px;">重新开始</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <div class="result-stats" id="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">正确率：</span>
+                        <span class="stat-value" id="accuracy">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">错误率：</span>
+                        <span class="stat-value" id="error-rate">0%</span>
+                    </div>
+                </div>
+                <div class="family-description">
+                    <h3>About This Family</h3>
+                    <p>In this warm family scene, it's 10:00 in the morning. Dad is sitting comfortably, reading a newspaper. Grandpa is relaxing on the couch, watching TV. Grandma, with her white hair, is gently watering the two flower pots - one with red flowers and the other with white ones. The little girl is having fun playing with the family cat. Mom is busy in the kitchen, preparing a delicious meal. On the pink table, there's a pink cup waiting to be used. Everyone is enjoying their peaceful morning together, creating a happy and harmonious atmosphere.</p>
+                </div>
+                <button class="restart-btn" id="restart-btn">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 游戏数据
+        const questions = [
+            {
+                question: "What is Dad doing?",
+                options: ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+                correctAnswer: "Reading a newspaper",
+                chineseQuestion: "爸爸在干什么？",
+                chineseAnswer: "看报纸"
+            },
+            {
+                question: "What is Grandpa doing?",
+                options: ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+                correctAnswer: "Watching TV",
+                chineseQuestion: "爷爷在干什么？",
+                chineseAnswer: "看电视"
+            },
+            {
+                question: "What is Grandma doing?",
+                options: ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+                correctAnswer: "Watering flowers",
+                chineseQuestion: "奶奶在干什么？",
+                chineseAnswer: "浇花"
+            },
+            {
+                question: "What is the little girl doing?",
+                options: ["Reading a book", "Playing with the cat", "Doing homework", "Eating dinner"],
+                correctAnswer: "Playing with the cat",
+                chineseQuestion: "小女孩在干什么？",
+                chineseAnswer: "和猫玩"
+            },
+            {
+                question: "What is Mom doing?",
+                options: ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+                correctAnswer: "Cooking",
+                chineseQuestion: "妈妈在干什么？",
+                chineseAnswer: "做饭"
+            },
+            {
+                question: "Where is the cup?",
+                options: ["On the table", "On the chair", "On the floor", "On the bed"],
+                correctAnswer: "On the table",
+                chineseQuestion: "杯子在哪里？",
+                chineseAnswer: "在桌子上面"
+            },
+            {
+                question: "What color is the cup?",
+                options: ["Pink", "Blue", "Green", "Yellow"],
+                correctAnswer: "Pink",
+                chineseQuestion: "杯子是什么颜色的？",
+                chineseAnswer: "粉色"
+            },
+            {
+                question: "What color is Grandma's hair?",
+                options: ["Black", "Brown", "White", "Gray"],
+                correctAnswer: "White",
+                chineseQuestion: "奶奶的头发是什么颜色？",
+                chineseAnswer: "白色"
+            },
+            {
+                question: "How many flower pots are there?",
+                options: ["1", "2", "3", "4"],
+                correctAnswer: "2",
+                chineseQuestion: "有几盆花？",
+                chineseAnswer: "2盆"
+            },
+            {
+                question: "What colors are the flowers?",
+                options: ["Red and white", "Blue and yellow", "Pink and purple", "Orange and green"],
+                correctAnswer: "Red and white",
+                chineseQuestion: "花的颜色是什么？",
+                chineseAnswer: "红色和白色"
+            },
+            {
+                question: "What time is it?",
+                options: ["9:00", "10:00", "11:00", "12:00"],
+                correctAnswer: "10:00",
+                chineseQuestion: "现在的是什么时间？",
+                chineseAnswer: "10点整"
+            }
+        ];
+
+        // 游戏变量
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        let correctAnswers = 0;
+
+        // 初始化游戏
+        function initGame() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            correctAnswers = 0;
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('question-number').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            
+            // 随机打乱选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.addEventListener('click', () => selectOption(optionElement));
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('translation').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
+            answered = false;
+        }
+
+        // 选择选项
+        function selectOption(selectedOption) {
+            if (answered) return;
+            
+            const question = questions[currentQuestion];
+            const correctAnswer = question.correctAnswer;
+            
+            // 禁用所有选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.removeEventListener('click', selectOption);
+                if (option.textContent === correctAnswer) {
+                    option.classList.add('correct');
+                } else if (option === selectedOption && option.textContent !== correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (selectedOption.textContent === correctAnswer) {
+                score += 10; // 每题10分
+                correctAnswers++; // 增加正确答案计数
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            
+            // 显示翻译
+            document.getElementById('translation-content').innerHTML = `
+                <strong>中文问句：</strong>${question.chineseQuestion}<br>
+                <strong>中文答句：</strong>${question.chineseAnswer}
+            `;
+            document.getElementById('translation').style.display = 'block';
+            
+            // 播放语音
+            playAudio(question.question, question.correctAnswer);
+            
+            // 显示音频播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
+            
+            document.getElementById('next-btn').style.display = 'inline-block';
+            answered = true;
+        }
+
+        // 音频文件映射
+        const audioMapping = {
+            "What is Dad doing?": "voice/game_family/question_0.mp3",
+            "Reading a newspaper": "voice/game_family/answer_0.mp3",
+            "What is Grandpa doing?": "voice/game_family/question_1.mp3",
+            "Watching TV": "voice/game_family/answer_1.mp3",
+            "What is Grandma doing?": "voice/game_family/question_2.mp3",
+            "Watering flowers": "voice/game_family/answer_2.mp3",
+            "What is the little girl doing?": "voice/game_family/question_3.mp3",
+            "Playing with the cat": "voice/game_family/answer_3.mp3",
+            "What is Mom doing?": "voice/game_family/question_4.mp3",
+            "Cooking": "voice/game_family/answer_4.mp3",
+            "Where is the cup?": "voice/game_family/question_5.mp3",
+            "On the table": "voice/game_family/answer_5.mp3",
+            "What color is the cup?": "voice/game_family/question_6.mp3",
+            "Pink": "voice/game_family/answer_6.mp3",
+            "What color is Grandma's hair?": "voice/game_family/question_7.mp3",
+            "White": "voice/game_family/answer_7.mp3",
+            "How many flower pots are there?": "voice/game_family/question_8.mp3",
+            "2": "voice/game_family/answer_8.mp3",
+            "What colors are the flowers?": "voice/game_family/question_9.mp3",
+            "Red and white": "voice/game_family/answer_9.mp3",
+            "What time is it?": "voice/game_family/question_10.mp3",
+            "10:00": "voice/game_family/answer_10.mp3"
+        };
+
+        // 播放音频
+        function playAudio(question, answer) {
+            // 尝试使用本地MP3文件播放问题
+            const questionAudioPath = audioMapping[question];
+            if (questionAudioPath) {
+                const questionAudio = new Audio(questionAudioPath);
+                questionAudio.play().catch(error => {
+                    console.error('播放问题音频失败:', error);
+                    // 如果本地音频播放失败，回退到Web Speech API
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(question);
+                        utterance.lang = 'en-US';
+                        utterance.rate = 0.7;
+                        utterance.pitch = 1.0;
+                        utterance.volume = 1.0;
+                        speechSynthesis.speak(utterance);
+                    }
+                });
+            } else {
+                // 如果没有本地音频文件，使用Web Speech API
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(question);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.7;
+                    utterance.pitch = 1.0;
+                    utterance.volume = 1.0;
+                    speechSynthesis.speak(utterance);
+                }
+            }
+            
+            // 延迟播放答案
+            setTimeout(() => {
+                // 尝试使用本地MP3文件播放答案
+                const answerAudioPath = audioMapping[answer];
+                if (answerAudioPath) {
+                    const answerAudio = new Audio(answerAudioPath);
+                    answerAudio.play().catch(error => {
+                        console.error('播放答案音频失败:', error);
+                        // 如果本地音频播放失败，回退到Web Speech API
+                        if ('speechSynthesis' in window) {
+                            const utterance = new SpeechSynthesisUtterance(answer);
+                            utterance.lang = 'en-US';
+                            utterance.rate = 0.7;
+                            utterance.pitch = 1.0;
+                            utterance.volume = 1.0;
+                            speechSynthesis.speak(utterance);
+                        }
+                    });
+                } else {
+                    // 如果没有本地音频文件，使用Web Speech API
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(answer);
+                        utterance.lang = 'en-US';
+                        utterance.rate = 0.7;
+                        utterance.pitch = 1.0;
+                        utterance.volume = 1.0;
+                        speechSynthesis.speak(utterance);
+                    }
+                }
+            }, 1500); // 延迟1.5秒播放答案
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                loadQuestion();
+            } else {
+                document.getElementById('progress-fill').style.width = '100%';
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            // 计算正确率、错误率
+            const totalQuestions = questions.length;
+            const accuracy = ((correctAnswers / totalQuestions) * 100).toFixed(0);
+            const errorRate = (( (totalQuestions - correctAnswers) / totalQuestions) * 100).toFixed(0);
+            
+            // 显示统计信息
+            document.getElementById('accuracy').textContent = `${accuracy}%`;
+            document.getElementById('error-rate').textContent = `${errorRate}%`;
+            
+            const message = document.getElementById('result-message');
+            if (score === 110) {
+                message.textContent = '太棒了！你是观察大师！';
+            } else if (score >= 90) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 70) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+        document.getElementById('game-restart-btn').addEventListener('click', initGame);
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (currentQuestion < questions.length) {
+                playAudio(questions[currentQuestion].question, questions[currentQuestion].correctAnswer);
+            }
+        });
+
+        // 初始化游戏
+        initGame();
+    </script>
+</body>
+</html>
