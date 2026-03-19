@@ -1,0 +1,134 @@
+[
+  {
+    "sentence": "______ am a student.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "I",
+    "explanation": "当主语是第一人称单数时，应该使用I"
+  },
+  {
+    "sentence": "______ love my family.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "I",
+    "explanation": "当主语是第一人称单数时，应该使用I"
+  },
+  {
+    "sentence": "______ have a dog.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "I",
+    "explanation": "当主语是第一人称单数时，应该使用I"
+  },
+  {
+    "sentence": "______ am hungry.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "I",
+    "explanation": "当主语是第一人称单数时，应该使用I"
+  },
+  {
+    "sentence": "______ am seven years old.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "I",
+    "explanation": "当主语是第一人称单数时，应该使用I"
+  },
+  {
+    "sentence": "______ are my friend.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "You",
+    "explanation": "当主语是第二人称时，应该使用You"
+  },
+  {
+    "sentence": "______ are very kind.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "You",
+    "explanation": "当主语是第二人称时，应该使用You"
+  },
+  {
+    "sentence": "______ are good at English.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "You",
+    "explanation": "当主语是第二人称时，应该使用You"
+  },
+  {
+    "sentence": "______ is a boy.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "He",
+    "explanation": "当主语是第三人称单数男性时，应该使用He"
+  },
+  {
+    "sentence": "______ likes ice cream.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "He",
+    "explanation": "当主语是第三人称单数男性时，应该使用He"
+  },
+  {
+    "sentence": "______ is tall.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "He",
+    "explanation": "当主语是第三人称单数男性时，应该使用He"
+  },
+  {
+    "sentence": "______ is a girl.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "She",
+    "explanation": "当主语是第三人称单数女性时，应该使用She"
+  },
+  {
+    "sentence": "______ is my sister.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "She",
+    "explanation": "当主语是第三人称单数女性时，应该使用She"
+  },
+  {
+    "sentence": "______ is my mother.",
+    "options": ["I", "You", "He", "She"],
+    "correctAnswer": "She",
+    "explanation": "当主语是第三人称单数女性时，应该使用She"
+  },
+  {
+    "sentence": "______ is a cat.",
+    "options": ["I", "You", "He", "It"],
+    "correctAnswer": "It",
+    "explanation": "当主语是第三人称单数非人类时，应该使用It"
+  },
+  {
+    "sentence": "______ is a bird.",
+    "options": ["I", "You", "He", "It"],
+    "correctAnswer": "It",
+    "explanation": "当主语是第三人称单数非人类时，应该使用It"
+  },
+  {
+    "sentence": "______ is a dog.",
+    "options": ["I", "You", "He", "It"],
+    "correctAnswer": "It",
+    "explanation": "当主语是第三人称单数非人类时，应该使用It"
+  },
+  {
+    "sentence": "______ are happy.",
+    "options": ["I", "You", "We", "It"],
+    "correctAnswer": "We",
+    "explanation": "当主语是第一人称复数时，应该使用We"
+  },
+  {
+    "sentence": "______ are in the park.",
+    "options": ["I", "You", "We", "It"],
+    "correctAnswer": "We",
+    "explanation": "当主语是第一人称复数时，应该使用We"
+  },
+  {
+    "sentence": "______ are playing football.",
+    "options": ["I", "You", "They", "It"],
+    "correctAnswer": "They",
+    "explanation": "当主语是第三人称复数时，应该使用They"
+  },
+  {
+    "sentence": "______ are students.",
+    "options": ["I", "You", "They", "It"],
+    "correctAnswer": "They",
+    "explanation": "当主语是第三人称复数时，应该使用They"
+  },
+  {
+    "sentence": "______ are my parents.",
+    "options": ["I", "You", "They", "It"],
+    "correctAnswer": "They",
+    "explanation": "当主语是第三人称复数时，应该使用They"
+  }
+]

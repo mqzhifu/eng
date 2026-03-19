@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 反义词连连看 - 英语语法学习乐园</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <h1>🔄 反义词连连看</h1>
+            <p>找出成对的反义词，锻炼你的记忆力！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="score">
+                分数: <span id="score">0</span>
+            </div>
+            <div class="error-count">
+                错误: <span id="error-count">0</span>
+            </div>
+            <div class="time">
+                耗时: <span id="game-time">00:00</span>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="game-board" id="game-board">
+                <!-- 卡片将通过JavaScript动态生成 -->
+            </div>
+
+            <div class="error-message" id="error-message"></div>
+
+            <div class="controls">
+                <button class="start-btn" id="start-btn">开始游戏</button>
+                <button class="give-up-btn" id="give-up-btn" style="display: none;">放弃</button>
+                <button class="restart-btn" id="restart-btn" style="display: none;">重新开始</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏结束！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <button class="restart-btn" id="result-restart-btn" style="display: none;">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let antonymsData = [];
+
+        // 从API获取数据
+        async function loadGameData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/game/game_antonyms`);
+                if (!response.ok) {
+                    throw new Error('Failed to load game data');
+                }
+                antonymsData = await response.json();
+                initGame(antonymsData);
+            } catch (error) {
+                console.error('Error loading game data:', error);
+                alert('加载游戏数据失败，请刷新页面重试');
+            }
+        }
+
+        // 播放音频
+        async function playWordAudio(word) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tts?text=${encodeURIComponent(word)}&game=game_antonyms`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to generate speech');
+                }
+                
+                const audioBlob = await response.blob();
+                
+                // 创建音频对象并播放
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+                await audio.play();
+                
+                // 释放URL对象
+                setTimeout(() => URL.revokeObjectURL(audioUrl), 1000);
+            } catch (error) {
+                console.error('播放音频失败:', error);
+            }
+        }
+
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let score = 0;
+        let errorCount = 0;
+        let gameStarted = false;
+        let gameStartTime = 0;
+        let gameEndTime = 0;
+        let timerInterval = null;
+
+        // 初始化游戏
+        function initGame(data = antonymsData) {
+            // 随机选择15对反义词（30张卡片），确保不重复
+            const shuffledAntonyms = [...data].sort(() => Math.random() - 0.5);
+            const selectedAntonyms = [];
+            const usedWords = new Set();
+            
+            // 筛选不重复的反义词对
+            for (const pair of shuffledAntonyms) {
+                if (!usedWords.has(pair.word) && !usedWords.has(pair.opposite)) {
+                    selectedAntonyms.push(pair);
+                    usedWords.add(pair.word);
+                    usedWords.add(pair.opposite);
+                    if (selectedAntonyms.length === 15) break;
+                }
+            }
+            
+            // 创建卡片数组
+            cards = [];
+            selectedAntonyms.forEach(pair => {
+                cards.push(
+                    { ...pair, id: Math.random().toString(36).substr(2, 9) },
+                    { word: pair.opposite, meaning: getMeaning(pair.opposite, data), opposite: pair.word, id: Math.random().toString(36).substr(2, 9) }
+                );
+            });
+            
+            // 打乱卡片顺序
+            cards.sort(() => Math.random() - 0.5);
+            
+            // 重置游戏状态
+            flippedCards = [];
+            matchedPairs = 0;
+            score = 0;
+            errorCount = 0;
+            gameStarted = false;
+            
+            // 更新UI
+            document.getElementById('score').textContent = score;
+            document.getElementById('error-count').textContent = errorCount;
+            document.getElementById('game-time').textContent = '00:00';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('start-btn').style.display = 'inline-block';
+            document.getElementById('give-up-btn').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'none';
+            
+            // 清除计时器
+            clearInterval(timerInterval);
+            
+            // 生成游戏板
+            generateGameBoard();
+        }
+
+        // 根据单词获取中文意思
+        function getMeaning(word, antonymsData) {
+            const pair = antonymsData.find(item => item.word === word);
+            return pair ? pair.meaning : '';
+        }
+
+        // 生成游戏板
+        function generateGameBoard(showMeaning = false) {
+            const gameBoard = document.getElementById('game-board');
+            gameBoard.innerHTML = '';
+            
+            cards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.dataset.id = card.id;
+                cardElement.dataset.word = card.word;
+                cardElement.dataset.opposite = card.opposite;
+                cardElement.dataset.meaning = card.meaning;
+                
+                // 根据单词获取对应的图标
+                function getIconForWord(word) {
+                    const iconMap = {
+                        // 大小相关
+                        'big': '📏', 'small': '📏',
+                        // 高度相关
+                        'tall': '📐', 'short': '📐',
+                        // 长度相关
+                        'long': '📏',
+                        // 体重相关
+                        'fat': '👤', 'thin': '👤',
+                        // 速度相关
+                        'fast': '⚡', 'slow': '🐢',
+                        // 温度相关
+                        'hot': '🔥', 'cold': '❄️', 'warm': '☀️', 'cool': '🌬️',
+                        // 质量相关
+                        'good': '👍', 'bad': '👎',
+                        // 新旧相关
+                        'new': '🆕', 'old': '📅',
+                        // 年龄相关
+                        'young': '👶',
+                        // 情绪相关
+                        'happy': '😊', 'sad': '😢', 'angry': '😠',
+                        // 肯定否定
+                        'yes': '✅', 'no': '❌',
+                        // 指示代词
+                        'this': '👇', 'that': '👆', 'these': '👇', 'those': '👆',
+                        // 动作相关
+                        'come': '🚶‍♂️', 'go': '🚶‍♀️', 'laugh': '😂', 'cry': '😢', 'sit': '🪑', 'stand': '🧍', 'sleep': '😴', 'wake': '🌅', 'push': '🔄', 'pull': '🔄',
+                        // 状态相关
+                        'open': '🔓', 'close': '🔒',
+                        // 方向相关
+                        'up': '⬆️', 'down': '⬇️', 'left': '⬅️', 'right': '➡️',
+                        // 位置相关
+                        'in': '📦', 'out': '📤', 'on': '🔛', 'off': '🔚', 'front': '⬅️', 'back': '➡️',
+                        // 时间相关
+                        'early': '🌅', 'late': '🌙', 'day': '☀️', 'night': '🌙',
+                        // 颜色相关
+                        'black': '⚫', 'white': '⚪',
+                        // 清洁相关
+                        'clean': '🧹', 'dirty': '🗑️',
+                        // 重量相关
+                        'light': '📱', 'heavy': '🏋️‍♂️',
+                        // 质地相关
+                        'soft': '🧸', 'hard': '🔨',
+                        // 湿度相关
+                        'dry': '☀️', 'wet': '💧',
+                        // 高度相关
+                        'high': '🏔️', 'low': '📉',
+                        // 距离相关
+                        'far': '🚗', 'near': '🚶',
+                        // 交易相关
+                        'buy': '🛒', 'sell': '💰',
+                        // 外观相关
+                        'beautiful': '🌸', 'ugly': '😖',
+                        // 性格相关
+                        'kind': '❤️', 'unkind': '😠',
+                        // 勇气相关
+                        'brave': '🦸‍♂️', 'afraid': '😨',
+                        // 声音相关
+                        'quiet': '🤫', 'noisy': '🔊',
+                        // 容量相关
+                        'full': '🍽️', 'empty': '🫙',
+                        // 比较相关
+                        'same': '🟰', 'different': '🔄',
+                        // 正确性相关
+                        'right': '✅', 'wrong': '❌',
+                        // 难度相关
+                        'easy': '🧩', 'difficult': '🧗‍♂️',
+                        // 强度相关
+                        'strong': '💪', 'weak': '🤕',
+                        // 厚度相关
+                        'thick': '📚', 'thin': '📄',
+                        // 记忆相关
+                        'forget': '🧠', 'remember': '📝',
+                        // 竞争相关
+                        'win': '🏆', 'lose': '😞',
+                        // 情感相关
+                        'love': '❤️', 'hate': '💔',
+                        // 人物相关
+                        'boy': '👦', 'girl': '👧', 'man': '👨', 'woman': '👩',
+                        // 状态相关
+                        'busy': '💼', 'free': '🆓', 'hungry': '🍽️',
+                        // 动作短语
+                        'turn on': '🔛', 'turn off': '🔚', 'get on': '🚌', 'get off': '🚶', 'put on': '👕', 'take off': '👕', 'go out': '🚪', 'come in': '🚪',
+                        // 位置相关
+                        'upstairs': '⬆️', 'downstairs': '⬇️',
+                        // 数量相关
+                        'many': '🔢', 'few': '🔢'
+                    };
+                    return iconMap[word] || '🔤';
+                }
+                
+                const cardContent = document.createElement('div');
+                cardContent.className = 'card-content';
+                if (showMeaning) {
+                    cardContent.innerHTML = `<strong>${card.word}</strong><br><small>${card.meaning}</small>`;
+                } else {
+                    cardContent.innerHTML = `<strong>${card.word}</strong>`;
+                }
+                
+                cardElement.appendChild(cardContent);
+                cardElement.setAttribute('data-icon', getIconForWord(card.word));
+                cardElement.addEventListener('click', () => selectCard(cardElement));
+                gameBoard.appendChild(cardElement);
+            });
+        }
+
+
+
+
+
+        // 选择卡片
+        function selectCard(card) {
+            if (!gameStarted) {
+                // 显示提示弹窗
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>提示</h3>
+                        <p>请先点击「开始游戏」按钮</p>
+                        <button class="start-btn" id="modal-start-btn">开始游戏</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 添加事件监听
+                document.getElementById('modal-start-btn').addEventListener('click', () => {
+                    modal.remove();
+                    startGame();
+                });
+                return;
+            }
+            
+            if (card.classList.contains('matched')) return;
+            if (flippedCards.length >= 2) return;
+            
+            // 播放单词语音
+            const word = card.dataset.word;
+            playWordAudio(word);
+            
+            card.classList.add('selected');
+            card.style.transform = 'scale(1.1)';
+            flippedCards.push(card);
+            
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        // 检查匹配
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const word1 = card1.dataset.word;
+            const word2 = card2.dataset.word;
+            const opposite1 = card1.dataset.opposite;
+            
+            if (word2 === opposite1) {
+                // 匹配成功
+                card1.classList.remove('selected');
+                card2.classList.remove('selected');
+                
+                // 添加成功效果：背景色变成绿色
+                card1.style.backgroundColor = '#4ecdc4';
+                card2.style.backgroundColor = '#4ecdc4';
+                
+                matchedPairs++;
+                score += 10;
+                document.getElementById('score').textContent = score;
+                
+                // 隐藏错误消息
+                document.getElementById('error-message').style.display = 'none';
+                
+                // 1秒后让卡片消失
+                setTimeout(() => {
+                    card1.style.opacity = '0';
+                    card2.style.opacity = '0';
+                    card1.style.transform = 'scale(0.5)';
+                    card2.style.transform = 'scale(0.5)';
+                    card1.style.transition = 'all 0.5s ease';
+                    card2.style.transition = 'all 0.5s ease';
+                    
+                    // 再等0.5秒后添加matched类
+                    setTimeout(() => {
+                        card1.classList.add('matched');
+                        card2.classList.add('matched');
+                        
+                        // 检查游戏是否结束
+                        if (matchedPairs === cards.length / 2) {
+                            endGame();
+                        }
+                    }, 500);
+                }, 1000);
+            } else {
+                // 匹配失败
+                card1.style.transform = 'scale(1)';
+                card2.style.transform = 'scale(1)';
+                
+                // 添加错误效果：背景色变成红色
+                card1.style.backgroundColor = '#ff6b6b';
+                card2.style.backgroundColor = '#ff6b6b';
+                
+                // 错误次数增加
+                errorCount++;
+                document.getElementById('error-count').textContent = errorCount;
+                
+                // 检查错误次数是否达到10次
+                if (errorCount >= 10) {
+                    endGame();
+                    return;
+                }
+                
+                // 显示错误消息
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = `❌ 错误！"${word1}" 和 "${word2}" 不是反义词 (错误次数: ${errorCount}/10)`;
+                errorMessage.style.display = 'block';
+                
+                // 2秒后隐藏错误消息和移除selected类，恢复背景色
+                setTimeout(() => {
+                    card1.classList.remove('selected');
+                    card2.classList.remove('selected');
+                    card1.style.backgroundColor = '';
+                    card2.style.backgroundColor = '';
+                    errorMessage.style.display = 'none';
+                }, 2000);
+            }
+            
+            flippedCards = [];
+        }
+
+
+
+        // 开始游戏
+        function startGame() {
+            gameStarted = true;
+            gameStartTime = Date.now();
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('give-up-btn').style.display = 'inline-block';
+            document.getElementById('restart-btn').style.display = 'inline-block';
+            
+            // 启动计时器
+            startTimer();
+        }
+        
+        // 启动计时器
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                const elapsedTime = Math.round((Date.now() - gameStartTime) / 1000);
+                const minutes = Math.floor(elapsedTime / 60).toString().padStart(2, '0');
+                const seconds = (elapsedTime % 60).toString().padStart(2, '0');
+                document.getElementById('game-time').textContent = `${minutes}:${seconds}`;
+                
+                // 检查是否超过10分钟（600秒）
+                if (elapsedTime >= 600) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // 结束游戏
+        function endGame() {
+            gameStarted = false;
+            clearInterval(timerInterval);
+            gameEndTime = Date.now();
+            const gameTime = Math.round((gameEndTime - gameStartTime) / 1000);
+            
+            // 计算用时
+            const minutes = Math.floor(gameTime / 60);
+            const seconds = gameTime % 60;
+            const timeString = minutes > 0 ? `${minutes}分${seconds}秒` : `${seconds}秒`;
+            
+            // 创建弹窗
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <h2>🎉 游戏结束！</h2>
+                    <div class="modal-score">${score}</div>
+                    <div class="modal-time">总耗时：${timeString}</div>
+                    <div class="modal-error-count">错误次数：${errorCount}/10</div>
+                    <div class="modal-message"></div>
+                    <div class="modal-buttons">
+                        <button class="restart-btn" id="modal-restart-btn" style="display: none;">再玩一次</button>
+                        <button class="home-btn" id="modal-home-btn">返回</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // 设置消息
+            const message = modal.querySelector('.modal-message');
+            if (score === cards.length / 2 * 10) {
+                message.textContent = '太棒了！你找到了所有反义词！';
+            } else if (score >= cards.length / 2 * 10 * 0.7) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= cards.length / 2 * 10 * 0.5) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+            
+            // 添加事件监听
+            document.getElementById('modal-restart-btn').addEventListener('click', () => {
+                modal.remove();
+                initGame();
+            });
+            
+            document.getElementById('modal-home-btn').addEventListener('click', () => {
+                window.location.href = 'game_index.html';
+            });
+        }
+
+        // 放弃游戏
+        function giveUp() {
+            // 显示中文翻译
+            generateGameBoard(true);
+            
+            // 使所有卡片不可点击
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                card.style.pointerEvents = 'none';
+                card.style.opacity = '0.7';
+            });
+            
+            // 重置错误次数
+            errorCount = 0;
+            document.getElementById('error-count').textContent = errorCount;
+        }
+
+        // 重新开始游戏
+        function restartGame() {
+            initGame();
+        }
+
+        // 事件监听
+        document.getElementById('start-btn').addEventListener('click', startGame);
+        document.getElementById('give-up-btn').addEventListener('click', giveUp);
+        document.getElementById('restart-btn').addEventListener('click', restartGame);
+        document.getElementById('result-restart-btn').addEventListener('click', initGame);
+
+        // 初始化游戏
+        loadGameData();
+    </script>
+</body>
+</html>

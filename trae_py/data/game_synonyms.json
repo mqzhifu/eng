@@ -1,0 +1,272 @@
+[
+  {
+    "chinese": "大的",
+    "options": ["big", "large", "small", "little"],
+    "correctAnswers": ["big", "large"]
+  },
+  {
+    "chinese": "小的",
+    "options": ["small", "little", "big", "large"],
+    "correctAnswers": ["small", "little"]
+  },
+  {
+    "chinese": "好的",
+    "options": ["good", "nice", "well", "fine"],
+    "correctAnswers": ["good", "nice", "well", "fine"]
+  },
+  {
+    "chinese": "漂亮的",
+    "options": ["beautiful", "pretty", "ugly", "bad"],
+    "correctAnswers": ["beautiful", "pretty"]
+  },
+  {
+    "chinese": "聪明的",
+    "options": ["clever", "smart", "stupid", "foolish"],
+    "correctAnswers": ["clever", "smart"]
+  },
+  {
+    "chinese": "快的",
+    "options": ["fast", "quick", "slow", "late"],
+    "correctAnswers": ["fast", "quick"]
+  },
+  {
+    "chinese": "高的",
+    "options": ["tall", "high", "short", "low"],
+    "correctAnswers": ["tall", "high"]
+  },
+  {
+    "chinese": "看",
+    "options": ["look", "see", "watch", "hear"],
+    "correctAnswers": ["look", "see", "watch"]
+  },
+  {
+    "chinese": "听",
+    "options": ["listen", "hear", "see", "watch"],
+    "correctAnswers": ["listen", "hear"]
+  },
+  {
+    "chinese": "说",
+    "options": ["speak", "talk", "tell", "say"],
+    "correctAnswers": ["speak", "talk", "tell", "say"]
+  },
+  {
+    "chinese": "开始",
+    "options": ["begin", "start", "finish", "end"],
+    "correctAnswers": ["begin", "start"]
+  },
+  {
+    "chinese": "结束",
+    "options": ["finish", "end", "begin", "start"],
+    "correctAnswers": ["finish", "end"]
+  },
+  {
+    "chinese": "学习",
+    "options": ["learn", "study", "teach", "instruct"],
+    "correctAnswers": ["learn", "study"]
+  },
+  {
+    "chinese": "喜欢",
+    "options": ["like", "love", "hate", "dislike"],
+    "correctAnswers": ["like", "love"]
+  },
+  {
+    "chinese": "许多",
+    "options": ["many", "much", "a lot of", "few"],
+    "correctAnswers": ["many", "much", "a lot of"]
+  },
+  {
+    "chinese": "图片",
+    "options": ["photo", "picture", "video", "audio"],
+    "correctAnswers": ["photo", "picture"]
+  },
+  {
+    "chinese": "声音",
+    "options": ["sound", "voice", "silence", "quiet"],
+    "correctAnswers": ["sound", "voice"]
+  },
+  {
+    "chinese": "问题",
+    "options": ["question", "problem", "answer", "solution"],
+    "correctAnswers": ["question", "problem"]
+  },
+  {
+    "chinese": "也",
+    "options": ["also", "too", "only", "just"],
+    "correctAnswers": ["also", "too"]
+  },
+  {
+    "chinese": "桌子",
+    "options": ["desk", "table", "chair", "sofa"],
+    "correctAnswers": ["desk", "table"]
+  },
+  {
+    "chinese": "笔",
+    "options": ["pen", "pencil", "eraser", "ruler"],
+    "correctAnswers": ["pen", "pencil"]
+  },
+  {
+    "chinese": "门",
+    "options": ["door", "gate", "window", "wall"],
+    "correctAnswers": ["door", "gate"]
+  },
+  {
+    "chinese": "晚上",
+    "options": ["evening", "night", "morning", "afternoon"],
+    "correctAnswers": ["evening", "night"]
+  },
+  {
+    "chinese": "吃",
+    "options": ["eat", "have", "drink", "drink"],
+    "correctAnswers": ["eat", "have"]
+  },
+  {
+    "chinese": "近的",
+    "options": ["near", "close", "far", "distant"],
+    "correctAnswers": ["near", "close"]
+  },
+  {
+    "chinese": "冷的",
+    "options": ["cold", "cool", "hot", "warm"],
+    "correctAnswers": ["cold", "cool"]
+  },
+  {
+    "chinese": "热的",
+    "options": ["warm", "hot", "cold", "cool"],
+    "correctAnswers": ["warm", "hot"]
+  },
+  {
+    "chinese": "容易的",
+    "options": ["easy", "simple", "difficult", "hard"],
+    "correctAnswers": ["easy", "simple"]
+  },
+  {
+    "chinese": "困难的",
+    "options": ["difficult", "hard", "easy", "simple"],
+    "correctAnswers": ["difficult", "hard"]
+  },
+  {
+    "chinese": "正确的",
+    "options": ["right", "correct", "wrong", "incorrect"],
+    "correctAnswers": ["right", "correct"]
+  },
+  {
+    "chinese": "错误的",
+    "options": ["wrong", "incorrect", "right", "correct"],
+    "correctAnswers": ["wrong", "incorrect"]
+  },
+  {
+    "chinese": "穿",
+    "options": ["wear", "dress", "put on", "take off"],
+    "correctAnswers": ["wear", "dress", "put on"]
+  },
+  {
+    "chinese": "寻找",
+    "options": ["find", "look for", "lose", "misplace"],
+    "correctAnswers": ["find", "look for"]
+  },
+  {
+    "chinese": "工作",
+    "options": ["job", "work", "play", "rest"],
+    "correctAnswers": ["job", "work"]
+  },
+  {
+    "chinese": "旅行",
+    "options": ["trip", "travel", "stay", "remain"],
+    "correctAnswers": ["trip", "travel"]
+  },
+  {
+    "chinese": "礼物",
+    "options": ["gift", "present", "take", "give"],
+    "correctAnswers": ["gift", "present"]
+  },
+  {
+    "chinese": "有趣的",
+    "options": ["fun", "funny", "boring", "dull"],
+    "correctAnswers": ["fun", "funny"]
+  },
+  {
+    "chinese": "居住",
+    "options": ["live", "stay", "leave", "depart"],
+    "correctAnswers": ["live", "stay"]
+  },
+  {
+    "chinese": "河 / 湖",
+    "options": ["river", "lake", "sea", "ocean"],
+    "correctAnswers": ["river", "lake"]
+  },
+  {
+    "chinese": "商店",
+    "options": ["shop", "store", "market", "mall"],
+    "correctAnswers": ["shop", "store"]
+  },
+  {
+    "chinese": "孩子",
+    "options": ["child", "kid", "adult", "grownup"],
+    "correctAnswers": ["child", "kid"]
+  },
+  {
+    "chinese": "生气的",
+    "options": ["angry", "mad", "happy", "glad"],
+    "correctAnswers": ["angry", "mad"]
+  },
+  {
+    "chinese": "害怕的",
+    "options": ["afraid", "scared", "brave", "courageous"],
+    "correctAnswers": ["afraid", "scared"]
+  },
+  {
+    "chinese": "累的 / 困的",
+    "options": ["tired", "sleepy", "energetic", "awake"],
+    "correctAnswers": ["tired", "sleepy"]
+  },
+  {
+    "chinese": "路 / 街道",
+    "options": ["road", "street", "path", "alley"],
+    "correctAnswers": ["road", "street"]
+  },
+  {
+    "chinese": "公园 / 花园",
+    "options": ["park", "garden", "forest", "jungle"],
+    "correctAnswers": ["park", "garden"]
+  },
+  {
+    "chinese": "杯子",
+    "options": ["cup", "glass", "bottle", "jar"],
+    "correctAnswers": ["cup", "glass"]
+  },
+  {
+    "chinese": "电影",
+    "options": ["movie", "film", "play", "show"],
+    "correctAnswers": ["movie", "film"]
+  },
+  {
+    "chinese": "游戏 / 比赛",
+    "options": ["game", "match", "work", "job"],
+    "correctAnswers": ["game", "match"]
+  },
+  {
+    "chinese": "笑",
+    "options": ["laugh", "smile", "cry", "weep"],
+    "correctAnswers": ["laugh", "smile"]
+  },
+  {
+    "chinese": "饿的",
+    "options": ["hungry", "starving", "full", "satisfied"],
+    "correctAnswers": ["hungry", "starving"]
+  },
+  {
+    "chinese": "照顾",
+    "options": ["look after", "take care of", "ignore", "neglect"],
+    "correctAnswers": ["look after", "take care of"]
+  },
+  {
+    "chinese": "关上",
+    "options": ["close", "turn off", "open", "turn on"],
+    "correctAnswers": ["close", "turn off"]
+  },
+  {
+    "chinese": "打开",
+    "options": ["open", "turn on", "close", "turn off"],
+    "correctAnswers": ["open", "turn on"]
+  }
+]

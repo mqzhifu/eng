@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 近似词多选游戏 - 英语语法学习乐园</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <h1>🔍 近似词多选游戏</h1>
+            <p>选择所有与中文意思匹配的近似词，一共20道题，满分100分！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <div class="progress-info">
+                    题目: <span id="current-question">1</span>/20
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="error-count">
+                错误: <span id="error-count">0</span>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <div class="question-number">第 <span id="question-number">1</span> 题</div>
+                <div class="question-text" id="question-text">
+                    请选择所有表示"大的"的单词
+                </div>
+                <div class="options" id="options">
+                    <div class="option">
+                        <input type="checkbox" name="option" value="big">
+                        <span>big</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="option" value="large">
+                        <span>large</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="option" value="small">
+                        <span>small</span>
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="option" value="little">
+                        <span>little</span>
+                    </div>
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <button class="next-btn" id="next-btn">下一题</button>
+                <button class="restart-btn" id="game-restart-btn" style="display: none; margin-left: 10px;">重新开始</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <div class="result-stats" id="result-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">正确率：</span>
+                        <span class="stat-value" id="accuracy">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">错误率：</span>
+                        <span class="stat-value" id="error-rate">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">总耗时：</span>
+                        <span class="stat-value" id="duration">00:00</span>
+                    </div>
+                </div>
+                <button class="restart-btn" id="restart-btn" style="display: none;">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+            <div class="ice-princess" id="ice-princess">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 1008.131 1628.738" enable-background="new 0 0 1008.131 1628.738" xml:space="preserve">
+                    <path d="M633.241,730.119c-16.585-34.552-24.082-25.527-20.89-40.503c5.323-24.936,40.335-70.209,45.529-85.305
+                        c4.345-12.622,6.164-15.432,10.745-16.58c5.242-1.316,7.271-5.225,7.281-14.044c0.034-19.543,7.305-12.556-2.395-31.454
+                        c-12.362-24.129-31.391-37.107-56.448-86.535c-24.075-47.481-30.45-51.866-65.391-118.174
+                        c-62.012-23.643-60.006-23.195-71.329-29.559c0-25.398-1.405-25.717,10.639-27.637c27.73-4.414,45.007-57.442,43.812-80.841
+                        c-0.665-13.037-0.521-13.743,3.111-15.398c4.382-1.997,5.033-4.482,1.175-4.482c-1.888,0-2.278-0.809-1.384-2.864
+                        c2.647-6.089,0.773-23.202,5.855-29.679c8.739-11.11-6.781-22.904-9.374-43.165c-1.443-11.307-3.885-15.751-11.91-21.661
+                        c-3.885-2.864-6.678-6.277-6.702-8.189c-0.058-4.961-16.073-23.717-20.273-23.744c-6.88-0.045-10.121-1.95-15.621-9.186
+                        c-7.932-10.438-13.045-10.034-19.03-15.494c-2.813-2.563-4.29-2.782-9.35-1.384c-11.246,3.112-5.596,9.351-18.392-1.723
+                        c-9.114-7.891-12.475-8.854-27.205-7.798c-8.549,0.613-14.044,2.165-22.066,6.236c-14.555,7.387-18.992,14.822-19.969,33.461
+                        c-1.822,34.652,11.702,46.106,17.957,52.81l-2.015,15.418c-5.476,41.829,11.658,23.462,9.162,52.344
+                        c-1.186,13.767,0.61,19.657,7.74,25.338c14.954,11.924,4.943,18.241,13.472,22.124c4.691,2.138,4.65,1.813,2.392,18.814
+                        c-18.537,139.685-70.019,34.369-90.924,164.172c-4.643,28.837-39.828,82.629-46.598,92.484c-4.375,6.369-10.312,8.296-15.493,13.732
+                        c-3.719,3.902-2.954,7.236-3.837,11.949c-2.661,14.189-13.274,10.751-13.274,28.732c0,10.683,3.474,25.745,8.206,35.572
+                        c5.316,11.053,13.679,9.155,23.803,22.422c20.232,26.529,68.004,56.736,83.304,69.982c7.801,6.754,12.627,10.113,16.254,12.756
+                        c-29.252,61.545-14.391,40.531-30.95,70.661C216.463,993.57,16.238,1479.367,23.439,1494.468
+                        c5.278,11.078,20.376,13.223,51.066,27.475c22.875,10.625,82.67,35.335,108.62,33.177c59.797-4.955,49.075,12.844,78.818,30.89
+                        c25.44,15.435,56.786,15.879,85.03,22.904c25.338,6.301,32.653,6.801,47.459,3.248c28.871-6.927,58.962-9.516,88.323-13.588
+                        c69.871-9.691,65.801-16.757,80.335-12.308c10.423,3.191,20.585,2.567,30.985,5.479c40.903,11.431,47.237,15.961,94.097,4.482
+                        c43.35-10.611,45.99-4.594,81.101-25.728c16.43-9.888,28.992-12.502,37.501-19.311c32.591-26.112,52.093-0.963,132.531-47.42
+                        c10.806-6.241,43.898-22.475,43.898-22.475c1.824-1.81,2.217,2.145-32.873-69.74c-49.56-101.531-191.979-412.685-279.028-600.194
+                        C658.711,784.236,646.177,757.079,633.241,730.119z M398.556,627.024c-2.906,16.299-5.469,19.451-9.769,12.013
+                        c-14.613-25.305-39.433-44.747-50.134-60.68c-6.709-10.001-6.764-10.204-5.828-21.552c0.997-12.068,4.745-24.772,10.889-36.898
+                        c3.981-7.867,27.476-42.469,28.832-42.469C390.987,477.438,407.739,575.506,398.556,627.024z M603.895,598.641
+                        c-25.288,54.126-23.556,52.669-23.556,52.669c-1.151,4.927-5.9,6.243-5.9,1.638c-0.004-1.576-2.289-7.651-5.081-13.5
+                        c-9.282-19.44-1.099-18.012-7.932-51.193c-9.292-45.097-7.791-75.835,4.602-94.279c2.217-3.303,11.149,2.601,21.579,14.264
+                        c8.069,9.021,24.478,38.683,24.464,44.213c-0.007,1.494-1.823,5.664-4.043,9.261C603.46,569.136,603.986,571.522,603.895,598.641z"/>
+                </svg>
+                <div class="princess-face" id="princess-face">😊</div>
+                <div class="snowflakes" id="snowflakes"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let questions = [];
+        let allQuestions = [];
+        
+        // 从后端加载游戏数据
+        function loadGameData() {
+            fetch(`${API_BASE_URL}/game/game_synonyms`)
+                .then(response => response.json())
+                .then(data => {
+                    allQuestions = data;
+                    questions = getRandomQuestions();
+                    initGame();
+                })
+                .catch(error => {
+                    console.error('加载游戏数据失败:', error);
+                    // 使用默认数据作为 fallback
+                    questions = getDefaultQuestions();
+                    initGame();
+                });
+        }
+        
+        // 随机选择20道题
+        function getRandomQuestions() {
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 20);
+        }
+        
+        // 默认数据作为 fallback
+        function getDefaultQuestions() {
+            return [
+                { chinese: "大的", options: ["big", "large", "small", "little"], correctAnswers: ["big", "large"] },
+                { chinese: "小的", options: ["small", "little", "big", "large"], correctAnswers: ["small", "little"] },
+                { chinese: "好的", options: ["good", "nice", "well", "fine"], correctAnswers: ["good", "nice", "well", "fine"] },
+                { chinese: "漂亮的", options: ["beautiful", "pretty", "ugly", "bad"], correctAnswers: ["beautiful", "pretty"] },
+                { chinese: "聪明的", options: ["clever", "smart", "stupid", "foolish"], correctAnswers: ["clever", "smart"] },
+                { chinese: "快的", options: ["fast", "quick", "slow", "late"], correctAnswers: ["fast", "quick"] },
+                { chinese: "高的", options: ["tall", "high", "short", "low"], correctAnswers: ["tall", "high"] },
+                { chinese: "看", options: ["look", "see", "watch", "hear"], correctAnswers: ["look", "see", "watch"] },
+                { chinese: "听", options: ["listen", "hear", "see", "watch"], correctAnswers: ["listen", "hear"] },
+                { chinese: "说", options: ["speak", "talk", "tell", "say"], correctAnswers: ["speak", "talk", "tell", "say"] },
+                { chinese: "开始", options: ["begin", "start", "finish", "end"], correctAnswers: ["begin", "start"] },
+                { chinese: "结束", options: ["finish", "end", "begin", "start"], correctAnswers: ["finish", "end"] },
+                { chinese: "学习", options: ["learn", "study", "teach", "instruct"], correctAnswers: ["learn", "study"] },
+                { chinese: "喜欢", options: ["like", "love", "hate", "dislike"], correctAnswers: ["like", "love"] },
+                { chinese: "许多", options: ["many", "much", "a lot of", "few"], correctAnswers: ["many", "much", "a lot of"] },
+                { chinese: "图片", options: ["photo", "picture", "video", "audio"], correctAnswers: ["photo", "picture"] },
+                { chinese: "声音", options: ["sound", "voice", "silence", "quiet"], correctAnswers: ["sound", "voice"] },
+                { chinese: "问题", options: ["question", "problem", "answer", "solution"], correctAnswers: ["question", "problem"] },
+                { chinese: "也", options: ["also", "too", "only", "just"], correctAnswers: ["also", "too"] },
+                { chinese: "桌子", options: ["desk", "table", "chair", "sofa"], correctAnswers: ["desk", "table"] }
+            ];
+        }
+
+        let currentQuestion = 0;
+        let score = 0;
+        let errorCount = 0;
+        let answered = false;
+        let startTime = 0;
+        let correctAnswers = 0;
+
+        // 初始化游戏
+        function initGame() {
+            // 重新随机选择20道题
+            questions = getRandomQuestions();
+            currentQuestion = 0;
+            score = 0;
+            errorCount = 0;
+            answered = false;
+            correctAnswers = 0;
+            startTime = Date.now(); // 记录开始时间
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('error-count').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+            document.getElementById('question-text').textContent = `请选择所有表示"${question.chinese}"的单词`;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            // 随机打乱选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = `
+                    <input type="checkbox" name="option" value="${option}">
+                    <span>${option}</span>
+                `;
+                
+                // 添加点击事件到整个选项
+                optionElement.addEventListener('click', function(e) {
+                    if (e.target.type !== 'checkbox') {
+                        const checkbox = this.querySelector('input[type="checkbox"]');
+                        checkbox.checked = !checkbox.checked;
+                    }
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    this.classList.toggle('selected', checkbox.checked);
+                    
+                    // 显示下一题按钮
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                });
+                
+                // 为复选框添加点击事件
+                const checkbox = optionElement.querySelector('input[type="checkbox"]');
+                checkbox.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const option = this.closest('.option');
+                    option.classList.toggle('selected', this.checked);
+                    
+                    // 显示下一题按钮
+                    document.getElementById('next-btn').style.display = 'inline-block';
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            // 重置按钮文本为"提交答案"
+            document.getElementById('next-btn').textContent = '提交答案';
+            // 隐藏播放按钮
+            document.getElementById('play-audio-btn').style.display = 'none';
+            answered = false;
+        }
+
+        // 播放音频
+        function playAudio() {
+            const question = questions[currentQuestion];
+            // 按顺序播放所有正确答案的音频
+            let delay = 0;
+            question.correctAnswers.forEach(word => {
+                // 使用后端TTS API
+                const audioUrl = `${API_BASE_URL}/tts?text=${encodeURIComponent(word)}&game=game_synonyms`;
+                // 使用setTimeout按顺序播放，避免同时播放多个声音
+                setTimeout(() => {
+                    const audio = new Audio(audioUrl);
+                    audio.onerror = function() {
+                        console.log('音频播放失败:', audioUrl);
+                        // 尝试使用Web Speech API作为备用
+                        const speech = new SpeechSynthesisUtterance(word);
+                        speech.lang = 'en-US';
+                        window.speechSynthesis.speak(speech);
+                    };
+                    audio.play();
+                }, delay);
+                // 每个音频之间间隔500毫秒
+                delay += 500;
+            });
+        }
+
+        // 选择选项
+        function checkAnswers() {
+            const question = questions[currentQuestion];
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const selectedOptions = [];
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedOptions.push(checkbox.value);
+                }
+            });
+            
+            // 检查是否至少选择了一个选项
+            if (selectedOptions.length === 0) {
+                // 创建自定义弹窗
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <h3>提示</h3>
+                        <p>请至少选择一个选项！</p>
+                        <button class="next-btn" id="modal-ok-btn">确定</button>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // 添加事件监听
+                document.getElementById('modal-ok-btn').addEventListener('click', () => {
+                    modal.remove();
+                });
+                return;
+            }
+            
+            // 检查答案是否正确
+            const isCorrect = selectedOptions.length === question.correctAnswers.length && 
+                           selectedOptions.every(option => question.correctAnswers.includes(option));
+            
+            // 显示正确和错误的选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                const checkbox = option.querySelector('input[type="checkbox"]');
+                const optionText = option.querySelector('span');
+                const word = checkbox.value;
+                
+                if (question.correctAnswers.includes(checkbox.value)) {
+                    option.classList.add('correct');
+                } else if (checkbox.checked) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (isCorrect) {
+                score += 5; // 每题5分
+                correctAnswers++; // 增加正确答案计数
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                errorCount++; // 增加错误计数
+                document.getElementById('error-count').textContent = errorCount;
+                feedback.textContent = `❌ 回答错误！正确答案是: ${question.correctAnswers.join(', ')}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            feedback.style.display = 'block';
+            answered = true;
+            
+            // 自动播放正确答案的音频
+            playAudio();
+            
+            // 显示音频播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (!answered) {
+                checkAnswers();
+                // 检查答案后，更新按钮文本为"下一题"
+                document.getElementById('next-btn').textContent = '下一题';
+                return;
+            }
+            
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('current-question').textContent = currentQuestion + 1;
+                document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                loadQuestion();
+                // 重置按钮文本为"提交答案"
+                document.getElementById('next-btn').textContent = '提交答案';
+            } else {
+                document.getElementById('progress-fill').style.width = '100%';
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            // 计算正确率、错误率和总耗时
+            const totalQuestions = questions.length;
+            const accuracy = ((correctAnswers / totalQuestions) * 100).toFixed(0);
+            const errorRate = (( (totalQuestions - correctAnswers) / totalQuestions) * 100).toFixed(0);
+            const duration = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(duration / 60);
+            const seconds = duration % 60;
+            const formattedDuration = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // 显示统计信息
+            document.getElementById('accuracy').textContent = `${accuracy}%`;
+            document.getElementById('error-rate').textContent = `${errorRate}%`;
+            document.getElementById('duration').textContent = formattedDuration;
+            
+            const message = document.getElementById('result-message');
+            if (score === 100) {
+                message.textContent = '太棒了！你是近似词大师！';
+                createConfetti();
+            } else if (score >= 80) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 60) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 生成雪花
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            if (!snowflakesContainer) return;
+            
+            setInterval(() => {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.top = '-10px';
+                snowflake.style.width = Math.random() * 4 + 2 + 'px';
+                snowflake.style.height = snowflake.style.width;
+                snowflake.style.animationDelay = Math.random() * 3 + 's';
+                snowflake.style.animationDuration = Math.random() * 2 + 2 + 's';
+                
+                snowflakesContainer.appendChild(snowflake);
+                
+                // 3秒后移除雪花
+                setTimeout(() => {
+                    snowflake.remove();
+                }, 5000);
+            }, 500);
+        }
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+        document.getElementById('game-restart-btn').addEventListener('click', initGame);
+        document.getElementById('play-audio-btn').addEventListener('click', playAudio);
+
+        // 加载游戏数据并初始化
+        loadGameData();
+        
+        // 生成雪花
+        createSnowflakes();
+    </script>
+</body>
+</html>

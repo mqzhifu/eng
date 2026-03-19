@@ -1,0 +1,602 @@
+[
+  {
+    "description": "This animal is called the king of the forest. It has long hair on its head and makes loud sounds.",
+    "descriptionChinese": "这种动物被称为森林之王。它头上有长毛，会发出很大的声音。",
+    "answer": "lion",
+    "options": [
+      "lion",
+      "tiger",
+      "elephant",
+      "giraffe"
+    ],
+    "chinese": "狮子"
+  },
+  {
+    "description": "This is the biggest animal on land. It has a long nose and big ears.",
+    "descriptionChinese": "这是陆地上最大的动物。它有长长的鼻子和大耳朵。",
+    "answer": "elephant",
+    "options": [
+      "elephant",
+      "giraffe",
+      "hippopotamus",
+      "rhinoceros"
+    ],
+    "chinese": "大象"
+  },
+  {
+    "description": "This animal has black and white stripes. It lives in Africa.",
+    "descriptionChinese": "这种动物有黑白条纹。它生活在非洲。",
+    "answer": "zebra",
+    "options": [
+      "zebra",
+      "panda",
+      "tiger",
+      "giraffe"
+    ],
+    "chinese": "斑马"
+  },
+  {
+    "description": "This animal is a big cat with orange fur and black stripes.",
+    "descriptionChinese": "这种动物是一种大猫，有橙色的皮毛和黑色的条纹。",
+    "answer": "tiger",
+    "options": [
+      "tiger",
+      "lion",
+      "leopard",
+      "cheetah"
+    ],
+    "chinese": "老虎"
+  },
+  {
+    "description": "This animal has a long neck and spots. It is the tallest animal on land.",
+    "descriptionChinese": "这种动物有长长的脖子和斑点。它是陆地上最高的动物。",
+    "answer": "giraffe",
+    "options": [
+      "giraffe",
+      "elephant",
+      "zebra",
+      "kangaroo"
+    ],
+    "chinese": "长颈鹿"
+  },
+  {
+    "description": "This bear is from China. It has black and white fur.",
+    "descriptionChinese": "这种熊来自中国。它有黑白相间的皮毛。",
+    "answer": "panda",
+    "options": [
+      "panda",
+      "polar bear",
+      "brown bear",
+      "koala"
+    ],
+    "chinese": "熊猫"
+  },
+  {
+    "description": "This is a big animal that lives in the sea. It is very big and kind.",
+    "descriptionChinese": "这是一种生活在海里的大动物。它很大很善良。",
+    "answer": "whale",
+    "options": [
+      "whale",
+      "dolphin",
+      "shark",
+      "turtle"
+    ],
+    "chinese": "鲸鱼"
+  },
+  {
+    "description": "This animal lives in trees and is smart.",
+    "descriptionChinese": "这种动物生活在树上，很聪明。",
+    "answer": "monkey",
+    "options": [
+      "monkey",
+      "gorilla",
+      "chimpanzee",
+      "orangutan"
+    ],
+    "chinese": "猴子"
+  },
+  {
+    "description": "This is a big reptile with a long tail and sharp teeth.",
+    "descriptionChinese": "这是一种大爬行动物，有长长的尾巴和锋利的牙齿。",
+    "answer": "crocodile",
+    "options": [
+      "crocodile",
+      "alligator",
+      "lizard",
+      "snake"
+    ],
+    "chinese": "鳄鱼"
+  },
+  {
+    "description": "This bird cannot fly. It lives in a very cold place.",
+    "descriptionChinese": "这种鸟不会飞。它生活在一个非常寒冷的地方。",
+    "answer": "penguin",
+    "options": [
+      "penguin",
+      "ostrich",
+      "emu",
+      "kiwi"
+    ],
+    "chinese": "企鹅"
+  },
+  {
+    "description": "This small animal has a long tail and likes to eat cheese.",
+    "descriptionChinese": "这种小动物有长长的尾巴，喜欢吃奶酪。",
+    "answer": "mouse",
+    "options": [
+      "mouse",
+      "rat",
+      "squirrel",
+      "rabbit"
+    ],
+    "chinese": "老鼠"
+  },
+  {
+    "description": "This big bird flies high and has sharp claws and a curved beak.",
+    "descriptionChinese": "这种大鸟飞得很高，有锋利的爪子和弯曲的嘴巴。",
+    "answer": "eagle",
+    "options": [
+      "eagle",
+      "hawk",
+      "owl",
+      "vulture"
+    ],
+    "chinese": "鹰"
+  },
+  {
+    "description": "This pet likes to chase mice.",
+    "descriptionChinese": "这种宠物喜欢追逐老鼠。",
+    "answer": "cat",
+    "options": [
+      "cat",
+      "dog",
+      "rabbit",
+      "hamster"
+    ],
+    "chinese": "猫"
+  },
+  {
+    "description": "This pet is people's best friend.",
+    "descriptionChinese": "这种宠物是人类最好的朋友。",
+    "answer": "dog",
+    "options": [
+      "dog",
+      "cat",
+      "horse",
+      "sheep"
+    ],
+    "chinese": "狗"
+  },
+  {
+    "description": "This big animal eats grass. It has horns and lives in groups.",
+    "descriptionChinese": "这种大动物吃草。它有角，成群生活。",
+    "answer": "cow",
+    "options": [
+      "cow",
+      "sheep",
+      "goat",
+      "deer"
+    ],
+    "chinese": "牛"
+  },
+  {
+    "description": "This small insect gets sweet juice from flowers.",
+    "descriptionChinese": "这种小昆虫从花中采集甜味的汁液。",
+    "answer": "bee",
+    "options": [
+      "bee",
+      "butterfly",
+      "ant",
+      "fly"
+    ],
+    "chinese": "蜜蜂"
+  },
+  {
+    "description": "This big fish has sharp teeth and is a top hunter in the sea.",
+    "descriptionChinese": "这种大鱼有锋利的牙齿，是海里的顶级猎手。",
+    "answer": "shark",
+    "options": [
+      "shark",
+      "whale",
+      "dolphin",
+      "tuna"
+    ],
+    "chinese": "鲨鱼"
+  },
+  {
+    "description": "This animal carries its babies in a bag on its belly. It hops around.",
+    "descriptionChinese": "这种动物在腹部的袋子里携带宝宝。它跳来跳去。",
+    "answer": "kangaroo",
+    "options": [
+      "kangaroo",
+      "koala",
+      "opossum",
+      "wallaby"
+    ],
+    "chinese": "袋鼠"
+  },
+  {
+    "description": "This bird is active at night. It has big eyes and can turn its head almost all the way around.",
+    "descriptionChinese": "这种鸟在夜间活动。它有大眼睛，可以将头几乎完全转一圈。",
+    "answer": "owl",
+    "options": [
+      "owl",
+      "eagle",
+      "hawk",
+      "vulture"
+    ],
+    "chinese": "猫头鹰"
+  },
+  {
+    "description": "This small animal can live in water and on land. It has smooth skin and can jump high.",
+    "descriptionChinese": "这种小动物可以生活在水里和陆地上。它有光滑的皮肤，可以跳得很高。",
+    "answer": "frog",
+    "options": [
+      "frog",
+      "toad",
+      "salamander",
+      "newt"
+    ],
+    "chinese": "青蛙"
+  },
+  {
+    "description": "This big cat has spots and runs very fast.",
+    "descriptionChinese": "这种大猫有斑点，跑得非常快。",
+    "answer": "cheetah",
+    "options": [
+      "cheetah",
+      "leopard",
+      "tiger",
+      "lion"
+    ],
+    "chinese": "猎豹"
+  },
+  {
+    "description": "This small animal has a bushy tail and likes to eat nuts.",
+    "descriptionChinese": "这种小动物有浓密的尾巴，喜欢吃坚果。",
+    "answer": "squirrel",
+    "options": [
+      "squirrel",
+      "mouse",
+      "rat",
+      "rabbit"
+    ],
+    "chinese": "松鼠"
+  },
+  {
+    "description": "This long reptile sheds its skin as it grows.",
+    "descriptionChinese": "这种长爬行动物在生长过程中会蜕皮。",
+    "answer": "snake",
+    "options": [
+      "snake",
+      "lizard",
+      "crocodile",
+      "turtle"
+    ],
+    "chinese": "蛇"
+  },
+  {
+    "description": "This sea animal is smart and likes to play.",
+    "descriptionChinese": "这种海洋动物很聪明，喜欢玩耍。",
+    "answer": "dolphin",
+    "options": [
+      "dolphin",
+      "whale",
+      "seal",
+      "sea lion"
+    ],
+    "chinese": "海豚"
+  },
+  {
+    "description": "This big animal has a hump on its back and lives in hot, dry places.",
+    "descriptionChinese": "这种大动物背上有驼峰，生活在炎热干燥的地方。",
+    "answer": "camel",
+    "options": [
+      "camel",
+      "horse",
+      "donkey",
+      "mule"
+    ],
+    "chinese": "骆驼"
+  },
+  {
+    "description": "This bird sings very beautifully.",
+    "descriptionChinese": "这种鸟唱歌非常好听。",
+    "answer": "nightingale",
+    "options": [
+      "nightingale",
+      "sparrow",
+      "pigeon",
+      "crow"
+    ],
+    "chinese": "夜莺"
+  },
+  {
+    "description": "This small animal has long ears and a fluffy tail.",
+    "descriptionChinese": "这种小动物有长长的耳朵和蓬松的尾巴。",
+    "answer": "rabbit",
+    "options": [
+      "rabbit",
+      "mouse",
+      "rat",
+      "squirrel"
+    ],
+    "chinese": "兔子"
+  },
+  {
+    "description": "This wild animal has thick fur and lives in cold places. It howls at night.",
+    "descriptionChinese": "这种野生动物有厚厚的皮毛，生活在寒冷的地方。它在夜间嚎叫。",
+    "answer": "wolf",
+    "options": [
+      "wolf",
+      "fox",
+      "coyote",
+      "jackal"
+    ],
+    "chinese": "狼"
+  },
+  {
+    "description": "This bird has colorful feathers and can copy what people say.",
+    "descriptionChinese": "这种鸟有彩色的羽毛，可以模仿人们说的话。",
+    "answer": "parrot",
+    "options": [
+      "parrot",
+      "eagle",
+      "owl",
+      "pigeon"
+    ],
+    "chinese": "鹦鹉"
+  },
+  {
+    "description": "This small animal has sharp spines on its back to protect itself.",
+    "descriptionChinese": "这种小动物背上有锋利的刺来保护自己。",
+    "answer": "porcupine",
+    "options": [
+      "porcupine",
+      "hedgehog",
+      "armadillo",
+      "mole"
+    ],
+    "chinese": "豪猪"
+  },
+  {
+    "description": "This reptile lives in the sea. It has a hard shell and lays eggs on beaches.",
+    "descriptionChinese": "这种爬行动物生活在海里。它有坚硬的壳，在海滩上产卵。",
+    "answer": "turtle",
+    "options": [
+      "turtle",
+      "tortoise",
+      "crocodile",
+      "alligator"
+    ],
+    "chinese": "海龟"
+  },
+  {
+    "description": "This big animal eats grass. It has horns on its head and lives in forests.",
+    "descriptionChinese": "这种大动物吃草。它头上有角，生活在森林里。",
+    "answer": "deer",
+    "options": [
+      "deer",
+      "elk",
+      "moose",
+      "reindeer"
+    ],
+    "chinese": "鹿"
+  },
+  {
+    "description": "This small insect has six legs and pretty wings.",
+    "descriptionChinese": "这种小昆虫有六条腿和漂亮的翅膀。",
+    "answer": "butterfly",
+    "options": [
+      "butterfly",
+      "bee",
+      "ant",
+      "fly"
+    ],
+    "chinese": "蝴蝶"
+  },
+  {
+    "description": "This big cat has long hair on its head and lives in groups.",
+    "descriptionChinese": "这种大猫头上有长毛，成群生活。",
+    "answer": "lion",
+    "options": [
+      "lion",
+      "tiger",
+      "leopard",
+      "cheetah"
+    ],
+    "chinese": "狮子"
+  },
+  {
+    "description": "This small animal has a long nose and eats insects.",
+    "descriptionChinese": "这种小动物有长长的鼻子，吃昆虫。",
+    "answer": "anteater",
+    "options": [
+      "anteater",
+      "armadillo",
+      "mole",
+      "shrew"
+    ],
+    "chinese": "食蚁兽"
+  },
+  {
+    "description": "This big animal has a hump and is used for carrying things in the desert.",
+    "descriptionChinese": "这种大动物有驼峰，在沙漠中被用来搬运东西。",
+    "answer": "camel",
+    "options": [
+      "camel",
+      "horse",
+      "elephant",
+      "donkey"
+    ],
+    "chinese": "骆驼"
+  },
+  {
+    "description": "This bird has a very long neck and long legs.",
+    "descriptionChinese": "这种鸟有非常长的脖子和长腿。",
+    "answer": "flamingo",
+    "options": [
+      "flamingo",
+      "stork",
+      "crane",
+      "heron"
+    ],
+    "chinese": "火烈鸟"
+  },
+  {
+    "description": "This small animal has a bushy tail and is very clever.",
+    "descriptionChinese": "这种小动物有浓密的尾巴，非常聪明。",
+    "answer": "fox",
+    "options": [
+      "fox",
+      "wolf",
+      "coyote",
+      "jackal"
+    ],
+    "chinese": "狐狸"
+  },
+  {
+    "description": "This big sea animal has long tusks and whiskers.",
+    "descriptionChinese": "这种大海动物有长长的獠牙和胡须。",
+    "answer": "walrus",
+    "options": [
+      "walrus",
+      "seal",
+      "sea lion",
+      "dolphin"
+    ],
+    "chinese": "海象"
+  },
+  {
+    "description": "This bird can swim underwater very well.",
+    "descriptionChinese": "这种鸟能很好地在水下游泳。",
+    "answer": "penguin",
+    "options": [
+      "penguin",
+      "duck",
+      "swan",
+      "goose"
+    ],
+    "chinese": "企鹅"
+  },
+  {
+    "description": "This small animal has a long tail and can jump from tree to tree.",
+    "descriptionChinese": "这种小动物有长长的尾巴，可以从一棵树跳到另一棵树。",
+    "answer": "monkey",
+    "options": [
+      "monkey",
+      "squirrel",
+      "ferret",
+      "weasel"
+    ],
+    "chinese": "猴子"
+  },
+  {
+    "description": "This reptile has a hard shell and moves very slowly.",
+    "descriptionChinese": "这种爬行动物有坚硬的壳，移动非常缓慢。",
+    "answer": "tortoise",
+    "options": [
+      "tortoise",
+      "turtle",
+      "snake",
+      "lizard"
+    ],
+    "chinese": "陆龟"
+  },
+  {
+    "description": "This bird has a very long beak and colorful feathers.",
+    "descriptionChinese": "这种鸟有非常长的嘴巴和彩色的羽毛。",
+    "answer": "toucan",
+    "options": [
+      "toucan",
+      "parrot",
+      "macaw",
+      "cockatoo"
+    ],
+    "chinese": "巨嘴鸟"
+  },
+  {
+    "description": "This small animal has a pointy nose and comes out at night.",
+    "descriptionChinese": "这种小动物有尖尖的鼻子，在夜间出来活动。",
+    "answer": "hedgehog",
+    "options": [
+      "hedgehog",
+      "porcupine",
+      "shrew",
+      "mole"
+    ],
+    "chinese": "刺猬"
+  },
+  {
+    "description": "This big animal eats grass. It has a long tail and lives in groups.",
+    "descriptionChinese": "这种大动物吃草。它有长长的尾巴，成群生活。",
+    "answer": "horse",
+    "options": [
+      "horse",
+      "cow",
+      "sheep",
+      "goat"
+    ],
+    "chinese": "马"
+  },
+  {
+    "description": "This bird can fly very far in different seasons.",
+    "descriptionChinese": "这种鸟在不同季节可以飞行很远的距离。",
+    "answer": "migration bird",
+    "options": [
+      "migration bird",
+      "eagle",
+      "owl",
+      "sparrow"
+    ],
+    "chinese": "候鸟"
+  },
+  {
+    "description": "This small animal has a striped tail and is very curious.",
+    "descriptionChinese": "这种小动物有条纹尾巴，非常好奇。",
+    "answer": "raccoon",
+    "options": [
+      "raccoon",
+      "fox",
+      "badger",
+      "skunk"
+    ],
+    "chinese": "浣熊"
+  },
+  {
+    "description": "This big bear has thick white fur and lives in very cold places.",
+    "descriptionChinese": "这种大熊有厚厚的白色皮毛，生活在非常寒冷的地方。",
+    "answer": "polar bear",
+    "options": [
+      "polar bear",
+      "brown bear",
+      "black bear",
+      "grizzly bear"
+    ],
+    "chinese": "北极熊"
+  },
+  {
+    "description": "This bird has beautiful feathers and does a special dance to find a friend.",
+    "descriptionChinese": "这种鸟有美丽的羽毛，会跳特殊的舞蹈来寻找朋友。",
+    "answer": "peacock",
+    "options": [
+      "peacock",
+      "pheasant",
+      "turkey",
+      "quail"
+    ],
+    "chinese": "孔雀"
+  },
+  {
+    "description": "This small animal has a bag and lives in Australia. It eats leaves.",
+    "descriptionChinese": "这种小动物有袋子，生活在澳大利亚。它吃树叶。",
+    "answer": "koala",
+    "options": [
+      "koala",
+      "kangaroo",
+      "wallaby",
+      "wombat"
+    ],
+    "chinese": "考拉"
+  }
+]

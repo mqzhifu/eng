@@ -1,0 +1,264 @@
+{
+  "questions": [
+    {
+      "english": "What's your name?",
+      "chinese": "你叫什么名字？",
+      "options": ["你叫什么名字？", "你多大了？", "你好吗？", "你来自哪里？"]
+    },
+    {
+      "english": "How old are you?",
+      "chinese": "你多大了？",
+      "options": ["你叫什么名字？", "你多大了？", "你好吗？", "你来自哪里？"]
+    },
+    {
+      "english": "How are you?",
+      "chinese": "你好吗？",
+      "options": ["你叫什么名字？", "你多大了？", "你好吗？", "你来自哪里？"]
+    },
+    {
+      "english": "Where are you from?",
+      "chinese": "你来自哪里？",
+      "options": ["你叫什么名字？", "你多大了？", "你好吗？", "你来自哪里？"]
+    },
+    {
+      "english": "What do you do?",
+      "chinese": "你是做什么的？",
+      "options": ["你是做什么的？", "你喜欢什么？", "你在做什么？", "你想去哪里？"]
+    },
+    {
+      "english": "What do you like?",
+      "chinese": "你喜欢什么？",
+      "options": ["你是做什么的？", "你喜欢什么？", "你在做什么？", "你想去哪里？"]
+    },
+    {
+      "english": "What are you doing?",
+      "chinese": "你在做什么？",
+      "options": ["你是做什么的？", "你喜欢什么？", "你在做什么？", "你想去哪里？"]
+    },
+    {
+      "english": "Where do you want to go?",
+      "chinese": "你想去哪里？",
+      "options": ["你是做什么的？", "你喜欢什么？", "你在做什么？", "你想去哪里？"]
+    },
+    {
+      "english": "Who is he?",
+      "chinese": "他是谁？",
+      "options": ["他是谁？", "她是谁？", "它是什么？", "他们是谁？"]
+    },
+    {
+      "english": "Who is she?",
+      "chinese": "她是谁？",
+      "options": ["他是谁？", "她是谁？", "它是什么？", "他们是谁？"]
+    },
+    {
+      "english": "What is it?",
+      "chinese": "它是什么？",
+      "options": ["他是谁？", "她是谁？", "它是什么？", "他们是谁？"]
+    },
+    {
+      "english": "Who are they?",
+      "chinese": "他们是谁？",
+      "options": ["他是谁？", "她是谁？", "它是什么？", "他们是谁？"]
+    },
+    {
+      "english": "When is your birthday?",
+      "chinese": "你的生日是什么时候？",
+      "options": ["你的生日是什么时候？", "你什么时候来？", "你什么时候走？", "你什么时候开始？"]
+    },
+    {
+      "english": "When will you come?",
+      "chinese": "你什么时候来？",
+      "options": ["你的生日是什么时候？", "你什么时候来？", "你什么时候走？", "你什么时候开始？"]
+    },
+    {
+      "english": "When will you leave?",
+      "chinese": "你什么时候走？",
+      "options": ["你的生日是什么时候？", "你什么时候来？", "你什么时候走？", "你什么时候开始？"]
+    },
+    {
+      "english": "When will you start?",
+      "chinese": "你什么时候开始？",
+      "options": ["你的生日是什么时候？", "你什么时候来？", "你什么时候走？", "你什么时候开始？"]
+    },
+    {
+      "english": "Why are you happy?",
+      "chinese": "你为什么开心？",
+      "options": ["你为什么开心？", "你为什么难过？", "你为什么生气？", "你为什么累？"]
+    },
+    {
+      "english": "Why are you sad?",
+      "chinese": "你为什么难过？",
+      "options": ["你为什么开心？", "你为什么难过？", "你为什么生气？", "你为什么累？"]
+    },
+    {
+      "english": "Why are you angry?",
+      "chinese": "你为什么生气？",
+      "options": ["你为什么开心？", "你为什么难过？", "你为什么生气？", "你为什么累？"]
+    },
+    {
+      "english": "Why are you tired?",
+      "chinese": "你为什么累？",
+      "options": ["你为什么开心？", "你为什么难过？", "你为什么生气？", "你为什么累？"]
+    },
+    {
+      "english": "Which one do you like?",
+      "chinese": "你喜欢哪一个？",
+      "options": ["你喜欢哪一个？", "你喜欢哪本书？", "你喜欢哪种颜色？", "你喜欢哪个季节？"]
+    },
+    {
+      "english": "Which book do you like?",
+      "chinese": "你喜欢哪本书？",
+      "options": ["你喜欢哪一个？", "你喜欢哪本书？", "你喜欢哪种颜色？", "你喜欢哪个季节？"]
+    },
+    {
+      "english": "Which color do you like?",
+      "chinese": "你喜欢哪种颜色？",
+      "options": ["你喜欢哪一个？", "你喜欢哪本书？", "你喜欢哪种颜色？", "你喜欢哪个季节？"]
+    },
+    {
+      "english": "Which season do you like?",
+      "chinese": "你喜欢哪个季节？",
+      "options": ["你喜欢哪一个？", "你喜欢哪本书？", "你喜欢哪种颜色？", "你喜欢哪个季节？"]
+    },
+    {
+      "english": "How do you go to school?",
+      "chinese": "你怎么去上学？",
+      "options": ["你怎么去上学？", "你怎么去工作？", "你怎么去超市？", "你怎么去医院？"]
+    },
+    {
+      "english": "How do you go to work?",
+      "chinese": "你怎么去工作？",
+      "options": ["你怎么去上学？", "你怎么去工作？", "你怎么去超市？", "你怎么去医院？"]
+    },
+    {
+      "english": "How do you go to the supermarket?",
+      "chinese": "你怎么去超市？",
+      "options": ["你怎么去上学？", "你怎么去工作？", "你怎么去超市？", "你怎么去医院？"]
+    },
+    {
+      "english": "How do you go to the hospital?",
+      "chinese": "你怎么去医院？",
+      "options": ["你怎么去上学？", "你怎么去工作？", "你怎么去超市？", "你怎么去医院？"]
+    },
+    {
+      "english": "What time is it?",
+      "chinese": "现在几点了？",
+      "options": ["现在几点了？", "今天几号？", "今天星期几？", "现在什么季节？"]
+    },
+    {
+      "english": "What date is it today?",
+      "chinese": "今天几号？",
+      "options": ["现在几点了？", "今天几号？", "今天星期几？", "现在什么季节？"]
+    },
+    {
+      "english": "What day is it today?",
+      "chinese": "今天星期几？",
+      "options": ["现在几点了？", "今天几号？", "今天星期几？", "现在什么季节？"]
+    },
+    {
+      "english": "What season is it now?",
+      "chinese": "现在什么季节？",
+      "options": ["现在几点了？", "今天几号？", "今天星期几？", "现在什么季节？"]
+    },
+    {
+      "english": "How much is this?",
+      "chinese": "这个多少钱？",
+      "options": ["这个多少钱？", "那个多少钱？", "这些多少钱？", "那些多少钱？"]
+    },
+    {
+      "english": "How much is that?",
+      "chinese": "那个多少钱？",
+      "options": ["这个多少钱？", "那个多少钱？", "这些多少钱？", "那些多少钱？"]
+    },
+    {
+      "english": "How much are these?",
+      "chinese": "这些多少钱？",
+      "options": ["这个多少钱？", "那个多少钱？", "这些多少钱？", "那些多少钱？"]
+    },
+    {
+      "english": "How much are those?",
+      "chinese": "那些多少钱？",
+      "options": ["这个多少钱？", "那个多少钱？", "这些多少钱？", "那些多少钱？"]
+    },
+    {
+      "english": "Do you like coffee?",
+      "chinese": "你喜欢咖啡吗？",
+      "options": ["你喜欢咖啡吗？", "你喜欢茶吗？", "你喜欢牛奶吗？", "你喜欢果汁吗？"]
+    },
+    {
+      "english": "Do you like tea?",
+      "chinese": "你喜欢茶吗？",
+      "options": ["你喜欢咖啡吗？", "你喜欢茶吗？", "你喜欢牛奶吗？", "你喜欢果汁吗？"]
+    },
+    {
+      "english": "Do you like milk?",
+      "chinese": "你喜欢牛奶吗？",
+      "options": ["你喜欢咖啡吗？", "你喜欢茶吗？", "你喜欢牛奶吗？", "你喜欢果汁吗？"]
+    },
+    {
+      "english": "Do you like juice?",
+      "chinese": "你喜欢果汁吗？",
+      "options": ["你喜欢咖啡吗？", "你喜欢茶吗？", "你喜欢牛奶吗？", "你喜欢果汁吗？"]
+    },
+    {
+      "english": "Can you speak English?",
+      "chinese": "你会说英语吗？",
+      "options": ["你会说英语吗？", "你会说法语吗？", "你会说中文吗？", "你会说日语吗？"]
+    },
+    {
+      "english": "Can you speak French?",
+      "chinese": "你会说法语吗？",
+      "options": ["你会说英语吗？", "你会说法语吗？", "你会说中文吗？", "你会说日语吗？"]
+    },
+    {
+      "english": "Can you speak Chinese?",
+      "chinese": "你会说中文吗？",
+      "options": ["你会说英语吗？", "你会说法语吗？", "你会说中文吗？", "你会说日语吗？"]
+    },
+    {
+      "english": "Can you speak Japanese?",
+      "chinese": "你会说日语吗？",
+      "options": ["你会说英语吗？", "你会说法语吗？", "你会说中文吗？", "你会说日语吗？"]
+    },
+    {
+      "english": "Have you been to Beijing?",
+      "chinese": "你去过北京吗？",
+      "options": ["你去过北京吗？", "你去过上海吗？", "你去过广州吗？", "你去过深圳吗？"]
+    },
+    {
+      "english": "Have you been to Shanghai?",
+      "chinese": "你去过上海吗？",
+      "options": ["你去过北京吗？", "你去过上海吗？", "你去过广州吗？", "你去过深圳吗？"]
+    },
+    {
+      "english": "Have you been to Guangzhou?",
+      "chinese": "你去过广州吗？",
+      "options": ["你去过北京吗？", "你去过上海吗？", "你去过广州吗？", "你去过深圳吗？"]
+    },
+    {
+      "english": "Have you been to Shenzhen?",
+      "chinese": "你去过深圳吗？",
+      "options": ["你去过北京吗？", "你去过上海吗？", "你去过广州吗？", "你去过深圳吗？"]
+    },
+    {
+      "english": "What's your favorite food?",
+      "chinese": "你最喜欢的食物是什么？",
+      "options": ["你最喜欢的食物是什么？", "你最喜欢的颜色是什么？", "你最喜欢的动物是什么？", "你最喜欢的运动是什么？"]
+    },
+    {
+      "english": "What's your favorite color?",
+      "chinese": "你最喜欢的颜色是什么？",
+      "options": ["你最喜欢的食物是什么？", "你最喜欢的颜色是什么？", "你最喜欢的动物是什么？", "你最喜欢的运动是什么？"]
+    },
+    {
+      "english": "What's your favorite animal?",
+      "chinese": "你最喜欢的动物是什么？",
+      "options": ["你最喜欢的食物是什么？", "你最喜欢的颜色是什么？", "你最喜欢的动物是什么？", "你最喜欢的运动是什么？"]
+    },
+    {
+      "english": "What's your favorite sport?",
+      "chinese": "你最喜欢的运动是什么？",
+      "options": ["你最喜欢的食物是什么？", "你最喜欢的颜色是什么？", "你最喜欢的动物是什么？", "你最喜欢的运动是什么？"]
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 动物猜猜猜 - 英语语法学习乐园</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="game_index.html" class="back-btn">⬅ 返回</a>
+            <button class="play-audio-btn" id="play-audio-btn" style="display: none;">🔊</button>
+            <h1>🐾 动物猜猜猜</h1>
+            <p>根据描述猜测动物，选择正确的答案！</p>
+        </div>
+
+        <div class="game-info">
+            <div class="progress">
+                <div class="progress-info">
+                    题目: <span id="current-question">1</span>/20
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="error-count">
+                错误: <span id="error-count">0</span>
+            </div>
+            <div class="score">
+                分数: <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="game-content">
+            <div class="question" id="question">
+                <div class="question-text" id="question-text">
+                    <!-- 问题将通过JavaScript动态生成 -->
+                </div>
+                <div class="options" id="options">
+                    <!-- 选项将通过JavaScript动态生成 -->
+                </div>
+                <div class="feedback" id="feedback"></div>
+                <div class="translation-box" id="translation" style="display: none;">
+                    <div class="translation-content" id="translation-content"></div>
+                </div>
+                <button class="next-btn" id="next-btn">下一题</button>
+                <button class="restart-btn" id="game-restart-btn" style="display: none; margin-left: 10px;">重新开始</button>
+            </div>
+
+            <div class="result" id="result">
+                <h2>🎉 游戏完成！</h2>
+                <div class="result-score" id="result-score">0</div>
+                <div class="result-message" id="result-message"></div>
+                <button class="restart-btn" id="restart-btn" style="display: none;">再玩一次</button>
+                <a href="game_index.html" class="home-btn">返回游戏列表</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let questions = [];
+        let animalData = [];
+        let currentQuestion = 0;
+        let score = 0;
+        let errorCount = 0;
+        let answered = false;
+
+        // 从API获取数据
+        async function loadGameData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/game/game_animal`);
+                if (!response.ok) {
+                    throw new Error('Failed to load game data');
+                }
+                animalData = await response.json();
+                initGame(animalData);
+            } catch (error) {
+                console.error('Error loading game data:', error);
+                alert('加载游戏数据失败，请刷新页面重试');
+            }
+        }
+
+        // 播放音频
+        async function playAudio(text) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tts?text=${encodeURIComponent(text)}&game=game_animal`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to generate speech');
+                }
+                
+                const audioBlob = await response.blob();
+                
+                // 创建音频对象并播放
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audio = new Audio(audioUrl);
+                await audio.play();
+                
+                // 释放URL对象
+                setTimeout(() => URL.revokeObjectURL(audioUrl), 1000);
+            } catch (error) {
+                console.error('播放音频失败:', error);
+            }
+        }
+
+        // 初始化游戏
+        function initGame(data = animalData) {
+            // 随机选择20道题
+            const shuffled = [...data].sort(() => Math.random() - 0.5);
+            questions = shuffled.slice(0, 20);
+            
+            currentQuestion = 0;
+            score = 0;
+            errorCount = 0;
+            answered = false;
+            document.getElementById('current-question').textContent = 1;
+            document.getElementById('score').textContent = 0;
+            document.getElementById('error-count').textContent = 0;
+            document.getElementById('progress-fill').style.width = '0%';
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+            loadQuestion();
+        }
+
+        // 加载题目
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question-text').textContent = question.description;
+            
+            const optionsContainer = document.getElementById('options');
+            optionsContainer.innerHTML = '';
+            
+            // 随机打乱选项
+            const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+            
+            shuffledOptions.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.innerHTML = option;
+                optionElement.dataset.answer = option;
+                optionElement.addEventListener('click', selectOption);
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('feedback').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('translation').style.display = 'none';
+            document.getElementById('play-audio-btn').style.display = 'none';
+            answered = false;
+        }
+
+        // 选择选项
+        function selectOption(e) {
+            if (answered) return;
+            
+            const selectedOption = e.target;
+            const question = questions[currentQuestion];
+            const correctAnswer = question.answer;
+            
+            // 禁用所有选项
+            const options = document.querySelectorAll('.option');
+            options.forEach(option => {
+                option.removeEventListener('click', selectOption);
+                if (option.dataset.answer === correctAnswer) {
+                    option.classList.add('correct');
+                    if (option === selectedOption) {
+                        animateOption(option, true);
+                    }
+                } else if (option === selectedOption && option.dataset.answer !== correctAnswer) {
+                    option.classList.add('incorrect');
+                    animateOption(option, false);
+                }
+            });
+            
+            // 显示反馈
+            const feedback = document.getElementById('feedback');
+            if (selectedOption.dataset.answer === correctAnswer) {
+                score += 5; // 每题5分
+                document.getElementById('score').textContent = score;
+                feedback.textContent = '🎉 回答正确！';
+                feedback.className = 'feedback correct';
+                createConfetti();
+            } else {
+                errorCount++; // 增加错误次数
+                document.getElementById('error-count').textContent = errorCount;
+                feedback.textContent = `❌ 回答错误！正确答案是: ${correctAnswer}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            // 显示翻译
+            document.getElementById('translation-content').innerHTML = `
+                <strong>问题翻译：</strong>${question.descriptionChinese}<br>
+                <strong>中文名称：</strong>${question.chinese}
+            `;
+            document.getElementById('translation').style.display = 'block';
+            
+            feedback.style.display = 'block';
+            document.getElementById('next-btn').style.display = 'inline-block';
+            answered = true;
+            
+            // 播放问题描述的音频
+            playAudio(question.description);
+            
+            // 显示音频播放按钮
+            document.getElementById('play-audio-btn').style.display = 'flex';
+        }
+
+        // 选项选择动画
+        function animateOption(option, isCorrect) {
+            option.classList.add('option-animation');
+            if (isCorrect) {
+                option.classList.add('correct-animation');
+            } else {
+                option.classList.add('incorrect-animation');
+            }
+            setTimeout(() => {
+                option.classList.remove('option-animation', 'correct-animation', 'incorrect-animation');
+            }, 1000);
+        }
+
+        // 创建庆祝效果
+        function createConfetti() {
+            const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                // 3秒后移除
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // 下一题
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                document.getElementById('current-question').textContent = currentQuestion + 1;
+                // 如果是最后一题，设置进度条为100%
+                if (currentQuestion === questions.length - 1) {
+                    document.getElementById('progress-fill').style.width = '100%';
+                } else {
+                    document.getElementById('progress-fill').style.width = ((currentQuestion / questions.length) * 100) + '%';
+                }
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // 显示结果
+        function showResult() {
+            // 设置进度条为100%
+            document.getElementById('progress-fill').style.width = '100%';
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('result-score').textContent = score;
+            
+            const message = document.getElementById('result-message');
+            if (score === 100) {
+                message.textContent = '太棒了！你是动物专家！';
+                createConfetti();
+            } else if (score >= 80) {
+                message.textContent = '做得很好！继续加油！';
+            } else if (score >= 60) {
+                message.textContent = '不错！再多练习一下吧！';
+            } else {
+                message.textContent = '没关系，再试一次吧！';
+            }
+        }
+
+        // 播放音频按钮点击事件
+        document.getElementById('play-audio-btn').addEventListener('click', function() {
+            if (currentQuestion < questions.length) {
+                const question = questions[currentQuestion];
+                playAudio(question.description);
+            }
+        });
+
+        // 事件监听
+        document.getElementById('next-btn').addEventListener('click', nextQuestion);
+        document.getElementById('restart-btn').addEventListener('click', initGame);
+        document.getElementById('game-restart-btn').addEventListener('click', initGame);
+
+        // 初始化游戏
+        loadGameData();
+    </script>
+</body>
+</html>

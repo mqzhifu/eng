@@ -1,0 +1,79 @@
+[
+  {
+    "question": "What is Dad doing?",
+    "options": ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+    "correctAnswer": "Reading a newspaper",
+    "chineseQuestion": "爸爸在干什么？",
+    "chineseAnswer": "看报纸"
+  },
+  {
+    "question": "What is Grandpa doing?",
+    "options": ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+    "correctAnswer": "Watching TV",
+    "chineseQuestion": "爷爷在干什么？",
+    "chineseAnswer": "看电视"
+  },
+  {
+    "question": "What is Grandma doing?",
+    "options": ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+    "correctAnswer": "Watering flowers",
+    "chineseQuestion": "奶奶在干什么？",
+    "chineseAnswer": "浇花"
+  },
+  {
+    "question": "What is the little girl doing?",
+    "options": ["Reading a book", "Playing with the cat", "Doing homework", "Eating dinner"],
+    "correctAnswer": "Playing with the cat",
+    "chineseQuestion": "小女孩在干什么？",
+    "chineseAnswer": "和猫玩"
+  },
+  {
+    "question": "What is Mom doing?",
+    "options": ["Reading a newspaper", "Watching TV", "Cooking", "Watering flowers"],
+    "correctAnswer": "Cooking",
+    "chineseQuestion": "妈妈在干什么？",
+    "chineseAnswer": "做饭"
+  },
+  {
+    "question": "Where is the cup?",
+    "options": ["On the table", "On the chair", "On the floor", "On the bed"],
+    "correctAnswer": "On the table",
+    "chineseQuestion": "杯子在哪里？",
+    "chineseAnswer": "在桌子上面"
+  },
+  {
+    "question": "What color is the cup?",
+    "options": ["Pink", "Blue", "Green", "Yellow"],
+    "correctAnswer": "Pink",
+    "chineseQuestion": "杯子是什么颜色的？",
+    "chineseAnswer": "粉色"
+  },
+  {
+    "question": "What color is Grandma's hair?",
+    "options": ["Black", "Brown", "White", "Gray"],
+    "correctAnswer": "White",
+    "chineseQuestion": "奶奶的头发是什么颜色？",
+    "chineseAnswer": "白色"
+  },
+  {
+    "question": "How many flower pots are there?",
+    "options": ["1", "2", "3", "4"],
+    "correctAnswer": "2",
+    "chineseQuestion": "有几盆花？",
+    "chineseAnswer": "2盆"
+  },
+  {
+    "question": "What colors are the flowers?",
+    "options": ["Red and white", "Blue and yellow", "Pink and purple", "Orange and green"],
+    "correctAnswer": "Red and white",
+    "chineseQuestion": "花的颜色是什么？",
+    "chineseAnswer": "红色和白色"
+  },
+  {
+    "question": "What time is it?",
+    "options": ["9:00", "10:00", "11:00", "12:00"],
+    "correctAnswer": "10:00",
+    "chineseQuestion": "现在的是什么时间？",
+    "chineseAnswer": "10点整"
+  }
+]

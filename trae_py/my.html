@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 我的 - 英语语法学习乐园</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="index.html" class="back-btn">⬅ 返回</a>
+            <h1>👤 我的</h1>
+        </div>
+        
+        <div class="my-container">
+            <div class="user-profile">
+                <div class="avatar">👶</div>
+                <div class="user-info">
+                    <div class="user-name">小明</div>
+                    <div class="user-level">等级：初级学习者</div>
+                </div>
+            </div>
+            
+            <div class="stats-section">
+                <div class="stat-item">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">连续打卡</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">总打卡天数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">游戏次数</div>
+                </div>
+            </div>
+            
+            <div class="checkin-section">
+                <button class="checkin-btn" id="checkin-btn">今日打卡</button>
+                <div class="checkin-status" id="checkin-status">点击按钮完成今日打卡</div>
+            </div>
+            
+            <a href="checkin_list.html"><button class="checkin-list-btn">查看打卡记录</button></a>
+        </div>
+    </div>
+    
+    <script src="js/common.js"></script>
+    <script>
+        // 检查今日是否已打卡
+        async function checkCheckinStatus() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/checkin/status`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.checked) {
+                        document.getElementById('checkin-btn').classList.add('checked');
+                        document.getElementById('checkin-btn').textContent = '已打卡';
+                        document.getElementById('checkin-status').textContent = '今日已完成打卡，坚持学习！';
+                    }
+                }
+            } catch (error) {
+                console.error('检查打卡状态失败:', error);
+            }
+        }
+        
+        // 打卡功能
+        document.getElementById('checkin-btn').addEventListener('click', async function() {
+            if (this.classList.contains('checked')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/checkin`, {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        this.classList.add('checked');
+                        this.textContent = '已打卡';
+                        document.getElementById('checkin-status').textContent = '打卡成功！坚持学习，加油！';
+                        
+                        // 显示成功动画
+                        this.style.transform = 'scale(1.1)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 300);
+                    }
+                }
+            } catch (error) {
+                console.error('打卡失败:', error);
+                document.getElementById('checkin-status').textContent = '打卡失败，请重试';
+            }
+        });
+        
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                if (response.ok) {
+                    const data = await response.json();
+                    // 更新连续打卡天数
+                    document.querySelector('.stat-item:nth-child(1) .stat-value').textContent = data.continuousCheckins || 0;
+                    // 更新总打卡天数
+                    document.querySelector('.stat-item:nth-child(2) .stat-value').textContent = data.totalCheckins || 0;
+                    // 更新游戏次数
+                    document.querySelector('.stat-item:nth-child(3) .stat-value').textContent = data.gamePlays || 0;
+                }
+            } catch (error) {
+                console.error('加载统计数据失败:', error);
+            }
+        }
+        
+        // 页面加载时检查打卡状态和加载统计数据
+        window.onload = async function() {
+            await checkCheckinStatus();
+            await loadStats();
+        };
+    </script>
+</body>
+</html>

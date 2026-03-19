@@ -1,0 +1,240 @@
+[
+  {
+    "question": "What is the capital of France?",
+    "chineseQuestion": "法国的首都是什么？",
+    "correctAnswer": "Paris",
+    "chineseAnswer": "巴黎",
+    "category": "Geography"
+  },
+  {
+    "question": "What is the capital of the United States?",
+    "chineseQuestion": "美国的首都是什么？",
+    "correctAnswer": "Washington, D.C.",
+    "chineseAnswer": "华盛顿特区",
+    "category": "Geography"
+  },
+  {
+    "question": "What is the capital of China?",
+    "chineseQuestion": "中国的首都是什么？",
+    "correctAnswer": "Beijing",
+    "chineseAnswer": "北京",
+    "category": "Geography"
+  },
+  {
+    "question": "What is the capital of Japan?",
+    "chineseQuestion": "日本的首都是什么？",
+    "correctAnswer": "Tokyo",
+    "chineseAnswer": "东京",
+    "category": "Geography"
+  },
+  {
+    "question": "What is the capital of the United Kingdom?",
+    "chineseQuestion": "英国的首都是什么？",
+    "correctAnswer": "London",
+    "chineseAnswer": "伦敦",
+    "category": "Geography"
+  },
+  {
+    "question": "What is 2 + 2?",
+    "chineseQuestion": "2加2等于多少？",
+    "correctAnswer": "4",
+    "chineseAnswer": "4",
+    "category": "Mathematics"
+  },
+  {
+    "question": "What is 5 * 6?",
+    "chineseQuestion": "5乘6等于多少？",
+    "correctAnswer": "30",
+    "chineseAnswer": "30",
+    "category": "Mathematics"
+  },
+  {
+    "question": "What is 10 - 3?",
+    "chineseQuestion": "10减3等于多少？",
+    "correctAnswer": "7",
+    "chineseAnswer": "7",
+    "category": "Mathematics"
+  },
+  {
+    "question": "What is 12 / 4?",
+    "chineseQuestion": "12除以4等于多少？",
+    "correctAnswer": "3",
+    "chineseAnswer": "3",
+    "category": "Mathematics"
+  },
+  {
+    "question": "What is 7 + 8?",
+    "chineseQuestion": "7加8等于多少？",
+    "correctAnswer": "15",
+    "chineseAnswer": "15",
+    "category": "Mathematics"
+  },
+  {
+    "question": "Who wrote Romeo and Juliet?",
+    "chineseQuestion": "谁写了《罗密欧与朱丽叶》？",
+    "correctAnswer": "William Shakespeare",
+    "chineseAnswer": "威廉·莎士比亚",
+    "category": "Literature"
+  },
+  {
+    "question": "Who wrote Harry Potter?",
+    "chineseQuestion": "谁写了《哈利·波特》？",
+    "correctAnswer": "J.K. Rowling",
+    "chineseAnswer": "J.K.罗琳",
+    "category": "Literature"
+  },
+  {
+    "question": "Who wrote To Kill a Mockingbird?",
+    "chineseQuestion": "谁写了《杀死一只知更鸟》？",
+    "correctAnswer": "Harper Lee",
+    "chineseAnswer": "哈珀·李",
+    "category": "Literature"
+  },
+  {
+    "question": "Who wrote 1984?",
+    "chineseQuestion": "谁写了《1984》？",
+    "correctAnswer": "George Orwell",
+    "chineseAnswer": "乔治·奥威尔",
+    "category": "Literature"
+  },
+  {
+    "question": "Who wrote Pride and Prejudice?",
+    "chineseQuestion": "谁写了《傲慢与偏见》？",
+    "correctAnswer": "Jane Austen",
+    "chineseAnswer": "简·奥斯汀",
+    "category": "Literature"
+  },
+  {
+    "question": "What is the largest planet in our solar system?",
+    "chineseQuestion": "太阳系中最大的行星是什么？",
+    "correctAnswer": "Jupiter",
+    "chineseAnswer": "木星",
+    "category": "Science"
+  },
+  {
+    "question": "What is the smallest planet in our solar system?",
+    "chineseQuestion": "太阳系中最小的行星是什么？",
+    "correctAnswer": "Mercury",
+    "chineseAnswer": "水星",
+    "category": "Science"
+  },
+  {
+    "question": "What is the chemical symbol for water?",
+    "chineseQuestion": "水的化学符号是什么？",
+    "correctAnswer": "H2O",
+    "chineseAnswer": "H2O",
+    "category": "Science"
+  },
+  {
+    "question": "What is the chemical symbol for gold?",
+    "chineseQuestion": "金的化学符号是什么？",
+    "correctAnswer": "Au",
+    "chineseAnswer": "Au",
+    "category": "Science"
+  },
+  {
+    "question": "What is the chemical symbol for oxygen?",
+    "chineseQuestion": "氧的化学符号是什么？",
+    "correctAnswer": "O",
+    "chineseAnswer": "O",
+    "category": "Science"
+  },
+  {
+    "question": "Who invented the telephone?",
+    "chineseQuestion": "谁发明了电话？",
+    "correctAnswer": "Alexander Graham Bell",
+    "chineseAnswer": "亚历山大·格雷厄姆·贝尔",
+    "category": "History"
+  },
+  {
+    "question": "Who invented the light bulb?",
+    "chineseQuestion": "谁发明了电灯？",
+    "correctAnswer": "Thomas Edison",
+    "chineseAnswer": "托马斯·爱迪生",
+    "category": "History"
+  },
+  {
+    "question": "Who was the first president of the United States?",
+    "chineseQuestion": "美国的第一任总统是谁？",
+    "correctAnswer": "George Washington",
+    "chineseAnswer": "乔治·华盛顿",
+    "category": "History"
+  },
+  {
+    "question": "Who was the first person to walk on the moon?",
+    "chineseQuestion": "第一个登上月球的人是谁？",
+    "correctAnswer": "Neil Armstrong",
+    "chineseAnswer": "尼尔·阿姆斯特朗",
+    "category": "History"
+  },
+  {
+    "question": "Who painted the Mona Lisa?",
+    "chineseQuestion": "谁画了《蒙娜丽莎》？",
+    "correctAnswer": "Leonardo da Vinci",
+    "chineseAnswer": "列奥纳多·达·芬奇",
+    "category": "Art"
+  },
+  {
+    "question": "Who painted Starry Night?",
+    "chineseQuestion": "谁画了《星夜》？",
+    "correctAnswer": "Vincent van Gogh",
+    "chineseAnswer": "文森特·梵高",
+    "category": "Art"
+  },
+  {
+    "question": "Who painted The Last Supper?",
+    "chineseQuestion": "谁画了《最后的晚餐》？",
+    "correctAnswer": "Leonardo da Vinci",
+    "chineseAnswer": "列奥纳多·达·芬奇",
+    "category": "Art"
+  },
+  {
+    "question": "Who painted The Scream?",
+    "chineseQuestion": "谁画了《呐喊》？",
+    "correctAnswer": "Edvard Munch",
+    "chineseAnswer": "爱德华·蒙克",
+    "category": "Art"
+  },
+  {
+    "question": "Who painted Guernica?",
+    "chineseQuestion": "谁画了《格尔尼卡》？",
+    "correctAnswer": "Pablo Picasso",
+    "chineseAnswer": "巴勃罗·毕加索",
+    "category": "Art"
+  },
+  {
+    "question": "What is the national animal of the United States?",
+    "chineseQuestion": "美国的国兽是什么？",
+    "correctAnswer": "Bald Eagle",
+    "chineseAnswer": "白头海雕",
+    "category": "Culture"
+  },
+  {
+    "question": "What is the national animal of China?",
+    "chineseQuestion": "中国的国兽是什么？",
+    "correctAnswer": "Giant Panda",
+    "chineseAnswer": "大熊猫",
+    "category": "Culture"
+  },
+  {
+    "question": "What is the national animal of India?",
+    "chineseQuestion": "印度的国兽是什么？",
+    "correctAnswer": "Bengal Tiger",
+    "chineseAnswer": "孟加拉虎",
+    "category": "Culture"
+  },
+  {
+    "question": "What is the national animal of Australia?",
+    "chineseQuestion": "澳大利亚的国兽是什么？",
+    "correctAnswer": "Kangaroo",
+    "chineseAnswer": "袋鼠",
+    "category": "Culture"
+  },
+  {
+    "question": "What is the national animal of Canada?",
+    "chineseQuestion": "加拿大的国兽是什么？",
+    "correctAnswer": "Beaver",
+    "chineseAnswer": "海狸",
+    "category": "Culture"
+  }
+]

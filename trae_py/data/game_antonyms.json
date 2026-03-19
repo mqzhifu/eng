@@ -1,0 +1,602 @@
+[
+  {
+    "word": "big",
+    "meaning": "大的",
+    "opposite": "small"
+  },
+  {
+    "word": "small",
+    "meaning": "小的",
+    "opposite": "big"
+  },
+  {
+    "word": "tall",
+    "meaning": "高的",
+    "opposite": "short"
+  },
+  {
+    "word": "short",
+    "meaning": "矮的",
+    "opposite": "tall"
+  },
+  {
+    "word": "long",
+    "meaning": "长的",
+    "opposite": "short"
+  },
+  {
+    "word": "fat",
+    "meaning": "胖的",
+    "opposite": "thin"
+  },
+  {
+    "word": "thin",
+    "meaning": "瘦的",
+    "opposite": "fat"
+  },
+  {
+    "word": "fast",
+    "meaning": "快的",
+    "opposite": "slow"
+  },
+  {
+    "word": "slow",
+    "meaning": "慢的",
+    "opposite": "fast"
+  },
+  {
+    "word": "hot",
+    "meaning": "热的",
+    "opposite": "cold"
+  },
+  {
+    "word": "cold",
+    "meaning": "冷的",
+    "opposite": "hot"
+  },
+  {
+    "word": "warm",
+    "meaning": "暖的",
+    "opposite": "cool"
+  },
+  {
+    "word": "cool",
+    "meaning": "凉的",
+    "opposite": "warm"
+  },
+  {
+    "word": "good",
+    "meaning": "好的",
+    "opposite": "bad"
+  },
+  {
+    "word": "bad",
+    "meaning": "坏的",
+    "opposite": "good"
+  },
+  {
+    "word": "new",
+    "meaning": "新的",
+    "opposite": "old"
+  },
+  {
+    "word": "old",
+    "meaning": "旧的",
+    "opposite": "new"
+  },
+  {
+    "word": "young",
+    "meaning": "年轻的",
+    "opposite": "old"
+  },
+  {
+    "word": "happy",
+    "meaning": "开心的",
+    "opposite": "sad"
+  },
+  {
+    "word": "sad",
+    "meaning": "难过的",
+    "opposite": "happy"
+  },
+  {
+    "word": "yes",
+    "meaning": "是",
+    "opposite": "no"
+  },
+  {
+    "word": "no",
+    "meaning": "否",
+    "opposite": "yes"
+  },
+  {
+    "word": "this",
+    "meaning": "这",
+    "opposite": "that"
+  },
+  {
+    "word": "that",
+    "meaning": "那",
+    "opposite": "this"
+  },
+  {
+    "word": "these",
+    "meaning": "这些",
+    "opposite": "those"
+  },
+  {
+    "word": "those",
+    "meaning": "那些",
+    "opposite": "these"
+  },
+  {
+    "word": "come",
+    "meaning": "来",
+    "opposite": "go"
+  },
+  {
+    "word": "go",
+    "meaning": "去",
+    "opposite": "come"
+  },
+  {
+    "word": "open",
+    "meaning": "打开",
+    "opposite": "close"
+  },
+  {
+    "word": "close",
+    "meaning": "关闭",
+    "opposite": "open"
+  },
+  {
+    "word": "up",
+    "meaning": "向上",
+    "opposite": "down"
+  },
+  {
+    "word": "down",
+    "meaning": "向下",
+    "opposite": "up"
+  },
+  {
+    "word": "left",
+    "meaning": "左",
+    "opposite": "right"
+  },
+  {
+    "word": "right",
+    "meaning": "右",
+    "opposite": "left"
+  },
+  {
+    "word": "in",
+    "meaning": "里面",
+    "opposite": "out"
+  },
+  {
+    "word": "out",
+    "meaning": "外面",
+    "opposite": "in"
+  },
+  {
+    "word": "on",
+    "meaning": "开着",
+    "opposite": "off"
+  },
+  {
+    "word": "off",
+    "meaning": "关着",
+    "opposite": "on"
+  },
+  {
+    "word": "early",
+    "meaning": "早的",
+    "opposite": "late"
+  },
+  {
+    "word": "late",
+    "meaning": "晚的",
+    "opposite": "early"
+  },
+  {
+    "word": "black",
+    "meaning": "黑的",
+    "opposite": "white"
+  },
+  {
+    "word": "white",
+    "meaning": "白的",
+    "opposite": "black"
+  },
+  {
+    "word": "clean",
+    "meaning": "干净的",
+    "opposite": "dirty"
+  },
+  {
+    "word": "dirty",
+    "meaning": "脏的",
+    "opposite": "clean"
+  },
+  {
+    "word": "light",
+    "meaning": "轻的",
+    "opposite": "heavy"
+  },
+  {
+    "word": "heavy",
+    "meaning": "重的",
+    "opposite": "light"
+  },
+  {
+    "word": "soft",
+    "meaning": "软的",
+    "opposite": "hard"
+  },
+  {
+    "word": "hard",
+    "meaning": "硬的",
+    "opposite": "soft"
+  },
+  {
+    "word": "dry",
+    "meaning": "干的",
+    "opposite": "wet"
+  },
+  {
+    "word": "wet",
+    "meaning": "湿的",
+    "opposite": "dry"
+  },
+  {
+    "word": "high",
+    "meaning": "高的",
+    "opposite": "low"
+  },
+  {
+    "word": "low",
+    "meaning": "低的",
+    "opposite": "high"
+  },
+  {
+    "word": "far",
+    "meaning": "远的",
+    "opposite": "near"
+  },
+  {
+    "word": "near",
+    "meaning": "近的",
+    "opposite": "far"
+  },
+  {
+    "word": "buy",
+    "meaning": "买",
+    "opposite": "sell"
+  },
+  {
+    "word": "sell",
+    "meaning": "卖",
+    "opposite": "buy"
+  },
+  {
+    "word": "beautiful",
+    "meaning": "美丽的",
+    "opposite": "ugly"
+  },
+  {
+    "word": "ugly",
+    "meaning": "丑陋的",
+    "opposite": "beautiful"
+  },
+  {
+    "word": "kind",
+    "meaning": "善良的",
+    "opposite": "unkind"
+  },
+  {
+    "word": "unkind",
+    "meaning": "不友善的",
+    "opposite": "kind"
+  },
+  {
+    "word": "brave",
+    "meaning": "勇敢的",
+    "opposite": "afraid"
+  },
+  {
+    "word": "afraid",
+    "meaning": "害怕的",
+    "opposite": "brave"
+  },
+  {
+    "word": "quiet",
+    "meaning": "安静的",
+    "opposite": "noisy"
+  },
+  {
+    "word": "noisy",
+    "meaning": "吵闹的",
+    "opposite": "quiet"
+  },
+  {
+    "word": "full",
+    "meaning": "满的",
+    "opposite": "empty"
+  },
+  {
+    "word": "empty",
+    "meaning": "空的",
+    "opposite": "full"
+  },
+  {
+    "word": "same",
+    "meaning": "相同的",
+    "opposite": "different"
+  },
+  {
+    "word": "different",
+    "meaning": "不同的",
+    "opposite": "same"
+  },
+  {
+    "word": "right",
+    "meaning": "正确的",
+    "opposite": "wrong"
+  },
+  {
+    "word": "wrong",
+    "meaning": "错误的",
+    "opposite": "right"
+  },
+  {
+    "word": "easy",
+    "meaning": "容易的",
+    "opposite": "difficult"
+  },
+  {
+    "word": "difficult",
+    "meaning": "困难的",
+    "opposite": "easy"
+  },
+  {
+    "word": "strong",
+    "meaning": "强壮的",
+    "opposite": "weak"
+  },
+  {
+    "word": "weak",
+    "meaning": "虚弱的",
+    "opposite": "strong"
+  },
+  {
+    "word": "thick",
+    "meaning": "厚的",
+    "opposite": "thin"
+  },
+  {
+    "word": "thin",
+    "meaning": "薄的",
+    "opposite": "thick"
+  },
+  {
+    "word": "forget",
+    "meaning": "忘记",
+    "opposite": "remember"
+  },
+  {
+    "word": "remember",
+    "meaning": "记得",
+    "opposite": "forget"
+  },
+  {
+    "word": "win",
+    "meaning": "赢",
+    "opposite": "lose"
+  },
+  {
+    "word": "lose",
+    "meaning": "输",
+    "opposite": "win"
+  },
+  {
+    "word": "love",
+    "meaning": "爱",
+    "opposite": "hate"
+  },
+  {
+    "word": "hate",
+    "meaning": "恨",
+    "opposite": "love"
+  },
+  {
+    "word": "laugh",
+    "meaning": "笑",
+    "opposite": "cry"
+  },
+  {
+    "word": "cry",
+    "meaning": "哭",
+    "opposite": "laugh"
+  },
+  {
+    "word": "sit",
+    "meaning": "坐",
+    "opposite": "stand"
+  },
+  {
+    "word": "stand",
+    "meaning": "站",
+    "opposite": "sit"
+  },
+  {
+    "word": "sleep",
+    "meaning": "睡觉",
+    "opposite": "wake"
+  },
+  {
+    "word": "wake",
+    "meaning": "醒来",
+    "opposite": "sleep"
+  },
+  {
+    "word": "push",
+    "meaning": "推",
+    "opposite": "pull"
+  },
+  {
+    "word": "pull",
+    "meaning": "拉",
+    "opposite": "push"
+  },
+  {
+    "word": "give",
+    "meaning": "给",
+    "opposite": "take"
+  },
+  {
+    "word": "take",
+    "meaning": "拿",
+    "opposite": "give"
+  },
+  {
+    "word": "teach",
+    "meaning": "教",
+    "opposite": "learn"
+  },
+  {
+    "word": "learn",
+    "meaning": "学",
+    "opposite": "teach"
+  },
+  {
+    "word": "front",
+    "meaning": "前面",
+    "opposite": "back"
+  },
+  {
+    "word": "back",
+    "meaning": "后面",
+    "opposite": "front"
+  },
+  {
+    "word": "day",
+    "meaning": "白天",
+    "opposite": "night"
+  },
+  {
+    "word": "night",
+    "meaning": "夜晚",
+    "opposite": "day"
+  },
+  {
+    "word": "boy",
+    "meaning": "男孩",
+    "opposite": "girl"
+  },
+  {
+    "word": "girl",
+    "meaning": "女孩",
+    "opposite": "boy"
+  },
+  {
+    "word": "man",
+    "meaning": "男人",
+    "opposite": "woman"
+  },
+  {
+    "word": "woman",
+    "meaning": "女人",
+    "opposite": "man"
+  },
+  {
+    "word": "busy",
+    "meaning": "忙碌的",
+    "opposite": "free"
+  },
+  {
+    "word": "free",
+    "meaning": "空闲的",
+    "opposite": "busy"
+  },
+  {
+    "word": "hungry",
+    "meaning": "饿的",
+    "opposite": "full"
+  },
+  {
+    "word": "full",
+    "meaning": "饱的",
+    "opposite": "hungry"
+  },
+  {
+    "word": "turn on",
+    "meaning": "打开",
+    "opposite": "turn off"
+  },
+  {
+    "word": "turn off",
+    "meaning": "关闭",
+    "opposite": "turn on"
+  },
+  {
+    "word": "get on",
+    "meaning": "上车",
+    "opposite": "get off"
+  },
+  {
+    "word": "get off",
+    "meaning": "下车",
+    "opposite": "get on"
+  },
+  {
+    "word": "put on",
+    "meaning": "穿上",
+    "opposite": "take off"
+  },
+  {
+    "word": "take off",
+    "meaning": "脱下",
+    "opposite": "put on"
+  },
+  {
+    "word": "go out",
+    "meaning": "出去",
+    "opposite": "come in"
+  },
+  {
+    "word": "come in",
+    "meaning": "进来",
+    "opposite": "go out"
+  },
+  {
+    "word": "upstairs",
+    "meaning": "楼上",
+    "opposite": "downstairs"
+  },
+  {
+    "word": "downstairs",
+    "meaning": "楼下",
+    "opposite": "upstairs"
+  },
+  {
+    "word": "happy",
+    "meaning": "高兴的",
+    "opposite": "angry"
+  },
+  {
+    "word": "angry",
+    "meaning": "生气的",
+    "opposite": "happy"
+  },
+  {
+    "word": "many",
+    "meaning": "许多",
+    "opposite": "few"
+  },
+  {
+    "word": "few",
+    "meaning": "很少",
+    "opposite": "many"
+  }
+]
