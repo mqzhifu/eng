@@ -40,6 +40,12 @@ def index():
 def static_file(path):
     return send_from_directory('..', path)
 
+# 处理 .well-known 路径
+@app.route('/.well-known/<path:path>')
+def well_known(path):
+    # 从当前目录提供 .well-known 文件
+    return send_from_directory('.', f'.well-known/{path}')
+
 # 语音生成API
 @app.route('/api/tts', methods=['GET'])
 def generate_tts():
